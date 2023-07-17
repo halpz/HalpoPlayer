@@ -3,28 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>NSAppTransportSecurity</key>
-			<dict>
-				<key>NSAllowsArbitraryLoads</key>
-				<true/>
-			</dict>
-			<key>UIBackgroundModes</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
 			<array>
-				<string>audio</string>
-			</array>
-			<key>UIApplicationSceneManifest</key>
-			<dict>
-				<key>UIApplicationSupportsMultipleScenes</key>
-				<true/>
-				<key>UISceneConfigurations</key>
 				<dict>
-					<key>CPTemplateApplicationSceneSessionRoleApplication</key>
-					<array>
-						<dict>
-							<key>UISceneDelegateClassName</key>
-							<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
-						</dict>
-					</array>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
 				</dict>
-			</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>
