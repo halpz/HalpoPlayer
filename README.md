@@ -9,12 +9,12 @@ A simple, lightweight Subsonic client for iOS written in SwiftUI
 - Download music to play offline
 - Airplay integration
 - Enter 2 different server URLs for public and local access
+- Carplay widget
 
 ## To Do
 
 - Playlist management
 - Manage song queue
-- Carplay
 
 ## Authors
 
