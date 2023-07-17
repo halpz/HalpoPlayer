@@ -35,6 +35,9 @@ struct AlbumCell: View {
 						.font(.body)
 						.foregroundColor(.secondary)
 				}
+				Spacer()
+				Image(systemName: "chevron.right")
+					.font(.body)
 			}
 		}
 		.padding(8)

@@ -33,34 +33,7 @@ struct ContentView: View {
 			Button {
 				coordinator.albumTapped( albumId: album.id)
 			} label: {
-				HStack {
-					if let image = imageDictionary[album.id] {
-						Image(uiImage: image)
-							.resizable()
-							.scaledToFit()
-							.cornerRadius(8)
-							.frame(width: 60, height: 60)
-					} else {
-						ProgressView()
-							.frame(width: 60, height: 60)
-							.onAppear {
-								Task {
-									let image = try await SubsonicClient.shared.coverArt(albumId: album.id)
-									self.imageDictionary[album.id] = image
-								}
-							}
-					}
-					VStack(alignment: .leading) {
-						Text("\(album.title)")
-							.font(.body).bold()
-						Text("\(album.artist)")
-							.font(.body)
-							.foregroundColor(.secondary)
-					}
-					Spacer()
-					Image(systemName: "chevron.right")
-						.font(.body)
-				}
+				AlbumCell(album: Album(albumListResponse: album))
 			}
 		}
 		.simultaneousGesture(DragGesture().onChanged({ value in

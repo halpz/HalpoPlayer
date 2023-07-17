@@ -45,6 +45,19 @@ struct Album: Codable, Identifiable, Hashable {
 		name = searchResponse.name
 		song = []
 	}
+
+	init(albumListResponse: GetAlbumListResponse.Album) {
+		artist = albumListResponse.artist
+		artistId = albumListResponse.artistId
+		id = albumListResponse.id
+		coverArt = albumListResponse.coverArt
+		duration = albumListResponse.duration
+		songCount = albumListResponse.songCount
+		created = albumListResponse.created
+		year = albumListResponse.year
+		name = albumListResponse.name
+		song = []
+	}
 }
 
 

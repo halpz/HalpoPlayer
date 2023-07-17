@@ -87,9 +87,7 @@ struct DownloadsView: View {
 								} label: {
 									HStack {
 										AlbumCell(album: album)
-										Spacer()
-										Image(systemName: "chevron.right")
-											.font(.body)
+										
 									}
 								}
 							}

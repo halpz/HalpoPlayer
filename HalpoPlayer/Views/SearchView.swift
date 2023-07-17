@@ -26,9 +26,6 @@ struct SearchView: View {
 							let convertedAlbum = Album(searchResponse: album)
 							HStack {
 								AlbumCell(album: convertedAlbum)
-								Spacer()
-								Image(systemName: "chevron.right")
-									.font(.body)
 							}
 						}
 					}
