@@ -38,6 +38,7 @@
 		DA7F1EC52A652E2A006D8934 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBC2A652E2A006D8934 /* ContentView.swift */; };
 		DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBD2A652E2A006D8934 /* SongCell.swift */; };
 		DA7F1ECA2A652EAC006D8934 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */; };
+		DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		DA7F1EBD2A652E2A006D8934 /* SongCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		DA7F1EC72A652E43006D8934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HalpoPlayer.entitlements; sourceTree = "<group>"; };
+		DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAlbumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7F1EB52A652E2A006D8934 /* DownloadsView.swift */,
+				DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */,
 				DA7F1EB62A652E2A006D8934 /* AlbumDetailView.swift */,
 				DA7F1EB72A652E2A006D8934 /* SearchView.swift */,
 				DA7F1EB82A652E2A006D8934 /* AlbumCell.swift */,
@@ -282,6 +285,7 @@
 				DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */,
 				DA7F1EBE2A652E2A006D8934 /* DownloadsView.swift in Sources */,
 				DA7F1EA22A652E14006D8934 /* GetRandomSongsResponse.swift in Sources */,
+				DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */,
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
 				DA7F1EBF2A652E2A006D8934 /* AlbumDetailView.swift in Sources */,
 				DA7F1EB32A652E25006D8934 /* Database.swift in Sources */,

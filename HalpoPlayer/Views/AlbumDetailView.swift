@@ -108,31 +108,7 @@ struct AlbumDetailView: View {
 							self.player.play(songs: songs, index: index)
 						}
 					} label: {
-						HStack {
-							if let trackNumber = song.track {
-								Text("\(trackNumber)")
-									.font(.body)
-									.foregroundColor(.secondary)
-									.padding(8)
-							}
-							VStack(alignment: .leading) {
-								Text("\(song.title)")
-									.font(.body).bold()
-									.foregroundColor(player.currentSong == song ? .accentColor : .primary)
-								Text("\(song.artist)")
-									.font(.body)
-									.foregroundColor(.secondary)
-							}
-							
-							Spacer()
-							if downloadingSongs.contains(song) {
-								ProgressView()
-							} else if database.musicCache[song.id] != nil {
-								Image(systemName: "arrow.down.circle.fill").imageScale(.large)
-									.foregroundColor(.green)
-							}
-						}
-						.padding(8)
+						SongCell(showAlbumName: false, showTrackNumber: true, song: song)
 					}
 					.swipeActions {
 						Button {

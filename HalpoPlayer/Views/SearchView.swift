@@ -34,7 +34,7 @@ struct SearchView: View {
 						Button {
 							self.player.play(songs: [Song(searchSong: cellSong)], index: 0)
 						} label: {
-							SongCell(song: Song(searchSong: cellSong))
+							SongCell(showAlbumName: true, showTrackNumber: false, song: Song(searchSong: cellSong))
 						}
 						.swipeActions(allowsFullSwipe: false) {
 							Button {

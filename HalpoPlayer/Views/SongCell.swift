@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct SongCell: View {
+	var showAlbumName: Bool = true
+	var showTrackNumber: Bool = true
 	@EnvironmentObject var player: AudioManager
 	let song: Song
 	@State var image: UIImage?
 	var body: some View {
 		HStack {
 			HStack {
+				if showTrackNumber, let trackNumber = song.track {
+					Text("\(trackNumber)")
+						.font(.body)
+						.foregroundColor(.secondary)
+						.padding(8)
+				}
 				if let image = image {
 					Image(uiImage: image)
 						.resizable()
@@ -33,9 +41,11 @@ struct SongCell: View {
 					Text("\(song.title)")
 						.font(.body).bold()
 						.foregroundColor(player.currentSong == song ? .accentColor : .primary)
-					Text("\(song.album)")
-						.font(.body)
-						.foregroundColor(.secondary)
+					if showAlbumName {
+						Text("\(song.album)")
+							.font(.body)
+							.foregroundColor(.secondary)
+					}
 					Text("\(song.artist)")
 						.font(.body)
 						.foregroundColor(.secondary)
