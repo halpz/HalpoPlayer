@@ -25,6 +25,9 @@ class ContentViewModel: ObservableObject {
 	init() {
 		searchText = ""
 	}
+	func albumTapped(albumId: String, coordinator: Coordinator) {
+		coordinator.albumTapped(albumId: albumId)
+	}
 	func refresh() {
 		Task {
 			do {

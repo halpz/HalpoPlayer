@@ -16,7 +16,7 @@ struct ContentView: View {
 	var body: some View {
 		List(viewModel.results) { album in
 			Button {
-				coordinator.albumTapped( albumId: album.id)
+				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
 			} label: {
 				AlbumCell(album: Album(albumListResponse: album))
 			}
