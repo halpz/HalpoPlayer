@@ -50,7 +50,8 @@ struct GetPlaylistResponse: Codable {
 		let albumId, type, id, artist: String
 		let contentType: String
 		let isDir: Bool
-		let genre, album, coverArt, created: String
+		let album, coverArt, created: String
+		let genre: String?
 	}
 }
 

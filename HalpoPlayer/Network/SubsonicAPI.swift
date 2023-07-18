@@ -19,7 +19,7 @@ enum SubsonicAPI {
 	case getSimilarSongs(id: String)
 	case getPlaylists
 	case getPlaylist(id: String)
-	
+	case updatePlaylist(id: String, songs: [Song])
 	var method: String {
 		"GET"
 	}
@@ -53,6 +53,14 @@ enum SubsonicAPI {
 			return "getPlaylists?"
 		case .getPlaylist(let id):
 			return "getPlaylist?id=\(id)"
+		case .updatePlaylist(let id, let songs):
+			var newIds: String = ""
+			var removalIndices: String = ""
+			for (index, song) in songs.enumerated() {
+				newIds.append("&songIdToAdd=\(song.id)")
+				removalIndices.append("&songIndexToRemove=\(index)")
+			}
+			return "updatePlaylist?playlistId=\(id)\(removalIndices)\(newIds)"
 		}
 	}
 }

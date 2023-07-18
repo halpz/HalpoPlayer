@@ -10,6 +10,7 @@ import SwiftUI
 struct PlaylistView: View {
 	@StateObject var viewModel: PlaylistViewModel
 	@EnvironmentObject var player: AudioManager
+	@State private var editMode = EditMode.active
 	var name: String
 	init(playlist: GetPlaylistsResponse.Playlist) {
 		_viewModel = StateObject(wrappedValue: PlaylistViewModel(id: playlist.id))
@@ -54,8 +55,11 @@ struct PlaylistView: View {
 							viewModel.cellDidAppear(song: song)
 						}
 					}
+					.moveDisabled(viewModel.reordering)
 				}
+				.onMove(perform: viewModel.move)
 			}
+//			.environment(\.editMode, $editMode)
 			.listStyle(.plain)
 			.navigationTitle(name)
 		} else {
