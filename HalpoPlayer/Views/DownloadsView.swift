@@ -40,6 +40,7 @@ struct DownloadsView: View {
 									}
 									.tint(.blue)
 								}
+								.listRowSeparator(.hidden)
 								.onAppear {
 									self.songAppeared(song: file.song)
 								}
@@ -53,6 +54,7 @@ struct DownloadsView: View {
 										AlbumCell(album: album)
 									}
 								}
+								.listRowSeparator(.hidden)
 							}
 						}
 					} header: {

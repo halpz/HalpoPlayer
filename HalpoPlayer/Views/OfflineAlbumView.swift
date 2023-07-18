@@ -45,6 +45,7 @@ struct OfflineAlbumView: View {
 					}
 					.tint(.blue)
 				}
+				.listRowSeparator(.hidden)
 			}
 		}
 		.listStyle(.plain)

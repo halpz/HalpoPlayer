@@ -10,14 +10,14 @@ import UIKit
 
 class ContentViewModel: ObservableObject {
 	@Published var searchText: String
-	@Published var albumList: [GetAlbumListResponse.Album]?
+	
 	var player = AudioManager.shared
 	var database = Database.shared
 	var results: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
-			return albumList ?? []
+			return database.albumList ?? []
 		} else {
-			return albumList?.filter {
+			return database.albumList?.filter {
 				$0.title.localizedCaseInsensitiveContains(searchText) ||
 				$0.artist.localizedCaseInsensitiveContains(searchText)
 			} ?? []
@@ -32,7 +32,7 @@ class ContentViewModel: ObservableObject {
 				if try await SubsonicClient.shared.authenticate() {
 					let response = try await SubsonicClient.shared.getAlbumList()
 					DispatchQueue.main.async {
-						self.albumList = response.subsonicResponse.albumList.album
+						self.database.albumList = response.subsonicResponse.albumList.album
 					}
 				}
 			} catch {

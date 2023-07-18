@@ -40,6 +40,5 @@ struct AlbumCell: View {
 					.font(.body)
 			}
 		}
-		.padding(8)
 	}
 }

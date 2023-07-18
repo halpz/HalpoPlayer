@@ -8,13 +8,13 @@
 import Foundation
 
 class PlaylistsViewModel: ObservableObject {
-	@Published var playlists: GetPlaylistsResponse?
+	var database = Database.shared
 	func getPlaylists() {
 		Task {
 			do {
 				let response = try await SubsonicClient.shared.getPlaylists()
 				DispatchQueue.main.async {
-					self.playlists = response
+					self.database.playlists = response
 				}
 			} catch {
 				print(error)

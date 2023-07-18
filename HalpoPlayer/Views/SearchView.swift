@@ -11,72 +11,76 @@ struct SearchView: View {
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var database: Database
-	@State private var searchText = ""
-	@State private var response: Search2Response?
-	@State private var scope: SearchScope = .song
 	var body: some View {
 		ZStack {
 			List {
-				switch scope {
-				case .album:
-					ForEach(response?.subsonicResponse.searchResult2.album ?? []) { album in
-						Button {
-							coordinator.albumTapped( albumId: album.id)
-						} label: {
-							let convertedAlbum = Album(searchResponse: album)
-							HStack {
-								AlbumCell(album: convertedAlbum)
-							}
-						}
-					}
-				case .song:
-					ForEach(response?.subsonicResponse.searchResult2.song ?? []) { cellSong in
-						Button {
-							self.player.play(songs: [Song(searchSong: cellSong)], index: 0)
-						} label: {
-							SongCell(showAlbumName: true, showTrackNumber: false, song: Song(searchSong: cellSong))
-						}
-						.swipeActions(allowsFullSwipe: false) {
+				Section {
+					switch database.searchScope {
+					case .album:
+						ForEach(database.searchResults?.subsonicResponse.searchResult2.album ?? []) { album in
 							Button {
-								self.player.addSongToQueue(song: Song(searchSong: cellSong))
+								coordinator.albumTapped( albumId: album.id)
 							} label: {
-								Image(systemName: "text.badge.plus").imageScale(.large)
-							}
-							.tint(.blue)
-							if database.musicCache[Song(searchSong: cellSong).id] == nil {
-								Button {
-									self.database.cacheSong(song: Song(searchSong: cellSong)) {}
-								} label: {
-									Image(systemName: "arrow.down.app").imageScale(.large)
+								let convertedAlbum = Album(searchResponse: album)
+								HStack {
+									AlbumCell(album: convertedAlbum)
 								}
-								.tint(.green)
-							} else {
-								Button {
-									self.database.deleteSong(song: Song(searchSong: cellSong))
-								} label: {
-									Image(systemName: "trash.fill").imageScale(.large)
-								}
-								.tint(.red)
 							}
+							.listRowSeparator(.hidden)
+						}
+					case .song:
+						ForEach(database.searchResults?.subsonicResponse.searchResult2.song ?? []) { cellSong in
+							Button {
+								self.player.play(songs: [Song(searchSong: cellSong)], index: 0)
+							} label: {
+								SongCell(showAlbumName: true, showTrackNumber: false, song: Song(searchSong: cellSong))
+							}
+							.swipeActions(allowsFullSwipe: false) {
+								Button {
+									self.player.addSongToQueue(song: Song(searchSong: cellSong))
+								} label: {
+									Image(systemName: "text.badge.plus").imageScale(.large)
+								}
+								.tint(.blue)
+								if database.musicCache[Song(searchSong: cellSong).id] == nil {
+									Button {
+										self.database.cacheSong(song: Song(searchSong: cellSong)) {}
+									} label: {
+										Image(systemName: "arrow.down.app").imageScale(.large)
+									}
+									.tint(.green)
+								} else {
+									Button {
+										self.database.deleteSong(song: Song(searchSong: cellSong))
+									} label: {
+										Image(systemName: "trash.fill").imageScale(.large)
+									}
+									.tint(.red)
+								}
+							}
+							.listRowSeparator(.hidden)
 						}
 					}
+				} header: {
+					Picker("", selection: $database.searchScope) {
+						ForEach(SearchScope.allCases, id: \.self) { scope in
+							Text(scope.rawValue.capitalized)
+						}
+					}
+					.pickerStyle(.segmented)
 				}
+				
 			}
 			.listStyle(.plain)
-			.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+			.searchable(text: $database.searchText, placement: .navigationBarDrawer(displayMode: .always))
 			.autocorrectionDisabled(true)
 			.onSubmit(of: .search) {
 				Task {
 					do {
-						response = try await SubsonicClient.shared.search2(term: searchText.lowercased())
+						database.searchResults = try await SubsonicClient.shared.search2(term: database.searchText.lowercased())
 					} catch {
-						response = nil
+						database.searchResults = nil
 					}
-				}
-			}
-			.searchScopes($scope) {
-				ForEach(SearchScope.allCases, id: \.self) { scope in
-					Text(scope.rawValue.capitalized)
 				}
 			}
 		}

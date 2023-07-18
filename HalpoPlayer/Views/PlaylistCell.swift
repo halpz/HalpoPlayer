@@ -17,9 +17,10 @@ struct PlaylistCell: View {
 				Image(uiImage: image)
 					.resizable()
 					.scaledToFit()
-					.frame(width: 50, height: 50)
+					.frame(width: 60, height: 60)
 			} else {
 				ProgressView()
+					.frame(width: 60, height: 60)
 					.onAppear {
 						Task {
 							image = try await SubsonicClient.shared.coverArt(albumId: playlist.coverArt)
@@ -29,11 +30,13 @@ struct PlaylistCell: View {
 			VStack(alignment: .leading) {
 				Text(playlist.name)
 				Text("\(playlist.songCount) song\(playlist.songCount == 1 ? "" : "s")")
+					.foregroundColor(.secondary)
 			}
 			Spacer()
 			Image(systemName: "chevron.right")
 				.font(.body)
 		}
 		.padding(8)
+		
 	}
 }

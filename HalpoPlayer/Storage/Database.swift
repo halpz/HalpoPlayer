@@ -10,7 +10,11 @@ import Foundation
 class Database: ObservableObject {
 	static let shared = Database()
 	let imageCache = ImageCache.shared
-//	@Published var albums: [GetAlbumListResponse.Album] = []
+	@Published var albumList: [GetAlbumListResponse.Album]?
+	@Published var playlists: GetPlaylistsResponse?
+	@Published var searchResults: Search2Response?
+	@Published var searchScope: SearchScope
+	@Published var searchText: String
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
 			guard let data = try? JSONEncoder().encode(musicCache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
@@ -25,6 +29,8 @@ class Database: ObservableObject {
 		}
 	}
 	init() {
+		searchText = ""
+		searchScope = .song
 		if let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
 			let musicCachePath = documentsUrl.appendingPathComponent("musicCache")
 			let decoder = JSONDecoder()

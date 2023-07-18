@@ -31,6 +31,7 @@ struct AlbumDetailView: View {
 						}
 					}
 				}
+				.listRowSeparator(.hidden)
 				if let image = viewModel.image {
 					HStack {
 						Spacer()
@@ -39,8 +40,7 @@ struct AlbumDetailView: View {
 								.resizable()
 								.scaledToFit()
 								.cornerRadius(8)
-								.padding(8)
-								.frame(maxWidth: 400, maxHeight: 400)
+								.frame(maxWidth: 500, maxHeight: 500)
 							Button {
 								viewModel.playButtonPressed()
 							} label: {
@@ -54,6 +54,7 @@ struct AlbumDetailView: View {
 						}
 						Spacer()
 					}
+					.listRowSeparator(.hidden)
 				}
 				HStack {
 					Spacer()
@@ -76,12 +77,12 @@ struct AlbumDetailView: View {
 					.padding(8)
 					Spacer()
 				}
-				
+				.listRowSeparator(.hidden)
 				ForEach(songs) { song in
 					Button {
 						viewModel.playSong(song: song, songs: songs)
 					} label: {
-						SongCell(showAlbumName: false, showTrackNumber: true, song: song)
+						SongCell(showAlbumName: false, showTrackNumber: true, showAlbumArt: false, song: song)
 					}
 					.swipeActions {
 						Button {
@@ -108,6 +109,7 @@ struct AlbumDetailView: View {
 							}
 						}
 					}
+					.listRowSeparator(.hidden)
 					.onAppear {
 						self.songAppeared(song: song)
 					}

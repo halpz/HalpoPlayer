@@ -10,6 +10,7 @@ import SwiftUI
 struct SongCell: View {
 	var showAlbumName: Bool = true
 	var showTrackNumber: Bool = true
+	var showAlbumArt: Bool = true
 	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var downloadManger: DownloadManager
 	@EnvironmentObject var database: Database
@@ -22,22 +23,26 @@ struct SongCell: View {
 					Text("\(trackNumber)")
 						.font(.body)
 						.foregroundColor(.secondary)
+						.frame(width: 20)
 						.padding(8)
+						
 				}
-				if let image = image {
-					Image(uiImage: image)
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(8)
-						.frame(width: 60, height: 60)
-				} else {
-					ProgressView()
-						.frame(width: 60, height: 60)
-						.onAppear {
-							Task {
-								image = try await SubsonicClient.shared.coverArt(albumId: song.albumId)
+				if showAlbumArt {
+					if let image = image {
+						Image(uiImage: image)
+							.resizable()
+							.scaledToFit()
+							.cornerRadius(8)
+							.frame(width: 60, height: 60)
+					} else {
+						ProgressView()
+							.frame(width: 60, height: 60)
+							.onAppear {
+								Task {
+									image = try await SubsonicClient.shared.coverArt(albumId: song.albumId)
+								}
 							}
-						}
+					}
 				}
 				VStack(alignment: .leading) {
 					Text("\(song.title)")
@@ -63,6 +68,5 @@ struct SongCell: View {
 				}
 			}
 		}
-		.padding(8)
 	}
 }

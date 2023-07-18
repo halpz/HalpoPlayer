@@ -18,6 +18,7 @@ struct ContentView: View {
 			} label: {
 				AlbumCell(album: Album(albumListResponse: album))
 			}
+			.listRowSeparator(.hidden)
 		}
 		.simultaneousGesture(DragGesture().onChanged({ value in
 			withAnimation {
@@ -49,7 +50,7 @@ struct ContentView: View {
 			}
 		}
 		.onAppear {
-			if viewModel.albumList == nil {
+			if database.albumList == nil {
 				viewModel.getAlbumList()
 			}
 		}

@@ -23,6 +23,7 @@ struct PlaylistView: View {
 					} label: {
 						SongCell(showAlbumName: true, showTrackNumber: false, song: song)
 					}
+					.listRowSeparator(.hidden)
 				}
 			}
 			.listStyle(.plain)
