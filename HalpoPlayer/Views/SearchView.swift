@@ -14,52 +14,52 @@ struct SearchView: View {
 	var body: some View {
 		ZStack {
 			List {
-					switch database.searchScope {
-					case .album:
-						ForEach(database.searchResults?.subsonicResponse.searchResult2.album ?? []) { album in
-							Button {
-								coordinator.albumTapped( albumId: album.id)
-							} label: {
-								let convertedAlbum = Album(searchResponse: album)
-								HStack {
-									AlbumCell(album: convertedAlbum)
-								}
+				switch database.searchScope {
+				case .album:
+					ForEach(database.searchResults?.subsonicResponse.searchResult2.album ?? []) { album in
+						Button {
+							coordinator.albumTapped( albumId: album.id)
+						} label: {
+							let convertedAlbum = Album(searchResponse: album)
+							HStack {
+								AlbumCell(album: convertedAlbum)
 							}
-							.listRowSeparator(.hidden)
 						}
-					case .song:
-						ForEach(database.searchResults?.subsonicResponse.searchResult2.song ?? []) { cellSong in
-							Button {
-								self.player.play(songs: [Song(searchSong: cellSong)], index: 0)
-							} label: {
-								SongCell(showAlbumName: true, showTrackNumber: false, song: Song(searchSong: cellSong))
-							}
-							.swipeActions(allowsFullSwipe: false) {
-								Button {
-									self.player.addSongToQueue(song: Song(searchSong: cellSong))
-								} label: {
-									Image(systemName: "text.badge.plus").imageScale(.large)
-								}
-								.tint(.blue)
-								if database.musicCache[Song(searchSong: cellSong).id] == nil {
-									Button {
-										self.database.cacheSong(song: Song(searchSong: cellSong)) {}
-									} label: {
-										Image(systemName: "arrow.down.app").imageScale(.large)
-									}
-									.tint(.green)
-								} else {
-									Button {
-										self.database.deleteSong(song: Song(searchSong: cellSong))
-									} label: {
-										Image(systemName: "trash.fill").imageScale(.large)
-									}
-									.tint(.red)
-								}
-							}
-							.listRowSeparator(.hidden)
-						}
+						.listRowSeparator(.hidden)
 					}
+				case .song:
+					ForEach(database.searchResults?.subsonicResponse.searchResult2.song ?? []) { cellSong in
+						Button {
+							self.player.play(songs: [Song(searchSong: cellSong)], index: 0)
+						} label: {
+							SongCell(showAlbumName: true, showTrackNumber: false, song: Song(searchSong: cellSong))
+						}
+						.swipeActions(allowsFullSwipe: false) {
+							Button {
+								self.player.addSongToQueue(song: Song(searchSong: cellSong))
+							} label: {
+								Image(systemName: "text.badge.plus").imageScale(.large)
+							}
+							.tint(.blue)
+							if database.musicCache[Song(searchSong: cellSong).id] == nil {
+								Button {
+									self.database.cacheSong(song: Song(searchSong: cellSong)) {}
+								} label: {
+									Image(systemName: "arrow.down.app").imageScale(.large)
+								}
+								.tint(.green)
+							} else {
+								Button {
+									self.database.deleteSong(song: Song(searchSong: cellSong))
+								} label: {
+									Image(systemName: "trash.fill").imageScale(.large)
+								}
+								.tint(.red)
+							}
+						}
+						.listRowSeparator(.hidden)
+					}
+				}
 			}
 			.listStyle(.plain)
 			.searchable(text: $database.searchText, placement: .navigationBarDrawer(displayMode: .always))
