@@ -12,6 +12,7 @@ import SwiftAudioEx
 struct halpoplayerApp: App {
 	@ObservedObject var homeCoordinator = Coordinator()
 	@ObservedObject var downloadsCoordinator = Coordinator()
+	@ObservedObject var playlistsCoordinator = Coordinator()
 	@ObservedObject var searchCoordinator = Coordinator()
 	@ObservedObject var database = Database.shared
 	@ObservedObject var player = AudioManager.shared
@@ -39,6 +40,14 @@ struct halpoplayerApp: App {
 							}
 					}
 					.environmentObject(downloadsCoordinator)
+				case .playlists:
+					NavigationStack(path: $playlistsCoordinator.path) {
+						PlaylistsView()
+							.navigationDestination(for: Destination.self) { destination in
+								ViewFactory.viewForDestination(destination)
+							}
+					}
+					.environmentObject(playlistsCoordinator)
 				case .search:
 					NavigationStack(path: $searchCoordinator.path) {
 						SearchView()
@@ -100,6 +109,8 @@ struct halpoplayerApp: App {
 			return homeCoordinator
 		case .downloads:
 			return downloadsCoordinator
+		case .playlists:
+			return playlistsCoordinator
 		case .search:
 			return searchCoordinator
 		}
@@ -122,13 +133,15 @@ struct halpoplayerApp: App {
 }
 
 enum AppTab: String, CaseIterable, Hashable {
-	case home, downloads, search
+	case home, downloads, playlists, search
 	var iconName: String {
 		switch self {
 		case .home:
 			return "house"
 		case .downloads:
 			return "arrow.down.square"
+		case .playlists:
+			return "list.bullet"
 		case .search:
 			return "magnifyingglass"
 		}

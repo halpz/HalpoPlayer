@@ -17,6 +17,7 @@ enum SubsonicAPI {
 	case coverArt(albumId: String)
 	case stream(id: String, mp3: Bool)
 	case getSimilarSongs(id: String)
+	case getPlaylists
 	
 	var method: String {
 		"GET"
@@ -47,6 +48,8 @@ enum SubsonicAPI {
 			return "stream?id=\(id)\(format)"
 		case .getSimilarSongs(let id):
 			return "getSimilarSongs?id=\(id)"
+		case .getPlaylists:
+			return "getPlaylists?"
 		}
 	}
 }

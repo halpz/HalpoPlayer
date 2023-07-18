@@ -10,9 +10,7 @@ import SwiftUI
 struct AlbumDetailView: View {
 	@StateObject private var viewModel: AlbumDetailViewModel
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var database: Database
-	@EnvironmentObject var downloadManger: DownloadManager
 	init(albumId: String) {
 		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId))
 	}

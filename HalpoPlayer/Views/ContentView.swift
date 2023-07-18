@@ -10,9 +10,6 @@ import SwiftUI
 struct ContentView: View {
 	@StateObject var viewModel = ContentViewModel()
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var player: AudioManager
-	@EnvironmentObject var database: Database
-	@EnvironmentObject var accountHolder: AccountHolder
 	var body: some View {
 		List(viewModel.results) { album in
 			Button {
