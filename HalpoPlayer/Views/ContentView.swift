@@ -8,28 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+	@StateObject var viewModel = ContentViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
-	@State private var selectedAlbum: GetAlbumListResponse.Album?
-	@State private var searchText: String = ""
-	@State private var imageDictionary = [String: UIImage]()
-	@State private var showLogin = false
-	@State private var showSearch = false
-	@State private var showDownloads = false
-	var results: [GetAlbumListResponse.Album] {
-		if searchText.isEmpty {
-			return database.albums
-		} else {
-			return database.albums.filter {
-				$0.title.localizedCaseInsensitiveContains(searchText) ||
-				$0.artist.localizedCaseInsensitiveContains(searchText)
-			}
-		}
-	}
 	var body: some View {
-		List(results) { album in
+		List(viewModel.results) { album in
 			Button {
 				coordinator.albumTapped( albumId: album.id)
 			} label: {
@@ -42,39 +27,24 @@ struct ContentView: View {
 			}
 		}))
 		.refreshable {
-			Task {
-				do {
-					let albums = try await SubsonicClient.shared.getAlbumList()
-					self.database.albums = albums.subsonicResponse.albumList.album
-				} catch {
-					if try await SubsonicClient.shared.authenticate() {
-						let albums = try await SubsonicClient.shared.getAlbumList()
-						self.database.albums = albums.subsonicResponse.albumList.album
-					}
-				}
-			}
+			viewModel.refresh()
 		}
 		.listStyle(.plain)
-		.searchable(text: $searchText, prompt: "Search albums")
+		.searchable(text: $viewModel.searchText, prompt: "Search albums")
+		.scrollDismissesKeyboard(.immediately)
 		.navigationTitle("Music")
 		.navigationBarTitleDisplayMode(.inline)
 		.toolbar {
 			ToolbarItem(placement: .navigationBarLeading) {
 				Button {
-					coordinator.goToLogin()
+					viewModel.goToLogin(coordinator: coordinator)
 				} label: {
 					Image(systemName: "person.circle").imageScale(.large)
 				}
 			}
 			ToolbarItem(placement: .navigationBarTrailing) {
 				Button {
-					Task {
-						let response = try await SubsonicClient.shared.getRandomSongs()
-						let songs = response.subsonicResponse.randomSongs.song.compactMap {
-							return Song(randomSong: $0)
-						}
-						player.play(songs:songs, index: 0)
-					}
+					viewModel.shuffle(coordinator: coordinator)
 				} label: {
 					Image(systemName: "shuffle").imageScale(.large)
 				}

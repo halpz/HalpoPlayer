@@ -41,6 +41,7 @@
 		DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */; };
 		DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C22A6681550082659C /* DownloadManager.swift */; };
 		DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */; };
+		DA86C7C82A668C350082659C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C72A668C350082659C /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAlbumView.swift; sourceTree = "<group>"; };
 		DA86C7C22A6681550082659C /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
+		DA86C7C72A668C350082659C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */,
+				DA86C7C72A668C350082659C /* ContentViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				DA7F1EB22A652E25006D8934 /* AccountManager.swift in Sources */,
 				DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */,
 				DA7F1EBE2A652E2A006D8934 /* DownloadsView.swift in Sources */,
+				DA86C7C82A668C350082659C /* ContentViewModel.swift in Sources */,
 				DA7F1EA22A652E14006D8934 /* GetRandomSongsResponse.swift in Sources */,
 				DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */,
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
