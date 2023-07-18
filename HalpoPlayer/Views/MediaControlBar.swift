@@ -25,11 +25,12 @@ struct MediaControlBar: View {
 							withAnimation {
 								compact.isCompact = false
 							}
-						} else {
-							if let albumId = player.currentSong?.albumId,
-							   coordinator.viewingAlbum != albumId {
+						} else if let albumId = player.currentSong?.albumId {
+							if coordinator.viewingAlbum != albumId {
 								compact.isCompact = true
 								coordinator.albumTapped( albumId: albumId)
+							} else {
+								// scroll to current song?
 							}
 						}
 					} label: {
