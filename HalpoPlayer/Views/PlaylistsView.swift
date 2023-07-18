@@ -32,33 +32,4 @@ struct PlaylistsView: View {
 	}
 }
 
-struct PlaylistCell: View {
-	var playlist: GetPlaylistsResponse.Playlist
-	var body: some View {
-		HStack {
-			Text(playlist.name)
-			Spacer()
-			Image(systemName: "chevron.right")
-				.font(.body)
-		}
-	}
-}
 
-class PlaylistsViewModel: ObservableObject {
-	@Published var playlists: GetPlaylistsResponse?
-	func getPlaylists() {
-		Task {
-			do {
-				let response = try await SubsonicClient.shared.getPlaylists()
-				DispatchQueue.main.async {
-					self.playlists = response
-				}
-			} catch {
-				print(error)
-			}
-		}
-	}
-	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist, coordinator: Coordinator) {
-		coordinator.goToPlaylist(playlist: playlist)
-	}
-}

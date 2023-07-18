@@ -47,6 +47,9 @@
 		DA86C7CE2A669FA80082659C /* GetPlaylistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */; };
 		DA86C7D02A66A2190082659C /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7CF2A66A2190082659C /* PlaylistView.swift */; };
 		DA86C7D22A66A4010082659C /* GetPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */; };
+		DA86C7D42A66AB0B0082659C /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D32A66AB0B0082659C /* PlaylistCell.swift */; };
+		DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */; };
+		DA86C7D82A66AB330082659C /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +95,9 @@
 		DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaylistsResponse.swift; sourceTree = "<group>"; };
 		DA86C7CF2A66A2190082659C /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaylistResponse.swift; sourceTree = "<group>"; };
+		DA86C7D32A66AB0B0082659C /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
+		DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModel.swift; sourceTree = "<group>"; };
+		DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +170,8 @@
 				DA7F1E9D2A652E14006D8934 /* CachedSong.swift */,
 				DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */,
 				DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */,
+				DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */,
+				DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,6 +212,7 @@
 				DA7F1EB82A652E2A006D8934 /* AlbumCell.swift */,
 				DA86C7CB2A669D4F0082659C /* PlaylistsView.swift */,
 				DA86C7CF2A66A2190082659C /* PlaylistView.swift */,
+				DA86C7D32A66AB0B0082659C /* PlaylistCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +310,7 @@
 				DA7F1E922A652DF4006D8934 /* Coordinator.swift in Sources */,
 				DA7F1EAC2A652E1E006D8934 /* SubsonicClient.swift in Sources */,
 				DA86C7CE2A669FA80082659C /* GetPlaylistsResponse.swift in Sources */,
+				DA86C7D42A66AB0B0082659C /* PlaylistCell.swift in Sources */,
 				DA86C7CC2A669D4F0082659C /* PlaylistsView.swift in Sources */,
 				DA7F1EA42A652E14006D8934 /* Account.swift in Sources */,
 				DA7F1EA02A652E14006D8934 /* AuthenticationResponse.swift in Sources */,
@@ -325,9 +335,11 @@
 				DA86C7C82A668C350082659C /* ContentViewModel.swift in Sources */,
 				DA7F1EA22A652E14006D8934 /* GetRandomSongsResponse.swift in Sources */,
 				DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */,
+				DA86C7D82A66AB330082659C /* PlaylistViewModel.swift in Sources */,
 				DA86C7D02A66A2190082659C /* PlaylistView.swift in Sources */,
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
 				DA7F1EBF2A652E2A006D8934 /* AlbumDetailView.swift in Sources */,
+				DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */,
 				DA7F1EB32A652E25006D8934 /* Database.swift in Sources */,
 				DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */,
 				DA7F1E9F2A652E14006D8934 /* Search2Response.swift in Sources */,
