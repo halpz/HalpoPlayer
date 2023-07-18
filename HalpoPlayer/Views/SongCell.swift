@@ -11,6 +11,8 @@ struct SongCell: View {
 	var showAlbumName: Bool = true
 	var showTrackNumber: Bool = true
 	@EnvironmentObject var player: AudioManager
+	@EnvironmentObject var downloadManger: DownloadManager
+	@EnvironmentObject var database: Database
 	let song: Song
 	@State var image: UIImage?
 	var body: some View {
@@ -49,6 +51,15 @@ struct SongCell: View {
 					Text("\(song.artist)")
 						.font(.body)
 						.foregroundColor(.secondary)
+				}
+				
+				Spacer()
+				
+				if downloadManger.downloadingSongs.contains(song) {
+					ProgressView()
+				} else if database.musicCache[song.id] != nil {
+					Image(systemName: "arrow.down.circle.fill").imageScale(.large)
+						.foregroundColor(.green)
 				}
 			}
 		}

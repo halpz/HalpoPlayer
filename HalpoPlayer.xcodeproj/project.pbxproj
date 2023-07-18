@@ -39,6 +39,8 @@
 		DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBD2A652E2A006D8934 /* SongCell.swift */; };
 		DA7F1ECA2A652EAC006D8934 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */; };
 		DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */; };
+		DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C22A6681550082659C /* DownloadManager.swift */; };
+		DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,8 @@
 		DA7F1EC72A652E43006D8934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HalpoPlayer.entitlements; sourceTree = "<group>"; };
 		DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAlbumView.swift; sourceTree = "<group>"; };
+		DA86C7C22A6681550082659C /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 		DA7F1E7E2A652DD6006D8934 /* HalpoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				DA86C7C42A6684C30082659C /* View Models */,
 				DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */,
 				DA7F1EC72A652E43006D8934 /* Info.plist */,
 				DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */,
@@ -165,6 +170,7 @@
 				DA7F1EAE2A652E24006D8934 /* ImageCache.swift */,
 				DA7F1EAF2A652E24006D8934 /* AccountManager.swift */,
 				DA7F1EB02A652E24006D8934 /* Database.swift */,
+				DA86C7C22A6681550082659C /* DownloadManager.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -184,6 +190,14 @@
 				DA7F1EBD2A652E2A006D8934 /* SongCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		DA86C7C42A6684C30082659C /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7F1EC42A652E2A006D8934 /* AirPlayView.swift in Sources */,
+				DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */,
 				DA7F1EAB2A652E1E006D8934 /* Error.swift in Sources */,
 				DA7F1EC52A652E2A006D8934 /* ContentView.swift in Sources */,
 				DA7F1E922A652DF4006D8934 /* Coordinator.swift in Sources */,
@@ -274,6 +289,7 @@
 				DA7F1EAA2A652E1E006D8934 /* SubsonicAPI.swift in Sources */,
 				DA7F1EA32A652E14006D8934 /* GetAlbumListResponse.swift in Sources */,
 				DA7F1E912A652DF4006D8934 /* CarPlaySceneDelegate.swift in Sources */,
+				DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */,
 				DA7F1EC12A652E2A006D8934 /* AlbumCell.swift in Sources */,
 				DA7F1E9E2A652E14006D8934 /* GetAlbumResponse.swift in Sources */,
 				DA7F1EC22A652E2A006D8934 /* LoginView.swift in Sources */,

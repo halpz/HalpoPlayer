@@ -8,27 +8,19 @@
 import SwiftUI
 
 struct AlbumDetailView: View {
+	@StateObject private var viewModel: AlbumDetailViewModel
 	@EnvironmentObject var coordinator: Coordinator
-	var albumId: String
 	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var database: Database
-	@State var albumResponse: GetAlbumResponse?
-	@State private var image: UIImage?
-	@State private var downloadingSongs = [Song]()
-	var playButtonName: String {
-		if let currentSong = player.currentSong,
-		   let songs = albumResponse?.subsonicResponse.album.song,
-		   player.isPlaying && songs.contains(currentSong) {
-			return "pause.circle.fill"
-		} else {
-			return "play.circle.fill"
-		}
+	@EnvironmentObject var downloadManger: DownloadManager
+	init(albumId: String) {
+		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId))
 	}
 	var body: some View {
-		if let songs = albumResponse?.subsonicResponse.album.song {
+		if let songs = viewModel.albumResponse?.subsonicResponse.album.song {
 			List {
 				VStack(alignment: .leading) {
-					if let album = albumResponse?.subsonicResponse.album {
+					if let album = viewModel.albumResponse?.subsonicResponse.album {
 						Text("\(album.name)")
 							.font(.title)
 						Text("\(album.artist ?? "")")
@@ -41,7 +33,7 @@ struct AlbumDetailView: View {
 						}
 					}
 				}
-				if let image = image {
+				if let image = viewModel.image {
 					HStack {
 						Spacer()
 						ZStack {
@@ -52,9 +44,9 @@ struct AlbumDetailView: View {
 								.padding(8)
 								.frame(maxWidth: 400, maxHeight: 400)
 							Button {
-								playButtonPressed()
+								viewModel.playButtonPressed()
 							} label: {
-								Image(systemName: playButtonName)
+								Image(systemName: viewModel.playButtonName)
 									.imageScale(.large)
 									.foregroundStyle(.primary, Color.accentColor)
 									.symbolRenderingMode(.palette)
@@ -68,10 +60,7 @@ struct AlbumDetailView: View {
 				HStack {
 					Spacer()
 					Button {
-						Task {
-							let shuffled = songs.shuffled()
-							player.play(songs:shuffled, index: 0)
-						}
+						viewModel.shuffleSongs(songs: songs)
 					} label: {
 						Image(systemName: "shuffle").imageScale(.large)
 							.foregroundColor(Color.accentColor)
@@ -80,19 +69,7 @@ struct AlbumDetailView: View {
 					.padding(8)
 					Spacer()
 					Button {
-						Task {
-							songs.forEach {
-								self.database.deleteSong(song: $0)
-								self.downloadingSongs.append($0)
-							}
-							for song in songs {
-								self.database.cacheSong(song: song) {
-									if let index = self.downloadingSongs.firstIndex(of: song) {
-										self.downloadingSongs.remove(at: index)
-									}
-								}
-							}
-						}
+						viewModel.downloadAll(songs: songs)
 					} label: {
 						Image(systemName: "arrow.down.square").imageScale(.large)
 							.foregroundColor(Color.accentColor)
@@ -104,15 +81,13 @@ struct AlbumDetailView: View {
 				
 				ForEach(songs) { song in
 					Button {
-						if let index = songs.firstIndex(of: song) {
-							self.player.play(songs: songs, index: index)
-						}
+						viewModel.playSong(song: song, songs: songs)
 					} label: {
 						SongCell(showAlbumName: false, showTrackNumber: true, song: song)
 					}
 					.swipeActions {
 						Button {
-							self.player.addSongToQueue(song: song)
+							viewModel.addSongToQueue(song: song)
 						} label: {
 							Image(systemName: "text.badge.plus").imageScale(.large)
 						}
@@ -120,19 +95,14 @@ struct AlbumDetailView: View {
 						if song.suffix != "opus" {
 							if database.musicCache[song.id] == nil {
 								Button {
-									self.downloadingSongs.append(song)
-									self.database.cacheSong(song: song) {
-										if let index = self.downloadingSongs.firstIndex(of: song) {
-											self.downloadingSongs.remove(at: index)
-										}
-									}
+									viewModel.downloadSong(song: song)
 								} label: {
 									Image(systemName: "arrow.down.app").imageScale(.large)
 								}
 								.tint(.green)
 							} else {
 								Button {
-									self.database.deleteSong(song: song)
+									viewModel.deleteSong(song: song)
 								} label: {
 									Image(systemName: "trash.fill").imageScale(.large)
 								}
@@ -150,7 +120,7 @@ struct AlbumDetailView: View {
 			.toolbar {
 				Menu {
 					Button("Delete from cache") {
-						deleteAlbumFromCache()
+						viewModel.deleteAlbumFromCache()
 					}
 					
 				} label: {
@@ -159,7 +129,7 @@ struct AlbumDetailView: View {
 				
 			}
 			.onAppear {
-				coordinator.viewingAlbum = self.albumId
+				coordinator.viewingAlbum = viewModel.albumId
 			}
 			.onDisappear {
 				coordinator.viewingAlbum = nil
@@ -167,35 +137,8 @@ struct AlbumDetailView: View {
 		} else {
 			ProgressView()
 				.onAppear {
-					Task {
-						do {
-							albumResponse = try await SubsonicClient.shared.getAlbum(id: albumId)
-							image = try await SubsonicClient.shared.coverArt(albumId: albumId)
-						} catch {
-							print(error)
-						}
-					}
+					viewModel.getAlbum()
 				}
-		}
-	}
-	func playButtonPressed() {
-		if let currentSong = player.currentSong,
-		   let songs = albumResponse?.subsonicResponse.album.song,
-		   player.isPlaying && songs.contains(currentSong) {
-			self.player.queue.pause()
-		} else {
-			if let songs = albumResponse?.subsonicResponse.album.song {
-				if self.player.songs == songs {
-					self.player.queue.play()
-				} else {
-					self.player.play(songs: songs, index: 0)
-				}
-			}
-		}
-	}
-	func deleteAlbumFromCache() {
-		for song in albumResponse?.subsonicResponse.album.song ?? [] where database.musicCache[song.id] != nil {
-			database.deleteSong(song: song)
 		}
 	}
 	func songAppeared(song: Song) {
