@@ -11,6 +11,7 @@ struct AlbumDetailView: View {
 	@StateObject private var viewModel: AlbumDetailViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
+	@EnvironmentObject var player: AudioManager
 	init(albumId: String) {
 		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId))
 	}
@@ -82,7 +83,8 @@ struct AlbumDetailView: View {
 					Button {
 						viewModel.playSong(song: song, songs: songs)
 					} label: {
-						SongCell(showAlbumName: false, showTrackNumber: true, showAlbumArt: false, song: song)
+						let downloading = viewModel.downloading[song.id] ?? false
+						SongCell(downloading: downloading, showAlbumName: false, showTrackNumber: true, showAlbumArt: false, song: song)
 					}
 					.swipeActions {
 						Button {

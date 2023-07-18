@@ -18,7 +18,6 @@ struct halpoplayerApp: App {
 	@ObservedObject var player = AudioManager.shared
 	@ObservedObject var accountHolder = AccountHolder.shared
 	@ObservedObject var mediaControlBarMinimized = MediaControlBarMinimized.shared
-	@ObservedObject var downloadManager = DownloadManager.shared
 	@State var selectedTab: AppTab = .home
 	var body: some Scene {
 		WindowGroup {
@@ -97,7 +96,6 @@ struct halpoplayerApp: App {
 			.environmentObject(accountHolder)
 			.environmentObject(database)
 			.environmentObject(player)
-			.environmentObject(downloadManager)
 			.onAppear {
 				initApp()
 			}

@@ -10,7 +10,6 @@ import UIKit
 
 class ContentViewModel: ObservableObject {
 	@Published var searchText: String
-	
 	var player = AudioManager.shared
 	var database = Database.shared
 	var results: [GetAlbumListResponse.Album] {
@@ -52,7 +51,9 @@ class ContentViewModel: ObservableObject {
 			let songs = response.subsonicResponse.randomSongs.song.compactMap {
 				return Song(randomSong: $0)
 			}
-			player.play(songs:songs, index: 0)
+			DispatchQueue.main.async {
+				self.player.play(songs:songs, index: 0)
+			}
 		}
 	}
 	func goToLogin(coordinator: Coordinator) {

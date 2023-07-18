@@ -10,6 +10,7 @@ import SwiftUI
 struct DownloadsView: View {
 	@StateObject var viewModel = DownloadsViewModel()
 	@EnvironmentObject var coordinator: Coordinator
+	@EnvironmentObject var database: Database
 	var body: some View {
 		if viewModel.downloads.isEmpty {
 			Text("No downloads")

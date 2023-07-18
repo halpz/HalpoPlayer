@@ -39,7 +39,6 @@
 		DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBD2A652E2A006D8934 /* SongCell.swift */; };
 		DA7F1ECA2A652EAC006D8934 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */; };
 		DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */; };
-		DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C22A6681550082659C /* DownloadManager.swift */; };
 		DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */; };
 		DA86C7C82A668C350082659C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C72A668C350082659C /* ContentViewModel.swift */; };
 		DA86C7CA2A668F930082659C /* DownloadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C92A668F930082659C /* DownloadsViewModel.swift */; };
@@ -88,7 +87,6 @@
 		DA7F1EC72A652E43006D8934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HalpoPlayer.entitlements; sourceTree = "<group>"; };
 		DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAlbumView.swift; sourceTree = "<group>"; };
-		DA86C7C22A6681550082659C /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 		DA86C7C72A668C350082659C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		DA86C7C92A668F930082659C /* DownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewModel.swift; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				DA7F1EAE2A652E24006D8934 /* ImageCache.swift */,
 				DA7F1EAF2A652E24006D8934 /* AccountManager.swift */,
 				DA7F1EB02A652E24006D8934 /* Database.swift */,
-				DA86C7C22A6681550082659C /* DownloadManager.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -307,7 +304,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7F1EC42A652E2A006D8934 /* AirPlayView.swift in Sources */,
-				DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */,
 				DA7F1EAB2A652E1E006D8934 /* Error.swift in Sources */,
 				DA7F1EC52A652E2A006D8934 /* ContentView.swift in Sources */,
 				DA7F1E922A652DF4006D8934 /* Coordinator.swift in Sources */,

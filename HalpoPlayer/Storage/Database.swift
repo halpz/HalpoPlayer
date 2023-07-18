@@ -82,7 +82,6 @@ class Database: ObservableObject {
 					DispatchQueue.main.async {
 						self.musicCache[song.id] = toCache
 					}
-					print("Song cached: \(song.title)")
 					callback()
 				} catch {
 					print("Song caching error: \(error)")

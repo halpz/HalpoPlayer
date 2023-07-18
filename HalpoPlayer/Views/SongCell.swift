@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SongCell: View {
+	var downloading: Bool = false
 	var showAlbumName: Bool = true
 	var showTrackNumber: Bool = true
 	var showAlbumArt: Bool = true
 	@EnvironmentObject var player: AudioManager
-	@EnvironmentObject var downloadManger: DownloadManager
 	@EnvironmentObject var database: Database
 	let song: Song
 	@State var image: UIImage?
@@ -60,7 +60,7 @@ struct SongCell: View {
 				
 				Spacer()
 				
-				if downloadManger.downloadingSongs.contains(song) {
+				if downloading {
 					ProgressView()
 				} else if database.musicCache[song.id] != nil {
 					Image(systemName: "arrow.down.circle.fill").imageScale(.large)
