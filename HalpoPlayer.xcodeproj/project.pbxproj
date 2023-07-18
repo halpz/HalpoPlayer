@@ -186,12 +186,12 @@
 				DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */,
 				DA7F1EB62A652E2A006D8934 /* AlbumDetailView.swift */,
 				DA7F1EB72A652E2A006D8934 /* SearchView.swift */,
-				DA7F1EB82A652E2A006D8934 /* AlbumCell.swift */,
 				DA7F1EB92A652E2A006D8934 /* LoginView.swift */,
 				DA7F1EBA2A652E2A006D8934 /* MediaControlBar.swift */,
 				DA7F1EBB2A652E2A006D8934 /* AirPlayView.swift */,
 				DA7F1EBC2A652E2A006D8934 /* ContentView.swift */,
 				DA7F1EBD2A652E2A006D8934 /* SongCell.swift */,
+				DA7F1EB82A652E2A006D8934 /* AlbumCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
