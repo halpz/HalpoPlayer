@@ -44,7 +44,6 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-		printJSONData(data)
 		return try JSONDecoder().decode(T.self, from: data)
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
@@ -69,9 +68,11 @@ class SubsonicClient {
 		}
 		do {
 			try await setAddress(address: "\(account.address):\(account.port)")
+			AccountHolder.shared.offline = false
 		} catch {
 			do {
 				try await setAddress(address: "\(account.otherAddress):\(account.port)")
+				AccountHolder.shared.offline = false
 			} catch {
 				AccountHolder.shared.offline = true
 				throw HalpoError.offline

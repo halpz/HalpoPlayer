@@ -10,36 +10,41 @@ import UIKit
 
 class ContentViewModel: ObservableObject {
 	@Published var searchText: String
+	@Published var albumList: [GetAlbumListResponse.Album]?
 	var player = AudioManager.shared
 	var database = Database.shared
 	var results: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
-			return database.albums
+			return albumList ?? []
 		} else {
-			return database.albums.filter {
+			return albumList?.filter {
 				$0.title.localizedCaseInsensitiveContains(searchText) ||
 				$0.artist.localizedCaseInsensitiveContains(searchText)
-			}
+			} ?? []
 		}
 	}
 	init() {
 		searchText = ""
 	}
+	func getAlbumList() {
+		Task {
+			do {
+				if try await SubsonicClient.shared.authenticate() {
+					let response = try await SubsonicClient.shared.getAlbumList()
+					DispatchQueue.main.async {
+						self.albumList = response.subsonicResponse.albumList.album
+					}
+				}
+			} catch {
+				print(error)
+			}
+		}
+	}
 	func albumTapped(albumId: String, coordinator: Coordinator) {
 		coordinator.albumTapped(albumId: albumId)
 	}
 	func refresh() {
-		Task {
-			do {
-				let albums = try await SubsonicClient.shared.getAlbumList()
-				self.database.albums = albums.subsonicResponse.albumList.album
-			} catch {
-				if try await SubsonicClient.shared.authenticate() {
-					let albums = try await SubsonicClient.shared.getAlbumList()
-					self.database.albums = albums.subsonicResponse.albumList.album
-				}
-			}
-		}
+		getAlbumList()
 	}
 	func shuffle() {
 		Task {

@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
 	@StateObject var viewModel = ContentViewModel()
 	@EnvironmentObject var coordinator: Coordinator
+	@EnvironmentObject var database: Database
 	var body: some View {
 		List(viewModel.results) { album in
 			Button {
@@ -46,6 +47,9 @@ struct ContentView: View {
 					Image(systemName: "shuffle").imageScale(.large)
 				}
 			}
+		}
+		.onAppear {
+			viewModel.getAlbumList()
 		}
 	}
 }

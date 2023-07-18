@@ -121,10 +121,7 @@ struct halpoplayerApp: App {
 				UIApplication.shared.beginReceivingRemoteControlEvents()
 				try AudioSessionController.shared.set(category: .playback)
 				try AudioSessionController.shared.activateSession()
-				if try await SubsonicClient.shared.authenticate() {
-					let albums = try await SubsonicClient.shared.getAlbumList()
-					self.database.albums = albums.subsonicResponse.albumList.album
-				}
+				_ = try await SubsonicClient.shared.authenticate()
 			} catch {
 				print(error)
 			}

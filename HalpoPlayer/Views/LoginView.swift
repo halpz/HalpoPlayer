@@ -54,9 +54,7 @@ struct LoginView: View {
 			}
 			let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
 			accountHolder.account = account
-			if !(try await SubsonicClient.shared.authenticate()) {
-				Database.shared.albums = []
-			}
+			_ = try await SubsonicClient.shared.authenticate()			
 		}
 		dismiss()
 	}
