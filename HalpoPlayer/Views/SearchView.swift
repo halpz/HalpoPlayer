@@ -14,7 +14,6 @@ struct SearchView: View {
 	var body: some View {
 		ZStack {
 			List {
-				Section {
 					switch database.searchScope {
 					case .album:
 						ForEach(database.searchResults?.subsonicResponse.searchResult2.album ?? []) { album in
@@ -61,18 +60,14 @@ struct SearchView: View {
 							.listRowSeparator(.hidden)
 						}
 					}
-				} header: {
-					Picker("", selection: $database.searchScope) {
-						ForEach(SearchScope.allCases, id: \.self) { scope in
-							Text(scope.rawValue.capitalized)
-						}
-					}
-					.pickerStyle(.segmented)
-				}
-				
 			}
 			.listStyle(.plain)
 			.searchable(text: $database.searchText, placement: .navigationBarDrawer(displayMode: .always))
+			.searchScopes($database.searchScope) {
+				ForEach(SearchScope.allCases, id: \.self) { scope in
+					Text(scope.rawValue.capitalized)
+				}
+			}
 			.autocorrectionDisabled(true)
 			.onSubmit(of: .search) {
 				Task {
@@ -89,5 +84,5 @@ struct SearchView: View {
 }
 
 enum SearchScope: String, CaseIterable {
-	case album, song
+	case song, album
 }
