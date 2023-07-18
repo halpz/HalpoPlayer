@@ -21,6 +21,11 @@ struct PlaylistsView: View {
 						PlaylistCell(playlist: playlist)
 					}
 					.listRowSeparator(.hidden)
+					.onAppear {
+						withAnimation {
+							viewModel.cellDidAppear(playlist: playlist)
+						}
+					}
 				}
 			}
 			.listStyle(.plain)

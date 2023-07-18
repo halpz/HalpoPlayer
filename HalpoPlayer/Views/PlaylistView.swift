@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlaylistView: View {
 	@StateObject var viewModel: PlaylistViewModel
+	@EnvironmentObject var player: AudioManager
 	var name: String
 	init(playlist: GetPlaylistsResponse.Playlist) {
 		_viewModel = StateObject(wrappedValue: PlaylistViewModel(id: playlist.id))
@@ -17,6 +18,30 @@ struct PlaylistView: View {
 	var body: some View {
 		if viewModel.playlistResponse != nil {
 			List {
+				if let image = viewModel.image {
+					HStack {
+						Spacer()
+						ZStack {
+							Image(uiImage: image)
+								.resizable()
+								.scaledToFit()
+								.cornerRadius(8)
+								.frame(maxWidth: 500, maxHeight: 500)
+							Button {
+								viewModel.playPlaylist()
+							} label: {
+								Image(systemName: viewModel.playButtonName)
+									.imageScale(.large)
+									.foregroundStyle(.primary, Color.accentColor)
+									.symbolRenderingMode(.palette)
+									.font(.system(size:72))
+									.opacity(0.8)
+							}
+						}
+						Spacer()
+					}
+					.listRowSeparator(.hidden)
+				}
 				ForEach(viewModel.songs, id: \.self) { song in
 					Button {
 						viewModel.playSong(song: song)
@@ -24,18 +49,15 @@ struct PlaylistView: View {
 						SongCell(showAlbumName: true, showTrackNumber: false, song: song)
 					}
 					.listRowSeparator(.hidden)
-				}
-			}
-			.listStyle(.plain)
-			.toolbar {
-				ToolbarItem(placement: .navigationBarTrailing) {
-					Button {
-						viewModel.playPlaylist()
-					} label: {
-						Image(systemName: "play.fill").imageScale(.large)
+					.onAppear {
+						withAnimation {
+							viewModel.cellDidAppear(song: song)
+						}
 					}
 				}
 			}
+			.listStyle(.plain)
+			.navigationTitle(name)
 		} else {
 			ProgressView()
 				.navigationTitle(name)

@@ -170,8 +170,6 @@
 				DA7F1E9D2A652E14006D8934 /* CachedSong.swift */,
 				DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */,
 				DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */,
-				DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */,
-				DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,6 +218,8 @@
 		DA86C7C42A6684C30082659C /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */,
+				DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */,
 				DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */,
 				DA86C7C72A668C350082659C /* ContentViewModel.swift */,
 				DA86C7C92A668F930082659C /* DownloadsViewModel.swift */,
