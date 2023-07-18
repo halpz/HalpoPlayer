@@ -44,7 +44,7 @@ struct ContentView: View {
 			}
 			ToolbarItem(placement: .navigationBarTrailing) {
 				Button {
-					viewModel.shuffle(coordinator: coordinator)
+					viewModel.shuffle()
 				} label: {
 					Image(systemName: "shuffle").imageScale(.large)
 				}

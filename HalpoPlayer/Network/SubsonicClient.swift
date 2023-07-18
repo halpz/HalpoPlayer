@@ -44,7 +44,6 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-//		printJSONData(data)
 		return try JSONDecoder().decode(T.self, from: data)
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {

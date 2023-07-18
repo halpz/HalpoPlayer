@@ -38,7 +38,7 @@ class ContentViewModel: ObservableObject {
 			}
 		}
 	}
-	func shuffle(coordinator: Coordinator) {
+	func shuffle() {
 		Task {
 			let response = try await SubsonicClient.shared.getRandomSongs()
 			let songs = response.subsonicResponse.randomSongs.song.compactMap {
