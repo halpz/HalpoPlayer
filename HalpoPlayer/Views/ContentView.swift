@@ -49,7 +49,9 @@ struct ContentView: View {
 			}
 		}
 		.onAppear {
-			viewModel.getAlbumList()
+			if viewModel.albumList == nil {
+				viewModel.getAlbumList()
+			}
 		}
 	}
 }
