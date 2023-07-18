@@ -42,6 +42,7 @@
 		DA86C7C32A6681550082659C /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C22A6681550082659C /* DownloadManager.swift */; };
 		DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */; };
 		DA86C7C82A668C350082659C /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C72A668C350082659C /* ContentViewModel.swift */; };
+		DA86C7CA2A668F930082659C /* DownloadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7C92A668F930082659C /* DownloadsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		DA86C7C22A6681550082659C /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModel.swift; sourceTree = "<group>"; };
 		DA86C7C72A668C350082659C /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		DA86C7C92A668F930082659C /* DownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +117,6 @@
 		DA7F1E7E2A652DD6006D8934 /* HalpoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				DA86C7C42A6684C30082659C /* View Models */,
 				DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */,
 				DA7F1EC72A652E43006D8934 /* Info.plist */,
 				DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */,
@@ -123,6 +124,7 @@
 				DA7F1E8D2A652DF4006D8934 /* CarPlaySceneDelegate.swift */,
 				DA7F1E8E2A652DF4006D8934 /* Coordinator.swift */,
 				DA7F1E902A652DF4006D8934 /* Extensions.swift */,
+				DA86C7C42A6684C30082659C /* View Models */,
 				DA7F1E952A652E14006D8934 /* Model */,
 				DA7F1EA62A652E1E006D8934 /* Network */,
 				DA7F1EAD2A652E24006D8934 /* Storage */,
@@ -199,6 +201,7 @@
 			children = (
 				DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */,
 				DA86C7C72A668C350082659C /* ContentViewModel.swift */,
+				DA86C7C92A668F930082659C /* DownloadsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				DA7F1EA32A652E14006D8934 /* GetAlbumListResponse.swift in Sources */,
 				DA7F1E912A652DF4006D8934 /* CarPlaySceneDelegate.swift in Sources */,
 				DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */,
+				DA86C7CA2A668F930082659C /* DownloadsViewModel.swift in Sources */,
 				DA7F1EC12A652E2A006D8934 /* AlbumCell.swift in Sources */,
 				DA7F1E9E2A652E14006D8934 /* GetAlbumResponse.swift in Sources */,
 				DA7F1EC22A652E2A006D8934 /* LoginView.swift in Sources */,
