@@ -10,10 +10,11 @@ A simple, lightweight Subsonic client for iOS written in SwiftUI
 - Airplay integration
 - Enter 2 different server URLs for public and local access
 - Carplay widget
+- View your playlists
 
 ## To Do
 
-- Playlist management
+- Playlist editing
 - Manage song queue
 
 ## Authors
