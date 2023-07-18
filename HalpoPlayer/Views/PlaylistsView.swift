@@ -11,22 +11,35 @@ struct PlaylistsView: View {
 	@StateObject var viewModel = PlaylistsViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	var body: some View {
-		
 		if let playlists = viewModel.playlists {
 			List {
 				ForEach(playlists.subsonicResponse.playlists.playlist, id: \.self) { playlist in
 					Button {
 						viewModel.goToPlaylist(playlist: playlist, coordinator: coordinator)
 					} label: {
-						Text(playlist.name)
+						PlaylistCell(playlist: playlist)
 					}
 				}
 			}
+			.listStyle(.plain)
+			.navigationTitle("Playlists")
 		} else {
 			ProgressView()
 				.onAppear {
 					viewModel.getPlaylists()
 				}
+		}
+	}
+}
+
+struct PlaylistCell: View {
+	var playlist: GetPlaylistsResponse.Playlist
+	var body: some View {
+		HStack {
+			Text(playlist.name)
+			Spacer()
+			Image(systemName: "chevron.right")
+				.font(.body)
 		}
 	}
 }

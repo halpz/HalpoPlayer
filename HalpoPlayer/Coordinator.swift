@@ -58,7 +58,7 @@ class ViewFactory {
 		case .albumViewOffline(let album):
 			OfflineAlbumView(album: album)
 		case .playlist(let id):
-			Text(id)
+			PlaylistView(playlistId: id)
 		}
 	}
 }
