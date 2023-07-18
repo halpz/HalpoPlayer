@@ -46,6 +46,7 @@
 		DA86C7CC2A669D4F0082659C /* PlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7CB2A669D4F0082659C /* PlaylistsView.swift */; };
 		DA86C7CE2A669FA80082659C /* GetPlaylistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */; };
 		DA86C7D02A66A2190082659C /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7CF2A66A2190082659C /* PlaylistView.swift */; };
+		DA86C7D22A66A4010082659C /* GetPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		DA86C7CB2A669D4F0082659C /* PlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsView.swift; sourceTree = "<group>"; };
 		DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaylistsResponse.swift; sourceTree = "<group>"; };
 		DA86C7CF2A66A2190082659C /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
+		DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaylistResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				DA7F1E9C2A652E14006D8934 /* Account.swift */,
 				DA7F1E9D2A652E14006D8934 /* CachedSong.swift */,
 				DA86C7CD2A669FA80082659C /* GetPlaylistsResponse.swift */,
+				DA86C7D12A66A4010082659C /* GetPlaylistResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */,
 				DA86C7CA2A668F930082659C /* DownloadsViewModel.swift in Sources */,
 				DA7F1EC12A652E2A006D8934 /* AlbumCell.swift in Sources */,
+				DA86C7D22A66A4010082659C /* GetPlaylistResponse.swift in Sources */,
 				DA7F1E9E2A652E14006D8934 /* GetAlbumResponse.swift in Sources */,
 				DA7F1EC22A652E2A006D8934 /* LoginView.swift in Sources */,
 				DA7F1EB12A652E25006D8934 /* ImageCache.swift in Sources */,

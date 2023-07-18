@@ -59,6 +59,6 @@ class PlaylistsViewModel: ObservableObject {
 		}
 	}
 	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist, coordinator: Coordinator) {
-		coordinator.goToPlaylist(id: playlist.id)
+		coordinator.goToPlaylist(playlist: playlist)
 	}
 }

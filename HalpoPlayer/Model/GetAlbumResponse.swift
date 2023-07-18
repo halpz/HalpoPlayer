@@ -78,8 +78,30 @@ struct Song: Codable, Identifiable, Hashable {
 	let isDir: Bool
 	let album, coverArt, created: String
 	
+	init(playlistEntry: GetPlaylistResponse.Entry) {
+		suffix = playlistEntry.suffix
+		title = playlistEntry.title
+		bitRate = playlistEntry.bitRate
+		isVideo = playlistEntry.isVideo
+		duration = playlistEntry.duration
+		path = playlistEntry.path
+		artistId = playlistEntry.artistId
+		year = playlistEntry.year
+		parent = playlistEntry.parent
+		size = playlistEntry.size
+		albumId = playlistEntry.albumId
+		id = playlistEntry.id
+		type = playlistEntry.type
+		artist = playlistEntry.artist
+		contentType = playlistEntry.contentType
+		isDir = playlistEntry.isDir
+		album = playlistEntry.album
+		coverArt = playlistEntry.coverArt
+		created = playlistEntry.created
+		track = nil
+	}
 	init(randomSong: GetRandomSongsResponse.Song) {
-		self.suffix = randomSong.suffix
+		suffix = randomSong.suffix
 		title = randomSong.title
 		bitRate = randomSong.bitRate
 		isVideo = randomSong.isVideo
@@ -102,7 +124,7 @@ struct Song: Codable, Identifiable, Hashable {
 	}
 	
 	init(searchSong: Search2Response.Song) {
-		self.suffix = searchSong.suffix
+		suffix = searchSong.suffix
 		title = searchSong.title
 		bitRate = searchSong.bitRate
 		isVideo = searchSong.isVideo

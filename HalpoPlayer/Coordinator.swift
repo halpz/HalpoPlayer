@@ -25,8 +25,8 @@ class Coordinator: ObservableObject {
 	func albumTappedOffline(album: Album) {
 		path.append(Destination.albumViewOffline(album: album))
 	}
-	func goToPlaylist(id: String) {
-		path.append(Destination.playlist(id: id))
+	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist) {
+		path.append(Destination.playlist(playlist: playlist))
 	}
 }
 
@@ -36,7 +36,7 @@ enum Destination: Hashable {
 	case albumView(albumId: String)
 	case albumViewOffline(album: Album)
 	case search
-	case playlist(id: String)
+	case playlist(playlist: GetPlaylistsResponse.Playlist)
 }
 
 class ViewFactory {
@@ -57,8 +57,8 @@ class ViewFactory {
 			SearchView()
 		case .albumViewOffline(let album):
 			OfflineAlbumView(album: album)
-		case .playlist(let id):
-			PlaylistView(playlistId: id)
+		case .playlist(let playlist):
+			PlaylistView(playlist: playlist)
 		}
 	}
 }
