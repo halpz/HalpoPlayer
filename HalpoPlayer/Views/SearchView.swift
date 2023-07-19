@@ -18,7 +18,7 @@ struct SearchView: View {
 				case .album:
 					ForEach(database.searchResults?.subsonicResponse.searchResult2.album ?? []) { album in
 						Button {
-							coordinator.albumTapped( albumId: album.id)
+							coordinator.albumTapped( albumId: album.id, scrollToSong: nil)
 						} label: {
 							let convertedAlbum = Album(searchResponse: album)
 							HStack {

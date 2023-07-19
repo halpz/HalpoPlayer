@@ -58,7 +58,7 @@ class DownloadsViewModel: ObservableObject {
 		if SubsonicClient.shared.currentAddress == nil {
 			coordinator.albumTappedOffline(album: album)
 		} else {
-			coordinator.albumTapped( albumId: album.id)
+			coordinator.albumTapped( albumId: album.id, scrollToSong: nil)
 		}
 	}
 	func shuffle() {

@@ -40,7 +40,7 @@ class ContentViewModel: ObservableObject {
 		}
 	}
 	func albumTapped(albumId: String, coordinator: Coordinator) {
-		coordinator.albumTapped(albumId: albumId)
+		coordinator.albumTapped(albumId: albumId, scrollToSong: nil)
 	}
 	func refresh() {
 		getAlbumList()

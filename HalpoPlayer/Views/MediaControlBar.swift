@@ -28,7 +28,7 @@ struct MediaControlBar: View {
 						} else if let albumId = player.currentSong?.albumId {
 							if coordinator.viewingAlbum != albumId {
 								compact.isCompact = true
-								coordinator.albumTapped( albumId: albumId)
+								coordinator.albumTapped(albumId: albumId, scrollToSong: player.currentSong?.id)
 							} else {
 								// scroll to current song?
 							}

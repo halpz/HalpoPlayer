@@ -10,8 +10,8 @@ import SwiftUI
 class Coordinator: ObservableObject {
 	var viewingAlbum: String?
 	@Published var path = NavigationPath()
-	func albumTapped(albumId: String) {
-		path.append(Destination.albumView(albumId: albumId))
+	func albumTapped(albumId: String, scrollToSong: String?) {
+		path.append(Destination.albumView(albumId: albumId, scrollToSong: scrollToSong))
 	}
 	func downloadsTapped() {
 		path.append(Destination.downloads)
@@ -33,7 +33,7 @@ class Coordinator: ObservableObject {
 enum Destination: Hashable {
 	case downloads
 	case login
-	case albumView(albumId: String)
+	case albumView(albumId: String, scrollToSong: String?)
 	case albumViewOffline(album: Album)
 	case search
 	case playlist(playlist: GetPlaylistsResponse.Playlist)
@@ -43,8 +43,8 @@ class ViewFactory {
 	@ViewBuilder
 	class func viewForDestination(_ destination: Destination) -> some View {
 		switch destination {
-		case .albumView(let albumId):
-			AlbumDetailView(albumId: albumId)
+		case .albumView(let albumId, let scrollToSong):
+			AlbumDetailView(albumId: albumId, scrollToSong: scrollToSong)
 		case .downloads:
 			DownloadsView()
 		case .login:

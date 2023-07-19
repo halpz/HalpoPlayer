@@ -15,6 +15,7 @@ class AlbumDetailViewModel: ObservableObject {
 	@Published var albumResponse: GetAlbumResponse?
 	@Published var image: UIImage?
 	@Published var downloading = [String: Bool]()
+	@Published var scrollToSong: String?
 	var playButtonName: String {
 		if let currentSong = player.currentSong,
 		   let songs = albumResponse?.subsonicResponse.album.song,
@@ -24,8 +25,14 @@ class AlbumDetailViewModel: ObservableObject {
 			return "play.circle.fill"
 		}
 	}
-	init(albumId: String) {
+	init(albumId: String, scrollToSong: String?) {
 		self.albumId = albumId
+		getAlbum() {
+			guard let scrollToSong = scrollToSong else {return}
+			DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+				self.scrollToSong = scrollToSong
+			}
+		}
 	}
 	func shuffleSongs(songs: [Song]) {
 		let shuffled = songs.shuffled()
@@ -74,7 +81,7 @@ class AlbumDetailViewModel: ObservableObject {
 			database.deleteSong(song: song)
 		}
 	}
-	func getAlbum() {
+	func getAlbum(callback: (() -> Void)? = nil) {
 		Task {
 			do {
 				let album = try await SubsonicClient.shared.getAlbum(id: albumId)
@@ -82,6 +89,7 @@ class AlbumDetailViewModel: ObservableObject {
 				DispatchQueue.main.async {
 					self.image = imageResponse
 					self.albumResponse = album
+					callback?()
 				}
 			} catch {
 				print(error)

@@ -12,112 +12,120 @@ struct AlbumDetailView: View {
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var player: AudioManager
-	init(albumId: String) {
-		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId))
+	init(albumId: String, scrollToSong: String? = nil) {
+		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId, scrollToSong: scrollToSong))
 	}
 	var body: some View {
 		if let songs = viewModel.albumResponse?.subsonicResponse.album.song {
-			List {
-				VStack(alignment: .leading) {
-					if let album = viewModel.albumResponse?.subsonicResponse.album {
-						Text("\(album.name)")
-							.font(.title)
-						Text("\(album.artist ?? "")")
-							.font(.title2)
-							.foregroundColor(.secondary)
-						if let year = album.year {
-							Text(String(year))
-								.font(.title3)
+			ScrollViewReader { proxy in
+				List {
+					VStack(alignment: .leading) {
+						if let album = viewModel.albumResponse?.subsonicResponse.album {
+							Text("\(album.name)")
+								.font(.title)
+							Text("\(album.artist ?? "")")
+								.font(.title2)
 								.foregroundColor(.secondary)
+							if let year = album.year {
+								Text(String(year))
+									.font(.title3)
+									.foregroundColor(.secondary)
+							}
 						}
 					}
-				}
-				.listRowSeparator(.hidden)
-				if let image = viewModel.image {
+					.listRowSeparator(.hidden)
+					if let image = viewModel.image {
+						HStack {
+							Spacer()
+							ZStack {
+								Image(uiImage: image)
+									.resizable()
+									.scaledToFit()
+									.cornerRadius(8)
+									.frame(maxWidth: 500, maxHeight: 500)
+								Button {
+									viewModel.playButtonPressed()
+								} label: {
+									Image(systemName: viewModel.playButtonName)
+										.imageScale(.large)
+										.foregroundStyle(.primary, Color.accentColor)
+										.symbolRenderingMode(.palette)
+										.font(.system(size:72))
+										.opacity(0.8)
+								}
+							}
+							Spacer()
+						}
+						.listRowSeparator(.hidden)
+					}
 					HStack {
 						Spacer()
-						ZStack {
-							Image(uiImage: image)
-								.resizable()
-								.scaledToFit()
-								.cornerRadius(8)
-								.frame(maxWidth: 500, maxHeight: 500)
-							Button {
-								viewModel.playButtonPressed()
-							} label: {
-								Image(systemName: viewModel.playButtonName)
-									.imageScale(.large)
-									.foregroundStyle(.primary, Color.accentColor)
-									.symbolRenderingMode(.palette)
-									.font(.system(size:72))
-									.opacity(0.8)
-							}
+						Button {
+							viewModel.shuffleSongs(songs: songs)
+						} label: {
+							Image(systemName: "shuffle").imageScale(.large)
+								.foregroundColor(Color.accentColor)
 						}
+						.buttonStyle(.plain)
+						.padding(8)
+						Spacer()
+						Button {
+							viewModel.downloadAll(songs: songs)
+						} label: {
+							Image(systemName: "arrow.down.square").imageScale(.large)
+								.foregroundColor(Color.accentColor)
+						}
+						.buttonStyle(.plain)
+						.padding(8)
 						Spacer()
 					}
 					.listRowSeparator(.hidden)
-				}
-				HStack {
-					Spacer()
-					Button {
-						viewModel.shuffleSongs(songs: songs)
-					} label: {
-						Image(systemName: "shuffle").imageScale(.large)
-							.foregroundColor(Color.accentColor)
-					}
-					.buttonStyle(.plain)
-					.padding(8)
-					Spacer()
-					Button {
-						viewModel.downloadAll(songs: songs)
-					} label: {
-						Image(systemName: "arrow.down.square").imageScale(.large)
-							.foregroundColor(Color.accentColor)
-					}
-					.buttonStyle(.plain)
-					.padding(8)
-					Spacer()
-				}
-				.listRowSeparator(.hidden)
-				ForEach(songs) { song in
-					Button {
-						viewModel.playSong(song: song, songs: songs)
-					} label: {
-						let downloading = viewModel.downloading[song.id] ?? false
-						SongCell(downloading: downloading, showAlbumName: false, showTrackNumber: true, showAlbumArt: false, song: song)
-					}
-					.swipeActions {
+					ForEach(songs) { song in
 						Button {
-							viewModel.addSongToQueue(song: song)
+							viewModel.playSong(song: song, songs: songs)
 						} label: {
-							Image(systemName: "text.badge.plus").imageScale(.large)
+							let downloading = viewModel.downloading[song.id] ?? false
+							SongCell(downloading: downloading, showAlbumName: false, showTrackNumber: true, showAlbumArt: false, song: song)
 						}
-						.tint(.blue)
-						if song.suffix != "opus" {
-							if database.musicCache[song.id] == nil {
-								Button {
-									viewModel.downloadSong(song: song)
-								} label: {
-									Image(systemName: "arrow.down.app").imageScale(.large)
+						.swipeActions {
+							Button {
+								viewModel.addSongToQueue(song: song)
+							} label: {
+								Image(systemName: "text.badge.plus").imageScale(.large)
+							}
+							.tint(.blue)
+							if song.suffix != "opus" {
+								if database.musicCache[song.id] == nil {
+									Button {
+										viewModel.downloadSong(song: song)
+									} label: {
+										Image(systemName: "arrow.down.app").imageScale(.large)
+									}
+									.tint(.green)
+								} else {
+									Button {
+										viewModel.deleteSong(song: song)
+									} label: {
+										Image(systemName: "trash.fill").imageScale(.large)
+									}
+									.tint(.red)
 								}
-								.tint(.green)
-							} else {
-								Button {
-									viewModel.deleteSong(song: song)
-								} label: {
-									Image(systemName: "trash.fill").imageScale(.large)
-								}
-								.tint(.red)
 							}
 						}
+						.id(song.id)
+						.listRowSeparator(.hidden)
+						.onAppear {
+							self.songAppeared(song: song)
+						}
 					}
-					.listRowSeparator(.hidden)
-					.onAppear {
-						self.songAppeared(song: song)
+				}
+				.listStyle(.plain)
+				.onChange(of: viewModel.scrollToSong) { newValue in
+					withAnimation {
+						proxy.scrollTo(newValue, anchor: .center)
 					}
 				}
 			}
-			.listStyle(.plain)
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				Menu {
@@ -132,15 +140,19 @@ struct AlbumDetailView: View {
 			}
 			.onAppear {
 				coordinator.viewingAlbum = viewModel.albumId
+//				print("\(coordinator.viewingAlbum)")
 			}
 			.onDisappear {
-				coordinator.viewingAlbum = nil
+				if coordinator.viewingAlbum == viewModel.albumId {
+					coordinator.viewingAlbum = nil
+				}
+//				print("\(coordinator.viewingAlbum)")
 			}
 		} else {
 			ProgressView()
-				.onAppear {
-					viewModel.getAlbum()
-				}
+//				.onAppear {
+//					viewModel.getAlbum()
+//				}
 		}
 	}
 	func songAppeared(song: Song) {
