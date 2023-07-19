@@ -28,6 +28,9 @@ struct PlaylistsView: View {
 					}
 				}
 			}
+			.refreshable {
+				viewModel.getPlaylists()
+			}
 			.listStyle(.plain)
 			.navigationTitle("Playlists")
 		} else {

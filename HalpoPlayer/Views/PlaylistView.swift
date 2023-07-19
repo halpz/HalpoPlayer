@@ -57,6 +57,9 @@ struct PlaylistView: View {
 					}
 				}
 			}
+			.refreshable {
+				viewModel.getPlaylist()
+			}
 			.listStyle(.plain)
 			.navigationTitle(name)
 		} else {
