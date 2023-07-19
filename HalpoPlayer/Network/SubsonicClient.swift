@@ -44,7 +44,6 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-//		printJSONData(data)
 		return try JSONDecoder().decode(T.self, from: data)
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
@@ -145,6 +144,44 @@ class SubsonicClient {
 		   let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
 		   let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
 			print(prettyPrintedString)
+		}
+	}
+	func testAddressesForPermission(ad1: String, ad2: String, callback: @escaping (Bool) -> Void) {
+		let url1 = URL(string: ad1)!
+		var urlRequest1 = URLRequest(url: url1)
+		urlRequest1.httpMethod = "HEAD"
+		let url2 = URL(string: ad2)!
+		var urlRequest2 = URLRequest(url: url2)
+		urlRequest2.httpMethod = "HEAD"
+		let ur1 = urlRequest1
+		let ur2 = urlRequest2
+		Task {
+			var calledBack = false
+			var failures = 0
+			do {
+				_ = try await session.data(for: ur1)
+				if !calledBack {
+					callback(true)
+				}
+				calledBack = true
+			} catch {
+				failures += 1
+				if failures == 2 {
+					callback(false)
+				}
+			}
+			do {
+				_ = try await session.data(for: ur2)
+				if !calledBack {
+					callback(true)
+				}
+				calledBack = true
+			} catch {
+				failures += 1
+				if failures == 2 {
+					callback(false)
+				}
+			}
 		}
 	}
 }

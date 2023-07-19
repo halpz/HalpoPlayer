@@ -52,9 +52,15 @@ struct LoginView: View {
 			if !otherAddress.contains("http://") {
 				otherAddress = "http://" + otherAddress
 			}
-			let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
-			accountHolder.account = account
-			_ = try await SubsonicClient.shared.authenticate()			
+			
+			SubsonicClient.shared.testAddressesForPermission(ad1: address, ad2: otherAddress) { success in
+				guard success else {return}
+				let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
+				DispatchQueue.main.async {
+					accountHolder.account = account
+				}
+			}
+
 		}
 		dismiss()
 	}

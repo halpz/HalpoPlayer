@@ -27,8 +27,9 @@ class ContentViewModel: ObservableObject {
 		if database.albumList == nil {
 			getAlbumList()
 		}
+		NotificationCenter.default.addObserver(self, selector: #selector(getAlbumList), name: Notification.Name("login"), object: nil)
 	}
-	func getAlbumList() {
+	@objc func getAlbumList() {
 		Task {
 			do {
 				if try await SubsonicClient.shared.authenticate() {
