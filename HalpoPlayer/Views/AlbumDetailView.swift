@@ -121,8 +121,13 @@ struct AlbumDetailView: View {
 				}
 				.listStyle(.plain)
 				.onChange(of: viewModel.scrollToSong) { newValue in
-					withAnimation {
-						proxy.scrollTo(newValue, anchor: .center)
+					if let songs = viewModel.albumResponse?.subsonicResponse.album.song,
+					   let currentSong = player.currentSong {
+						if songs.contains(currentSong) {
+							withAnimation {
+								proxy.scrollTo(newValue, anchor: .center)
+							}
+						}
 					}
 				}
 			}

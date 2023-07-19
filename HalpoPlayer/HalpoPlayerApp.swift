@@ -30,7 +30,6 @@ struct halpoplayerApp: App {
 								ViewFactory.viewForDestination(destination)
 							}
 					}
-					.environmentObject(homeCoordinator)
 				case .downloads:
 					NavigationStack(path: $downloadsCoordinator.path) {
 						DownloadsView()
@@ -38,7 +37,6 @@ struct halpoplayerApp: App {
 								ViewFactory.viewForDestination(destination)
 							}
 					}
-					.environmentObject(downloadsCoordinator)
 				case .playlists:
 					NavigationStack(path: $playlistsCoordinator.path) {
 						PlaylistsView()
@@ -46,7 +44,6 @@ struct halpoplayerApp: App {
 								ViewFactory.viewForDestination(destination)
 							}
 					}
-					.environmentObject(playlistsCoordinator)
 				case .search:
 					NavigationStack(path: $searchCoordinator.path) {
 						SearchView()
@@ -54,7 +51,6 @@ struct halpoplayerApp: App {
 								ViewFactory.viewForDestination(destination)
 							}
 					}
-					.environmentObject(searchCoordinator)
 				}
 				MediaControlBar()
 					.gesture(DragGesture(minimumDistance: 30)
@@ -67,7 +63,6 @@ struct halpoplayerApp: App {
 								}
 							}
 						}))
-					.environmentObject(coordinatorForTab(tab: selectedTab))
 				HStack {
 					ForEach(AppTab.allCases, id: \.self) { tab in
 						Spacer()
@@ -96,6 +91,7 @@ struct halpoplayerApp: App {
 			.environmentObject(accountHolder)
 			.environmentObject(database)
 			.environmentObject(player)
+			.environmentObject(coordinatorForTab(tab: selectedTab))
 			.onAppear {
 				initApp()
 			}
