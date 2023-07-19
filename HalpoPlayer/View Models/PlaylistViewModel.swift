@@ -79,8 +79,17 @@ class PlaylistViewModel: ObservableObject {
 		songList.insert(song, at: finalDestination)
 		let finalSongs = songList
 		Task {
-			_ = try await SubsonicClient.shared.updatePlaylist(id: playlistId , songs: finalSongs)
-			self.reordering = false
+			do {
+				_ = try await SubsonicClient.shared.updatePlaylist(id: playlistId , songs: finalSongs)
+				let response = try await SubsonicClient.shared.getPlaylist(id: playlistId)
+				DispatchQueue.main.async {
+					self.playlistResponse = response
+				}
+				
+				self.reordering = false
+			} catch {
+				print(error)
+			}
 		}
 	}
 }

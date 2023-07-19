@@ -55,8 +55,11 @@ struct PlaylistView: View {
 							viewModel.cellDidAppear(song: song)
 						}
 					}
+					.moveDisabled(viewModel.reordering)
 				}
+				.onMove(perform: viewModel.move)
 			}
+			.environment(\.editMode, $editMode)
 			.refreshable {
 				viewModel.getPlaylist()
 			}
