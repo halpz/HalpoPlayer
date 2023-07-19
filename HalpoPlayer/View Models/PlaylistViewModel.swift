@@ -29,7 +29,7 @@ class PlaylistViewModel: ObservableObject {
 			Song(playlistEntry: $0)
 		} ?? []
 	}
-	func getPlaylist() {
+	func getPlaylist(callback: (() -> Void)? = nil) {
 		Task {
 			do {
 				let response = try await SubsonicClient.shared.getPlaylist(id: playlistId)
@@ -37,6 +37,7 @@ class PlaylistViewModel: ObservableObject {
 				DispatchQueue.main.async {
 					self.playlistResponse = response
 					self.image = imageResponse
+					callback?()
 				}
 			} catch {
 				print(error)
@@ -85,11 +86,12 @@ class PlaylistViewModel: ObservableObject {
 				DispatchQueue.main.async {
 					self.playlistResponse = response
 				}
-				
 				self.reordering = false
 			} catch {
 				print(error)
-				getPlaylist()
+				getPlaylist() {
+					self.reordering = false
+				}
 			}
 		}
 	}
