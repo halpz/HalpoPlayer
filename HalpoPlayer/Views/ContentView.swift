@@ -49,10 +49,5 @@ struct ContentView: View {
 				}
 			}
 		}
-		.onAppear {
-			if database.albumList == nil {
-				viewModel.getAlbumList()
-			}
-		}
 	}
 }

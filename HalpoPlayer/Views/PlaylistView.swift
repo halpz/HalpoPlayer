@@ -55,19 +55,13 @@ struct PlaylistView: View {
 							viewModel.cellDidAppear(song: song)
 						}
 					}
-//					.moveDisabled(viewModel.reordering)
 				}
-//				.onMove(perform: viewModel.move)
 			}
-//			.environment(\.editMode, $editMode)
 			.listStyle(.plain)
 			.navigationTitle(name)
 		} else {
 			ProgressView()
 				.navigationTitle(name)
-				.onAppear {
-					viewModel.getPlaylist()
-				}
 		}
 	}
 }

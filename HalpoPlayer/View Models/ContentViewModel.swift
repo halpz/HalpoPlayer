@@ -24,6 +24,9 @@ class ContentViewModel: ObservableObject {
 	}
 	init() {
 		searchText = ""
+		if database.albumList == nil {
+			getAlbumList()
+		}
 	}
 	func getAlbumList() {
 		Task {

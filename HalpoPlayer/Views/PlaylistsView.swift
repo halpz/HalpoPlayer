@@ -32,11 +32,6 @@ struct PlaylistsView: View {
 			.navigationTitle("Playlists")
 		} else {
 			ProgressView()
-				.onAppear {
-					if database.playlists == nil {
-						viewModel.getPlaylists()
-					}
-				}
 		}
 	}
 }

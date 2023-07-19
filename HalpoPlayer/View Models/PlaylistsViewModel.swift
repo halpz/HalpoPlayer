@@ -28,4 +28,9 @@ class PlaylistsViewModel: ObservableObject {
 		guard MediaControlBarMinimized.shared.isCompact == false else { return }
 		MediaControlBarMinimized.shared.isCompact = true
 	}
+	init() {
+		if database.playlists == nil {
+			getPlaylists()
+		}
+	}
 }

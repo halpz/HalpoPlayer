@@ -140,19 +140,14 @@ struct AlbumDetailView: View {
 			}
 			.onAppear {
 				coordinator.viewingAlbum = viewModel.albumId
-//				print("\(coordinator.viewingAlbum)")
 			}
 			.onDisappear {
 				if coordinator.viewingAlbum == viewModel.albumId {
 					coordinator.viewingAlbum = nil
 				}
-//				print("\(coordinator.viewingAlbum)")
 			}
 		} else {
 			ProgressView()
-//				.onAppear {
-//					viewModel.getAlbum()
-//				}
 		}
 	}
 	func songAppeared(song: Song) {

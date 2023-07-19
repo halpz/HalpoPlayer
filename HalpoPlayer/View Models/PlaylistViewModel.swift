@@ -15,6 +15,7 @@ class PlaylistViewModel: ObservableObject {
 	@Published var playlistResponse: GetPlaylistResponse?
 	init(id: String) {
 		playlistId = id
+		getPlaylist()
 	}
 	var playButtonName: String {
 		if player.isPlaying && player.songs == songs {
