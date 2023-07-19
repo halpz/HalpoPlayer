@@ -128,7 +128,7 @@ class SubsonicClient {
 		return try await request(.search(term: term)) as Search2Response
 	}
 	func getSimilarSongs(id: String) async throws -> String {
- 		return try await request(.getSimilarSongs(id: id)) as String
+		return try await request(.getSimilarSongs(id: id)) as String
 	}
 	func getPlaylists() async throws -> GetPlaylistsResponse {
 		return try await request(.getPlaylists) as GetPlaylistsResponse
@@ -156,25 +156,14 @@ class SubsonicClient {
 		let ur1 = urlRequest1
 		let ur2 = urlRequest2
 		Task {
-			var calledBack = false
-			do {
-				_ = try await session.data(for: ur1)
-				if !calledBack {
-					callback(true)
-				}
-				calledBack = true
-			} catch {
-				
-			}
-			do {
-				_ = try await session.data(for: ur2)
-				if !calledBack {
-					callback(true)
-				}
-				calledBack = true
-			} catch {
-				
-			}
+			do { _ = try await session.data(for: ur1)
+				callback(true)
+				return
+			} catch { }
+			do { _ = try await session.data(for: ur2)
+				callback(true)
+				return
+			} catch { }
 		}
 	}
 }
