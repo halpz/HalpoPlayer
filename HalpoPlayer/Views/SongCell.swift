@@ -23,7 +23,7 @@ struct SongCell: View {
 					Text("\(trackNumber)")
 						.font(.body)
 						.foregroundColor(.secondary)
-						.frame(width: 20)
+						.frame(width: 24)
 						.padding(8)
 						
 				}
