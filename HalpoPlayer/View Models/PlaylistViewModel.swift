@@ -89,6 +89,7 @@ class PlaylistViewModel: ObservableObject {
 				self.reordering = false
 			} catch {
 				print(error)
+				getPlaylist()
 			}
 		}
 	}
