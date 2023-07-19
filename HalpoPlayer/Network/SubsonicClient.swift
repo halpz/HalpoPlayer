@@ -157,7 +157,6 @@ class SubsonicClient {
 		let ur2 = urlRequest2
 		Task {
 			var calledBack = false
-			var failures = 0
 			do {
 				_ = try await session.data(for: ur1)
 				if !calledBack {
@@ -165,10 +164,7 @@ class SubsonicClient {
 				}
 				calledBack = true
 			} catch {
-				failures += 1
-				if failures == 2 {
-					callback(false)
-				}
+				
 			}
 			do {
 				_ = try await session.data(for: ur2)
@@ -177,10 +173,7 @@ class SubsonicClient {
 				}
 				calledBack = true
 			} catch {
-				failures += 1
-				if failures == 2 {
-					callback(false)
-				}
+				
 			}
 		}
 	}
