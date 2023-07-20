@@ -19,7 +19,7 @@ struct ArtistView: View {
 				Button {
 					coordinator.albumTapped(albumId: album.id, scrollToSong: nil)
 				} label: {
-					AlbumCell(album: album)
+					AlbumCell(album: album, showArtistName: false)
 				}
 				.listRowSeparator(.hidden)
 			}

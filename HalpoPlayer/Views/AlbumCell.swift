@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AlbumCell: View {
 	let album: Album
+	var showArtistName = true
 	@State var image: UIImage?
 	let imageSize: CGFloat = 60
 	var body: some View {
@@ -32,9 +33,11 @@ struct AlbumCell: View {
 				VStack(alignment: .leading) {
 					Text("\(album.name)")
 						.font(.body).bold()
-					Text("\(album.artist ?? "")")
-						.font(.body)
-						.foregroundColor(.secondary)
+					if showArtistName {
+						Text("\(album.artist ?? "")")
+							.font(.body)
+							.foregroundColor(.secondary)
+					}
 				}
 				Spacer()
 				Image(systemName: "chevron.right")
