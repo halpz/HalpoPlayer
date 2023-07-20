@@ -10,6 +10,7 @@ import SwiftUI
 struct AlbumCell: View {
 	let album: Album
 	@State var image: UIImage?
+	let imageSize: CGFloat = 60
 	var body: some View {
 		HStack {
 			HStack {
@@ -18,10 +19,10 @@ struct AlbumCell: View {
 						.resizable()
 						.scaledToFit()
 						.cornerRadius(8)
-						.frame(width: 60, height: 60)
+						.frame(width: imageSize, height: imageSize)
 				} else {
 					ProgressView()
-						.frame(width: 60, height: 60)
+						.frame(width: imageSize, height: imageSize)
 						.onAppear {
 							Task {
 								image = try await SubsonicClient.shared.coverArt(albumId: album.id)
