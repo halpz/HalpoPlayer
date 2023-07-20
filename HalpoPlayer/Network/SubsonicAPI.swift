@@ -22,6 +22,7 @@ enum SubsonicAPI {
 	case updatePlaylist(id: String, songs: [Song])
 	case getArtists
 	case getArtist(id: String)
+	case getArtistInfo(id: String)
 	var method: String {
 		"GET"
 	}
@@ -67,6 +68,8 @@ enum SubsonicAPI {
 			return "getArtists?"
 		case .getArtist(let id):
 			return "getArtist?id=\(id)"
+		case .getArtistInfo(let id):
+			return "getArtistInfo?id=\(id)"
 		}
 	}
 }

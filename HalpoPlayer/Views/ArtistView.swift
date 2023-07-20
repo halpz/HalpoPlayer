@@ -30,6 +30,9 @@ struct ArtistView: View {
 			}
 			.padding()
 			.listRowSeparator(.hidden)
+			if let info = viewModel.info {
+				Text(info.subsonicResponse.artistInfo.biography)
+			}
 			ForEach(viewModel.albums ?? []) { album in
 				Button {
 					coordinator.albumTapped(albumId: album.id, scrollToSong: nil)
@@ -59,6 +62,8 @@ class ArtistViewModel: ObservableObject {
 	var player = AudioManager.shared
 	var artistId: String
 	var response: GetArtistResponse?
+	var info: GetArtistInfoResponse?
+	@Published var bio: String?
 	@Published var albums: [Album]?
 	var artistName: String
 	@Published var image: UIImage?
@@ -71,12 +76,9 @@ class ArtistViewModel: ObservableObject {
 		Task {
 			do {
 				let response = try await SubsonicClient.shared.getArtist(id: artistId)
-				
 				let albums = response.subsonicResponse.artist.album.map { Album(artistResponse: $0)}
-				
 				var artistImage: UIImage?
 				let artist = response.subsonicResponse.artist
-				
 				if let image = Database.shared.imageCache.image(albumId: artist.id) {
 					artistImage = image
 				} else if let image = Database.shared.imageCache.image(albumId: artist.coverArt) {
@@ -99,6 +101,26 @@ class ArtistViewModel: ObservableObject {
 			} catch {
 				print(error)
 			}
+//			do {
+//				let info = try await SubsonicClient.shared.getArtistInfo(id: artistId)
+//
+////				let pattern = "<a target='_blank' href=\"(.+)\" rel=\"nofollow\">(.+)</a>"
+////
+////				let string = info.subsonicResponse.artistInfo.biography.replacingOccurrences(of: pattern,
+////												  with: "[$2]($1)",
+////												  options: .regularExpression,
+////												  range: nil)
+//
+//
+//				let string = info.subsonicResponse.artistInfo.biography
+//
+//				DispatchQueue.main.async {
+//					self.info = info
+//					self.bio = string
+//				}
+//			} catch {
+//				print("could not get artist info: \(error)")
+//			}
 		}
 	}
 	func shuffle() {

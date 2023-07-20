@@ -46,12 +46,12 @@ class SubsonicClient {
 		}
 		
 		
-//		switch api {
-//		case .getArtist:
-//			printJSONData(data)
-//		default:
-//			break
-//		}
+		switch api {
+		case .getArtistInfo:
+			printJSONData(data)
+		default:
+			break
+		}
 			
 		return try JSONDecoder().decode(T.self, from: data)
 	}
@@ -167,6 +167,9 @@ class SubsonicClient {
 	}
 	func getArtist(id: String) async throws -> GetArtistResponse {
 		return try await request(.getArtist(id: id)) as GetArtistResponse
+	}
+	func getArtistInfo(id: String) async throws -> GetArtistInfoResponse {
+		return try await request(.getArtistInfo(id: id)) as GetArtistInfoResponse
 	}
 	func printJSONData(_ data: Data) {
 		if let json = try? JSONSerialization.jsonObject(with: data, options: []),
