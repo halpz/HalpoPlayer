@@ -24,9 +24,9 @@ struct LibraryView: View {
 				}
 				List(viewModel.artists) { artist in
 					Button {
-						print(artist)
+						coordinator.goToArtist(artistId: artist.id)
 					} label: {
-						Text(artist.name)
+						ArtistCell(artist: artist)
 					}
 					.listRowSeparator(.hidden)
 				}

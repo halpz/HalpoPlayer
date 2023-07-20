@@ -10,6 +10,9 @@
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */; };
 		DA3E7C392A69367800DD5180 /* GetArtistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */; };
+		DA3E7C3B2A693C8100DD5180 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C3A2A693C8100DD5180 /* ArtistView.swift */; };
+		DA3E7C3D2A693E2F00DD5180 /* GetArtistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C3C2A693E2F00DD5180 /* GetArtistResponse.swift */; };
+		DA3E7C3F2A69420100DD5180 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */; };
 		DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */; };
 		DA7F1E842A652DD7006D8934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E832A652DD7006D8934 /* Assets.xcassets */; };
 		DA7F1E872A652DD7006D8934 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E862A652DD7006D8934 /* Preview Assets.xcassets */; };
@@ -59,6 +62,9 @@
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewType.swift; sourceTree = "<group>"; };
 		DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistsResponse.swift; sourceTree = "<group>"; };
+		DA3E7C3A2A693C8100DD5180 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
+		DA3E7C3C2A693E2F00DD5180 /* GetArtistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistResponse.swift; sourceTree = "<group>"; };
+		DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HalpoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalpoPlayerApp.swift; sourceTree = "<group>"; };
 		DA7F1E832A652DD7006D8934 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 				DA86C7F32A66EDA30082659C /* BasicResponse.swift */,
 				DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */,
 				DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */,
+				DA3E7C3C2A693E2F00DD5180 /* GetArtistResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,6 +227,8 @@
 				DA86C7CF2A66A2190082659C /* PlaylistView.swift */,
 				DA86C7D32A66AB0B0082659C /* PlaylistCell.swift */,
 				DA3E7C342A69213900DD5180 /* SideMenu.swift */,
+				DA3E7C3A2A693C8100DD5180 /* ArtistView.swift */,
+				DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -321,6 +330,7 @@
 				DA86C7CE2A669FA80082659C /* GetPlaylistsResponse.swift in Sources */,
 				DA86C7D42A66AB0B0082659C /* PlaylistCell.swift in Sources */,
 				DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */,
+				DA3E7C3B2A693C8100DD5180 /* ArtistView.swift in Sources */,
 				DA86C7CC2A669D4F0082659C /* PlaylistsView.swift in Sources */,
 				DA7F1EA42A652E14006D8934 /* Account.swift in Sources */,
 				DA7F1EA02A652E14006D8934 /* AuthenticationResponse.swift in Sources */,
@@ -332,6 +342,7 @@
 				DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */,
 				DA3E7C392A69367800DD5180 /* GetArtistsResponse.swift in Sources */,
 				DA86C7CA2A668F930082659C /* DownloadsViewModel.swift in Sources */,
+				DA3E7C3D2A693E2F00DD5180 /* GetArtistResponse.swift in Sources */,
 				DA7F1EC12A652E2A006D8934 /* AlbumCell.swift in Sources */,
 				DA86C7D22A66A4010082659C /* GetPlaylistResponse.swift in Sources */,
 				DA7F1E9E2A652E14006D8934 /* GetAlbumResponse.swift in Sources */,
@@ -348,6 +359,7 @@
 				DA86C7F42A66EDA30082659C /* BasicResponse.swift in Sources */,
 				DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */,
 				DA86C7D82A66AB330082659C /* PlaylistViewModel.swift in Sources */,
+				DA3E7C3F2A69420100DD5180 /* ArtistCell.swift in Sources */,
 				DA86C7D02A66A2190082659C /* PlaylistView.swift in Sources */,
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
 				DA7F1EBF2A652E2A006D8934 /* AlbumDetailView.swift in Sources */,

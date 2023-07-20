@@ -44,7 +44,15 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-//		printJSONData(data)
+		
+		
+//		switch api {
+//		case .getArtist:
+//			printJSONData(data)
+//		default:
+//			break
+//		}
+			
 		return try JSONDecoder().decode(T.self, from: data)
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
@@ -110,6 +118,20 @@ class SubsonicClient {
 			throw HalpoError.imageDecode
 		}
 	}
+	func downloadAvatar(artist: GetIndexesResponse.Artist) async throws -> UIImage {
+		if let image = Database.shared.imageCache.image(albumId: artist.id) {
+			return image
+		}
+		let url = URL(string: artist.artistImageUrl)!
+		let urlRequest = URLRequest(url: url)
+		let (data, _) = try await session.data(for: urlRequest)
+		if let image = UIImage(data: data) {
+			Database.shared.imageCache.cacheImage(albumId: artist.id, image: image)
+			return image
+		} else {
+			throw HalpoError.imageDecode
+		}
+	}
 	func getIndexes() async throws -> GetIndexesResponse {
 		return try await request(.getIndexes) as GetIndexesResponse
 	}
@@ -142,6 +164,9 @@ class SubsonicClient {
 	}
 	func getArtists() async throws -> GetArtistsResponse {
 		return try await request(.getArtists) as GetArtistsResponse
+	}
+	func getArtist(id: String) async throws -> GetArtistResponse {
+		return try await request(.getArtist(id: id)) as GetArtistResponse
 	}
 	func printJSONData(_ data: Data) {
 		if let json = try? JSONSerialization.jsonObject(with: data, options: []),

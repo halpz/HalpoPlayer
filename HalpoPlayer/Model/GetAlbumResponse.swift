@@ -33,6 +33,19 @@ struct Album: Codable, Identifiable, Hashable {
 	let name: String
 	let song: [Song]
 	
+	init(artistResponse: GetArtistResponse.Album) {
+		artist = artistResponse.artist
+		artistId = artistResponse.artistId
+		id = artistResponse.id
+		coverArt = artistResponse.coverArt
+		duration = artistResponse.duration
+		songCount = artistResponse.songCount
+		created = artistResponse.created
+		year = artistResponse.year
+		name = artistResponse.name
+		song = []
+	}
+	
 	init(searchResponse: Search2Response.Album) {
 		artist = searchResponse.artist
 		artistId = searchResponse.artistId
