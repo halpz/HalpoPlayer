@@ -1,44 +1,46 @@
 //
-//  GetIndexesResponse.swift
-//  halpoplayer
+//  GetArtistsResponse.swift
+//  HalpoPlayer
 //
-//  Created by Paul Halpin on 08/07/2023.
+//  Created by paul on 20/07/2023.
 //
 
 import Foundation
 
-// MARK: - GetIndexesResponse
-struct GetIndexesResponse: Codable {
+// MARK: - GetArtistsResponse
+struct GetArtistsResponse: Codable {
 	let subsonicResponse: SubsonicResponse
-	
+
 	enum CodingKeys: String, CodingKey {
 		case subsonicResponse = "subsonic-response"
 	}
 	
 	// MARK: - SubsonicResponse
 	struct SubsonicResponse: Codable {
-		let status: String
-		let indexes: Indexes
-		let serverVersion, type, version: String
+		let status, serverVersion, type: String
+		let artists: Artists
+		let version: String
 	}
-	
-	// MARK: - Indexes
-	struct Indexes: Codable {
+
+	// MARK: - Artists
+	struct Artists: Codable {
 		let index: [Index]
 		let lastModified: Int
 		let ignoredArticles: String
 	}
-	
+
 	// MARK: - Index
 	struct Index: Codable {
 		let name: String
 		let artist: [Artist]
 	}
-	
+
 	// MARK: - Artist
-	struct Artist: Codable, Identifiable {
+	struct Artist: Codable {
 		let albumCount: Int
 		let id, name, coverArt: String
 		let artistImageUrl: String
 	}
 }
+
+

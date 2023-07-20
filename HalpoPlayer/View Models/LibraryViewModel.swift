@@ -1,5 +1,5 @@
 //
-//  ContentViewModel.swift
+//  LibraryViewModel.swift
 //  HalpoPlayer
 //
 //  Created by paul on 18/07/2023.
@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class ContentViewModel: ObservableObject {
+class LibraryViewModel: ObservableObject {
 	@Published var searchText: String
 	@Published var viewType = Database.shared.libraryViewType
 	var player = AudioManager.shared
 	var database = Database.shared
-	var results: [GetAlbumListResponse.Album] {
+	var albums: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
 			return database.albumList ?? []
 		} else {
@@ -23,14 +23,31 @@ class ContentViewModel: ObservableObject {
 			} ?? []
 		}
 	}
+	var artists: [GetIndexesResponse.Artist] {
+		if searchText.isEmpty {
+			return database.artistList ?? []
+		} else {
+			return database.artistList?.filter {
+				$0.name.localizedCaseInsensitiveContains(searchText)
+			} ?? []
+		}
+	}
 	init() {
 		searchText = ""
-		if database.albumList == nil {
-			getAlbumList()
-		}
-		NotificationCenter.default.addObserver(self, selector: #selector(getAlbumList), name: Notification.Name("login"), object: nil)
+		loadContent()
+		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("login"), object: nil)
 	}
-	@objc func getAlbumList() {
+	func loadContent() {
+		switch viewType {
+		case .albums:
+			if database.albumList == nil {
+				getAlbumList()
+			}
+		case .artists:
+			getArtists()
+		}
+	}
+	func getAlbumList() {
 		Task {
 			do {
 				if try await SubsonicClient.shared.authenticate() {
@@ -44,11 +61,28 @@ class ContentViewModel: ObservableObject {
 			}
 		}
 	}
+	func getArtists() {
+		Task {
+			do {
+				if try await SubsonicClient.shared.authenticate() {
+					let response = try await SubsonicClient.shared.getIndexes()
+					let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
+						return index.artist
+					}
+					DispatchQueue.main.async {
+						self.database.artistList = artists
+					}
+				}
+			} catch {
+				print(error)
+			}
+		}
+	}
 	func albumTapped(albumId: String, coordinator: Coordinator) {
 		coordinator.albumTapped(albumId: albumId, scrollToSong: nil)
 	}
-	func refresh() {
-		getAlbumList()
+	@objc func refresh() {
+		loadContent()
 	}
 	func shuffle() {
 		Task {

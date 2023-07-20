@@ -8,5 +8,5 @@
 import Foundation
 
 enum LibraryViewType: String, CaseIterable {
-	case albums, songs, artists
+	case albums, artists
 }

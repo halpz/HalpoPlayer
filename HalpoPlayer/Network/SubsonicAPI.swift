@@ -20,6 +20,7 @@ enum SubsonicAPI {
 	case getPlaylists
 	case getPlaylist(id: String)
 	case updatePlaylist(id: String, songs: [Song])
+	case getArtists
 	var method: String {
 		"GET"
 	}
@@ -61,6 +62,8 @@ enum SubsonicAPI {
 				removalIndices.append("&songIndexToRemove=\(index)")
 			}
 			return "updatePlaylist?playlistId=\(id)\(removalIndices)\(newIds)"
+		case .getArtists:
+			return "getArtists?"
 		}
 	}
 }
