@@ -34,24 +34,12 @@ struct LibraryView: View {
 			.searchable(text: $viewModel.searchText, prompt: "Search albums")
 			.scrollDismissesKeyboard(.immediately)
 			.navigationBarTitleDisplayMode(.inline)
+			.navigationTitle(viewModel.viewType.rawValue.capitalized)
 			.toolbar {
-				ToolbarItem(placement: .principal) {
-					Menu {
-						ForEach(LibraryViewType.allCases, id: \.self) { menuItem in
-							Button {
-								viewModel.viewType = menuItem
-							} label: {
-								Text(menuItem.rawValue.capitalized)
-									.foregroundColor(menuItem == viewModel.viewType ? .accentColor : .primary)
-							}
-						}
-					} label: {
-						HStack {
-							Text(viewModel.viewType.rawValue.capitalized)
-								.font(Font.headline)
-								.foregroundColor(.primary)
-							Image(systemName: "chevron.down.circle")
-								.font(.system(size: 12))
+				ToolbarTitleMenu {
+					Picker("Picker", selection: $viewModel.viewType) {
+						ForEach(LibraryViewType.allCases, id: \.self) { item in
+							Text(item.rawValue.capitalized)
 						}
 					}
 				}
