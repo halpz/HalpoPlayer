@@ -27,8 +27,19 @@ struct ArtistCell: View {
 					.clipShape(Circle())
 					.onAppear {
 						Task {
-							let downloadedImage = try await SubsonicClient.shared.downloadAvatar(artist: artist)
-							self.image = downloadedImage
+							if let image = Database.shared.imageCache.image(albumId: artist.id) {
+								self.image = image
+							} else if let image = Database.shared.imageCache.image(albumId: artist.coverArt) {
+								self.image = image
+							} else {
+								do {
+									let downloadedImage = try await SubsonicClient.shared.downloadAvatar(artistId: artist.id, artistImageUrl: artist.artistImageUrl)
+									self.image = downloadedImage
+								} catch {
+									let downloadedImage = try await SubsonicClient.shared.coverArt(albumId: artist.coverArt)
+									self.image = downloadedImage
+								}
+							}
 						}
 					}
 			}

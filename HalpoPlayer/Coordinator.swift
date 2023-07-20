@@ -28,8 +28,8 @@ class Coordinator: ObservableObject {
 	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist) {
 		path.append(Destination.playlist(playlist: playlist))
 	}
-	func goToArtist(artistId: String) {
-		path.append(Destination.artist(artistId: artistId))
+	func goToArtist(artistId: String, artistName: String) {
+		path.append(Destination.artist(artistId: artistId, artistName: artistName))
 	}
 }
 
@@ -40,7 +40,7 @@ enum Destination: Hashable {
 	case albumViewOffline(album: Album)
 	case search
 	case playlist(playlist: GetPlaylistsResponse.Playlist)
-	case artist(artistId: String)
+	case artist(artistId: String, artistName: String)
 }
 
 class ViewFactory {
@@ -63,8 +63,8 @@ class ViewFactory {
 			OfflineAlbumView(album: album)
 		case .playlist(let playlist):
 			PlaylistView(playlist: playlist)
-		case .artist(let id):
-			ArtistView(artistId: id)
+		case .artist(let id, let artistName):
+			ArtistView(artistId: id, artistName: artistName)
 		}
 	}
 }

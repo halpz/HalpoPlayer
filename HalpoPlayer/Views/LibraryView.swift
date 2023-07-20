@@ -99,7 +99,7 @@ struct ArtistListView: View {
 		}
 		List(viewModel.artists) { artist in
 			Button {
-				coordinator.goToArtist(artistId: artist.id)
+				coordinator.goToArtist(artistId: artist.id, artistName: artist.name)
 			} label: {
 				ArtistCell(artist: artist)
 			}

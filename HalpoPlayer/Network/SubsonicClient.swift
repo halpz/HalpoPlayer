@@ -118,15 +118,15 @@ class SubsonicClient {
 			throw HalpoError.imageDecode
 		}
 	}
-	func downloadAvatar(artist: GetIndexesResponse.Artist) async throws -> UIImage {
-		if let image = Database.shared.imageCache.image(albumId: artist.id) {
+	func downloadAvatar(artistId: String, artistImageUrl: String) async throws -> UIImage {
+		if let image = Database.shared.imageCache.image(albumId: artistId) {
 			return image
 		}
-		let url = URL(string: artist.artistImageUrl)!
+		let url = URL(string: artistImageUrl)!
 		let urlRequest = URLRequest(url: url)
 		let (data, _) = try await session.data(for: urlRequest)
 		if let image = UIImage(data: data) {
-			Database.shared.imageCache.cacheImage(albumId: artist.id, image: image)
+			Database.shared.imageCache.cacheImage(albumId: artistId, image: image)
 			return image
 		} else {
 			throw HalpoError.imageDecode
