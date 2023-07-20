@@ -32,6 +32,7 @@ class AudioManager: ObservableObject {
 		self.queue.event.stateChange.addListener(self, handleAudioPlayerStateChange)
 		self.queue.event.secondElapse.addListener(self, handleAudioPlayerSecondElapse)
 		self.queue.event.updateDuration.addListener(self, handleAudioPlayerUpdateDuration)
+		self.queue.remoteCommandController.handlePreviousTrackCommand = handlePreviousTrackCommand
 		self.queue.event.fail.addListener(self, handleAudioPlayerError)
 		self.queue.remoteCommands = [
 			.play,
@@ -40,7 +41,6 @@ class AudioManager: ObservableObject {
 			.next,
 			.previous
 		]
-		self.queue.remoteCommandController.handlePreviousTrackCommand = handlePreviousTrackCommand
 	}
 	
 	func play(songs: [Song], index: Int) {
