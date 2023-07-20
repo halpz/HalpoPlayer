@@ -40,11 +40,22 @@ struct ArtistView: View {
 			}
 		}
 		.listStyle(.plain)
+		.toolbar {
+			ToolbarItem(placement: .navigationBarTrailing) {
+				Button {
+					viewModel.shuffle()
+				} label: {
+					Image(systemName: "shuffle").imageScale(.large)
+				}
+			}
+		}
 	}
 }
 
 class ArtistViewModel: ObservableObject {
+	var player = AudioManager.shared
 	var artistId: String
+	var response: GetArtistResponse?
 	@Published var albums: [Album]?
 	var artistName: String
 	@Published var image: UIImage?
@@ -57,6 +68,7 @@ class ArtistViewModel: ObservableObject {
 		Task {
 			do {
 				let response = try await SubsonicClient.shared.getArtist(id: artistId)
+				
 				let albums = response.subsonicResponse.artist.album.map { Album(artistResponse: $0)}
 				
 				var artistImage: UIImage?
@@ -77,11 +89,25 @@ class ArtistViewModel: ObservableObject {
 				}
 				let finalImage = artistImage
 				DispatchQueue.main.async {
+					self.response = response
 					self.image = finalImage
 					self.albums = albums
 				}
 			} catch {
 				print(error)
+			}
+		}
+	}
+	func shuffle() {
+		Task {
+			var songs = [Song]()
+			for album in self.response?.subsonicResponse.artist.album ?? [] {
+				let respones = try await SubsonicClient.shared.getAlbum(id: album.id)
+				songs.append(contentsOf: respones.subsonicResponse.album.song)
+			}
+			let finalSongs = songs
+			DispatchQueue.main.async {
+				self.player.play(songs:finalSongs, index: 0)
 			}
 		}
 	}
