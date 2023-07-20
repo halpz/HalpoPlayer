@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */; };
 		DA7F1E842A652DD7006D8934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E832A652DD7006D8934 /* Assets.xcassets */; };
 		DA7F1E872A652DD7006D8934 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E862A652DD7006D8934 /* Preview Assets.xcassets */; };
@@ -35,7 +36,7 @@
 		DA7F1EC22A652E2A006D8934 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EB92A652E2A006D8934 /* LoginView.swift */; };
 		DA7F1EC32A652E2A006D8934 /* MediaControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBA2A652E2A006D8934 /* MediaControlBar.swift */; };
 		DA7F1EC42A652E2A006D8934 /* AirPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBB2A652E2A006D8934 /* AirPlayView.swift */; };
-		DA7F1EC52A652E2A006D8934 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBC2A652E2A006D8934 /* ContentView.swift */; };
+		DA7F1EC52A652E2A006D8934 /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBC2A652E2A006D8934 /* AlbumsView.swift */; };
 		DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EBD2A652E2A006D8934 /* SongCell.swift */; };
 		DA7F1ECA2A652EAC006D8934 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */; };
 		DA7F1EEF2A656074006D8934 /* OfflineAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HalpoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalpoPlayerApp.swift; sourceTree = "<group>"; };
 		DA7F1E832A652DD7006D8934 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,7 +84,7 @@
 		DA7F1EB92A652E2A006D8934 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA7F1EBA2A652E2A006D8934 /* MediaControlBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlBar.swift; sourceTree = "<group>"; };
 		DA7F1EBB2A652E2A006D8934 /* AirPlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirPlayView.swift; sourceTree = "<group>"; };
-		DA7F1EBC2A652E2A006D8934 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DA7F1EBC2A652E2A006D8934 /* AlbumsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		DA7F1EBD2A652E2A006D8934 /* SongCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		DA7F1EC72A652E43006D8934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA7F1ECB2A653079006D8934 /* HalpoPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HalpoPlayer.entitlements; sourceTree = "<group>"; };
@@ -205,12 +207,13 @@
 				DA7F1EB92A652E2A006D8934 /* LoginView.swift */,
 				DA7F1EBA2A652E2A006D8934 /* MediaControlBar.swift */,
 				DA7F1EBB2A652E2A006D8934 /* AirPlayView.swift */,
-				DA7F1EBC2A652E2A006D8934 /* ContentView.swift */,
+				DA7F1EBC2A652E2A006D8934 /* AlbumsView.swift */,
 				DA7F1EBD2A652E2A006D8934 /* SongCell.swift */,
 				DA7F1EB82A652E2A006D8934 /* AlbumCell.swift */,
 				DA86C7CB2A669D4F0082659C /* PlaylistsView.swift */,
 				DA86C7CF2A66A2190082659C /* PlaylistView.swift */,
 				DA86C7D32A66AB0B0082659C /* PlaylistCell.swift */,
+				DA3E7C342A69213900DD5180 /* SideMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,9 +306,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */,
 				DA7F1EC42A652E2A006D8934 /* AirPlayView.swift in Sources */,
 				DA7F1EAB2A652E1E006D8934 /* Error.swift in Sources */,
-				DA7F1EC52A652E2A006D8934 /* ContentView.swift in Sources */,
+				DA7F1EC52A652E2A006D8934 /* AlbumsView.swift in Sources */,
 				DA7F1E922A652DF4006D8934 /* Coordinator.swift in Sources */,
 				DA7F1EAC2A652E1E006D8934 /* SubsonicClient.swift in Sources */,
 				DA86C7CE2A669FA80082659C /* GetPlaylistsResponse.swift in Sources */,

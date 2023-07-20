@@ -10,7 +10,7 @@ import SwiftAudioEx
 
 @main
 struct halpoplayerApp: App {
-	@ObservedObject var homeCoordinator = Coordinator()
+	@ObservedObject var libraryCoordinator = Coordinator()
 	@ObservedObject var downloadsCoordinator = Coordinator()
 	@ObservedObject var playlistsCoordinator = Coordinator()
 	@ObservedObject var searchCoordinator = Coordinator()
@@ -18,14 +18,14 @@ struct halpoplayerApp: App {
 	@ObservedObject var player = AudioManager.shared
 	@ObservedObject var accountHolder = AccountHolder.shared
 	@ObservedObject var mediaControlBarMinimized = MediaControlBarMinimized.shared
-	@State var selectedTab: AppTab = .home
+	@State var selectedTab: AppTab = .library
 	var body: some Scene {
 		WindowGroup {
 			VStack {
 				switch selectedTab {
-				case .home:
-					NavigationStack(path: $homeCoordinator.path) {
-						ContentView()
+				case .library:
+					NavigationStack(path: $libraryCoordinator.path) {
+						AlbumsView()
 							.navigationDestination(for: Destination.self) { destination in
 								ViewFactory.viewForDestination(destination)
 							}
@@ -99,8 +99,8 @@ struct halpoplayerApp: App {
 	}
 	func coordinatorForTab(tab: AppTab) -> Coordinator {
 		switch tab {
-		case .home:
-			return homeCoordinator
+		case .library:
+			return libraryCoordinator
 		case .downloads:
 			return downloadsCoordinator
 		case .playlists:
@@ -124,11 +124,11 @@ struct halpoplayerApp: App {
 }
 
 enum AppTab: String, CaseIterable, Hashable {
-	case home, downloads, playlists, search
+	case library, downloads, playlists, search
 	var iconName: String {
 		switch self {
-		case .home:
-			return "house"
+		case .library:
+			return "books.vertical"
 		case .downloads:
 			return "arrow.down.square"
 		case .playlists:

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  AlbumsView.swift
 //  halpoplayer
 //
 //  Created by paul on 07/07/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct AlbumsView: View {
 	@StateObject var viewModel = ContentViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
@@ -27,15 +27,13 @@ struct ContentView: View {
 					MediaControlBarMinimized.shared.isCompact = true
 				}
 			}))
-			
 			.refreshable {
 				viewModel.refresh()
 			}
-			
 			.listStyle(.plain)
 			.searchable(text: $viewModel.searchText, prompt: "Search albums")
 			.scrollDismissesKeyboard(.immediately)
-			.navigationTitle("Music")
+			.navigationTitle("Albums")
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .navigationBarLeading) {
