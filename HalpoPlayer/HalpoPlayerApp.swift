@@ -25,7 +25,7 @@ struct halpoplayerApp: App {
 				switch selectedTab {
 				case .library:
 					NavigationStack(path: $libraryCoordinator.path) {
-						AlbumsView()
+						LibraryView()
 							.navigationDestination(for: Destination.self) { destination in
 								ViewFactory.viewForDestination(destination)
 							}

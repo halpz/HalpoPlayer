@@ -15,6 +15,7 @@ class Database: ObservableObject {
 	@Published var searchResults: Search2Response?
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
+	@Published var libraryViewType: LibraryViewType = .albums
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
 			guard let data = try? JSONEncoder().encode(musicCache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {

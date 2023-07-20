@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AlbumsView: View {
+struct LibraryView: View {
 	@StateObject var viewModel = ContentViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
@@ -33,9 +33,28 @@ struct AlbumsView: View {
 			.listStyle(.plain)
 			.searchable(text: $viewModel.searchText, prompt: "Search albums")
 			.scrollDismissesKeyboard(.immediately)
-			.navigationTitle("Albums")
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
+				ToolbarItem(placement: .principal) {
+					Menu {
+						ForEach(LibraryViewType.allCases, id: \.self) { menuItem in
+							Button {
+								viewModel.viewType = menuItem
+							} label: {
+								Text(menuItem.rawValue.capitalized)
+									.foregroundColor(menuItem == viewModel.viewType ? .accentColor : .primary)
+							}
+						}
+					} label: {
+						HStack {
+							Text(viewModel.viewType.rawValue.capitalized)
+								.font(Font.headline)
+								.foregroundColor(.primary)
+							Image(systemName: "chevron.down.circle")
+								.font(.system(size: 12))
+						}
+					}
+				}
 				ToolbarItem(placement: .navigationBarLeading) {
 					Button {
 						viewModel.goToLogin(coordinator: coordinator)

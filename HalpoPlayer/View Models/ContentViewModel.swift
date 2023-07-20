@@ -10,6 +10,7 @@ import UIKit
 
 class ContentViewModel: ObservableObject {
 	@Published var searchText: String
+	@Published var viewType = Database.shared.libraryViewType
 	var player = AudioManager.shared
 	var database = Database.shared
 	var results: [GetAlbumListResponse.Album] {
