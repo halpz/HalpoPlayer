@@ -39,6 +39,9 @@ struct ArtistView: View {
 				.listRowSeparator(.hidden)
 			}
 		}
+		.refreshable {
+			viewModel.getArtistAlbums()
+		}
 		.listStyle(.plain)
 		.toolbar {
 			ToolbarItem(placement: .navigationBarTrailing) {
