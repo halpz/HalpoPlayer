@@ -130,12 +130,9 @@ class ArtistViewModel: ObservableObject {
 		let bio = info.subsonicResponse.artistInfo.biography
 		let pattern = /<a target='_blank' href="(?<url>.+?)\" rel=\"nofollow\">(?<text>.+?)<\/a>/
 		if let result = bio.firstMatch(of: pattern) {
-			print("URL: \(result.url)")
-			print("TEXT: \(result.text)")
 			let string = bio.replacing(pattern.regex) { match in
 				"[\(match.output.text)](\(match.output.url))"
 			}
-			print("Adjusted string: \(string)")
 			DispatchQueue.main.async {
 				self.info = info
 				self.bio = string
