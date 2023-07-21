@@ -46,12 +46,12 @@ class SubsonicClient {
 		}
 		
 		
-		switch api {
-		case .getArtistInfo:
-			printJSONData(data)
-		default:
-			break
-		}
+//		switch api {
+//		case .getArtistInfo:
+//			printJSONData(data)
+//		default:
+//			break
+//		}
 			
 		return try JSONDecoder().decode(T.self, from: data)
 	}

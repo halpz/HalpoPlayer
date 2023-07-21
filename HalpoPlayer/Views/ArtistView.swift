@@ -30,8 +30,10 @@ struct ArtistView: View {
 			}
 			.padding()
 			.listRowSeparator(.hidden)
-			if let info = viewModel.info {
-				Text(info.subsonicResponse.artistInfo.biography)
+			if let bio = viewModel.bio {
+				let markdown = LocalizedStringKey(stringLiteral: bio)
+				LongText(markdown)
+					.font(.body)
 			}
 			ForEach(viewModel.albums ?? []) { album in
 				Button {
@@ -43,7 +45,7 @@ struct ArtistView: View {
 			}
 		}
 		.refreshable {
-			viewModel.getArtistAlbums()
+			viewModel.loadData()
 		}
 		.listStyle(.plain)
 		.toolbar {
@@ -70,57 +72,73 @@ class ArtistViewModel: ObservableObject {
 	init(artistId: String, artistName: String) {
 		self.artistId = artistId
 		self.artistName = artistName
-		getArtistAlbums()
+		loadData()
 	}
-	func getArtistAlbums() {
+	func loadData() {
 		Task {
 			do {
 				let response = try await SubsonicClient.shared.getArtist(id: artistId)
+				self.response = response
 				let albums = response.subsonicResponse.artist.album.map { Album(artistResponse: $0)}
-				var artistImage: UIImage?
-				let artist = response.subsonicResponse.artist
-				if let image = Database.shared.imageCache.image(albumId: artist.id) {
-					artistImage = image
-				} else if let image = Database.shared.imageCache.image(albumId: artist.coverArt) {
-					artistImage = image
-				} else {
-					do {
-						let downloadedImage = try await SubsonicClient.shared.downloadAvatar(artistId: artistId, artistImageUrl: artist.artistImageUrl)
-						artistImage = downloadedImage
-					} catch {
-						let downloadedImage = try await SubsonicClient.shared.coverArt(albumId: artist.coverArt)
-						artistImage = downloadedImage
-					}
-				}
-				let finalImage = artistImage
 				DispatchQueue.main.async {
-					self.response = response
-					self.image = finalImage
 					self.albums = albums
 				}
 			} catch {
 				print(error)
 			}
-//			do {
-//				let info = try await SubsonicClient.shared.getArtistInfo(id: artistId)
-//
-////				let pattern = "<a target='_blank' href=\"(.+)\" rel=\"nofollow\">(.+)</a>"
-////
-////				let string = info.subsonicResponse.artistInfo.biography.replacingOccurrences(of: pattern,
-////												  with: "[$2]($1)",
-////												  options: .regularExpression,
-////												  range: nil)
-//
-//
-//				let string = info.subsonicResponse.artistInfo.biography
-//
-//				DispatchQueue.main.async {
-//					self.info = info
-//					self.bio = string
-//				}
-//			} catch {
-//				print("could not get artist info: \(error)")
-//			}
+			do {
+				try await getArtistImage()
+			} catch {
+				print("Could not get artist image: \(error)")
+			}
+			do {
+				try await getArtistBio()
+			} catch {
+				print("could not get artist info: \(error)")
+			}
+		}
+	}
+	func getArtistImage() async throws {
+		guard let artist = response?.subsonicResponse.artist else {
+			throw HalpoError.noURL
+		}
+		var artistImage: UIImage?
+		
+		if let image = Database.shared.imageCache.image(albumId: artist.id) {
+			artistImage = image
+		} else if let image = Database.shared.imageCache.image(albumId: artist.coverArt) {
+			artistImage = image
+		} else {
+			do {
+				let downloadedImage = try await SubsonicClient.shared.downloadAvatar(artistId: artistId, artistImageUrl: artist.artistImageUrl)
+				artistImage = downloadedImage
+			} catch {
+				let downloadedImage = try await SubsonicClient.shared.coverArt(albumId: artist.coverArt)
+				artistImage = downloadedImage
+			}
+		}
+		let finalImage = artistImage
+		DispatchQueue.main.async {
+			self.image = finalImage
+		}
+	}
+	func getArtistBio() async throws {
+		let info = try await SubsonicClient.shared.getArtistInfo(id: artistId)
+		let bio = info.subsonicResponse.artistInfo.biography
+		let pattern = /<a target='_blank' href="(?<url>.+?)\" rel=\"nofollow\">(?<text>.+?)<\/a>/
+		if let result = bio.firstMatch(of: pattern) {
+			print("URL: \(result.url)")
+			print("TEXT: \(result.text)")
+			let string = bio.replacing(pattern.regex) { match in
+				"[\(match.output.text)](\(match.output.url))"
+			}
+			print("Adjusted string: \(string)")
+			DispatchQueue.main.async {
+				self.info = info
+				self.bio = string
+			}
+		} else {
+			print("No match")
 		}
 	}
 	func shuffle() {

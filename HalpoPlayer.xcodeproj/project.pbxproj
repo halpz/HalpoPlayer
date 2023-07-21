@@ -15,6 +15,7 @@
 		DA3E7C3F2A69420100DD5180 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */; };
 		DA3E7C412A69896600DD5180 /* GetArtistInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C402A69896600DD5180 /* GetArtistInfoResponse.swift */; };
 		DA3E7C432A698BDC00DD5180 /* HTMLConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C422A698BDC00DD5180 /* HTMLConverter.swift */; };
+		DA470E7B2A6A8110001EFA80 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */; };
 		DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */; };
 		DA7F1E842A652DD7006D8934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E832A652DD7006D8934 /* Assets.xcassets */; };
 		DA7F1E872A652DD7006D8934 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E862A652DD7006D8934 /* Preview Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		DA3E7C402A69896600DD5180 /* GetArtistInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistInfoResponse.swift; sourceTree = "<group>"; };
 		DA3E7C422A698BDC00DD5180 /* HTMLConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLConverter.swift; sourceTree = "<group>"; };
+		DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableText.swift; sourceTree = "<group>"; };
 		DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HalpoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalpoPlayerApp.swift; sourceTree = "<group>"; };
 		DA7F1E832A652DD7006D8934 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				DA7F1E832A652DD7006D8934 /* Assets.xcassets */,
 				DA7F1E852A652DD7006D8934 /* Preview Content */,
 				DA3E7C422A698BDC00DD5180 /* HTMLConverter.swift */,
+				DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */,
 			);
 			path = HalpoPlayer;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
 				DA7F1EBF2A652E2A006D8934 /* AlbumDetailView.swift in Sources */,
 				DA3E7C432A698BDC00DD5180 /* HTMLConverter.swift in Sources */,
+				DA470E7B2A6A8110001EFA80 /* ExpandableText.swift in Sources */,
 				DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */,
 				DA7F1EB32A652E25006D8934 /* Database.swift in Sources */,
 				DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */,
