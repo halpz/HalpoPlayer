@@ -14,7 +14,7 @@ class DownloadsViewModel: ObservableObject {
 	var database = Database.shared
 	init() {
 		showAlert = false
-		downloadsType = .songs
+		downloadsType = .albums
 		searchText = ""
 	}
 	var downloads: [CachedSong] {

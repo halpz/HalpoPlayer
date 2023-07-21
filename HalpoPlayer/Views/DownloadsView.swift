@@ -107,5 +107,5 @@ struct DownloadsView: View {
 }
 
 enum DownloadsType: String, CaseIterable {
-	case songs, albums
+	case albums, songs
 }
