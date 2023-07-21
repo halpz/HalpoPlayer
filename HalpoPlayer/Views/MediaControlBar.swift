@@ -13,6 +13,7 @@ struct MediaControlBar: View {
 	@EnvironmentObject var compact: MediaControlBarMinimized
 	@ObservedObject var timeline = TimelineManager.shared
 	@Environment(\.colorScheme) var colorScheme
+	@State private var dragAmount = CGSize.zero
 	var buttonSize: CGFloat {
 		return compact.isCompact ? 28 : 48
 	}
@@ -181,6 +182,21 @@ struct MediaControlBar: View {
 					Color.init(red: 0, green: 0, blue: 0, opacity: 0.1)
 				}
 			}
+			.gesture(
+				DragGesture()
+					.onChanged { dragAmount = $0.translation }
+					.onEnded { _ in dragAmount = .zero }
+			)
+			.gesture(DragGesture(minimumDistance: 30)
+				.onEnded { value in
+					if !compact.isCompact {
+						if value.translation.height > 0 {
+							withAnimation {
+								compact.isCompact = true
+							}
+						}
+					}
+				})
 		} else {
 			EmptyView()
 		}
@@ -210,4 +226,23 @@ struct MediaControlBar: View {
 class MediaControlBarMinimized: ObservableObject {
 	static let shared = MediaControlBarMinimized()
 	@Published var isCompact = false
+}
+
+
+struct myView: View {
+	@State var isCompact = false
+	var body: some View {
+		Text("")
+		Text("")
+		if isCompact {
+			Text("")
+		}
+		Image("")
+		Text("")
+		Button {
+			isCompact.toggle()
+		} label: {
+			Text("button")
+		}
+	}
 }

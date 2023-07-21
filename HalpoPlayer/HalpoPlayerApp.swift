@@ -53,16 +53,7 @@ struct halpoplayerApp: App {
 					}
 				}
 				MediaControlBar()
-					.gesture(DragGesture(minimumDistance: 30)
-						.onEnded({ value in
-							if !MediaControlBarMinimized.shared.isCompact {
-								if value.translation.height > 0 {
-									withAnimation {
-										MediaControlBarMinimized.shared.isCompact = true
-									}
-								}
-							}
-						}))
+					
 				HStack {
 					ForEach(AppTab.allCases, id: \.self) { tab in
 						Spacer()
