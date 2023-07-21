@@ -31,6 +31,9 @@ class Coordinator: ObservableObject {
 	func goToArtist(artistId: String, artistName: String) {
 		path.append(Destination.artist(artistId: artistId, artistName: artistName))
 	}
+	func selectPlaylist(song: Song) {
+		path.append(Destination.playlistSelect(song: song))
+	}
 }
 
 enum Destination: Hashable {
@@ -41,6 +44,7 @@ enum Destination: Hashable {
 	case search
 	case playlist(playlist: GetPlaylistsResponse.Playlist)
 	case artist(artistId: String, artistName: String)
+	case playlistSelect(song: Song)
 }
 
 class ViewFactory {
@@ -65,6 +69,8 @@ class ViewFactory {
 			PlaylistView(playlist: playlist)
 		case .artist(let id, let artistName):
 			ArtistView(artistId: id, artistName: artistName)
+		case .playlistSelect(let song):
+			PlaylistsView(song)
 		}
 	}
 }

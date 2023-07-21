@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct PlaylistsView: View {
-	@StateObject var viewModel = PlaylistsViewModel()
+	@StateObject var viewModel: PlaylistsViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
+	init(_ song: Song? = nil) {
+		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song))
+	}
 	var body: some View {
 		if let playlists = database.playlists {
 			List {
 				ForEach(playlists.subsonicResponse.playlists.playlist, id: \.self) { playlist in
 					Button {
-						viewModel.goToPlaylist(playlist: playlist, coordinator: coordinator)
+						if viewModel.song != nil {
+							viewModel.addSongToPlaylist(playlistId: playlist.id, coordinator: coordinator)
+						} else {
+							viewModel.goToPlaylist(playlist: playlist, coordinator: coordinator)
+						}
 					} label: {
-						PlaylistCell(playlist: playlist)
+						PlaylistCell(showChevron: viewModel.song == nil, playlist: playlist)
 					}
 					.listRowSeparator(.hidden)
 					.onAppear {
@@ -32,7 +39,7 @@ struct PlaylistsView: View {
 				viewModel.getPlaylists()
 			}
 			.listStyle(.plain)
-			.navigationTitle("Playlists")
+			.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")
 		} else {
 			ProgressView()
 		}

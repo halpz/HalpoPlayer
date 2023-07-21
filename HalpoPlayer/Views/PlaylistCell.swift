@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct PlaylistCell: View {
+	var showChevron = true
 	var playlist: GetPlaylistsResponse.Playlist
 	@State private var image: UIImage?
 	var body: some View {
@@ -33,8 +34,10 @@ struct PlaylistCell: View {
 					.foregroundColor(.secondary)
 			}
 			Spacer()
-			Image(systemName: "chevron.right")
-				.font(.body)
+			if showChevron {
+				Image(systemName: "chevron.right")
+					.font(.body)
+			}
 		}
 		.padding(8)
 		

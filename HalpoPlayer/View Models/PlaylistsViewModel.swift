@@ -8,7 +8,14 @@
 import Foundation
 
 class PlaylistsViewModel: ObservableObject {
+	var song: Song?
 	var database = Database.shared
+	init(_ song: Song? = nil) {
+		self.song = song
+		if database.playlists == nil {
+			getPlaylists()
+		}
+	}
 	func getPlaylists() {
 		Task {
 			do {
@@ -28,9 +35,13 @@ class PlaylistsViewModel: ObservableObject {
 		guard MediaControlBarMinimized.shared.isCompact == false else { return }
 		MediaControlBarMinimized.shared.isCompact = true
 	}
-	init() {
-		if database.playlists == nil {
-			getPlaylists()
+	func addSongToPlaylist(playlistId: String, coordinator: Coordinator) {
+		Task {
+			guard let songId = song?.id else { return }
+			_ = try await SubsonicClient.shared.addSongToPlaylist(playlistId: playlistId, songId: songId)
+			DispatchQueue.main.async {
+				coordinator.path.removeLast()
+			}
 		}
 	}
 }

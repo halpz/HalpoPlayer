@@ -43,7 +43,8 @@ struct GetPlaylistResponse: Codable {
 		let bitRate: Int
 		let isVideo: Bool
 		let duration: Int
-		let artistId, path: String
+		let path: String
+		let artistId: String?
 		let year: Int
 		let parent: String
 		let size: Int

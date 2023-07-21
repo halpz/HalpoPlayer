@@ -89,7 +89,8 @@ struct AlbumDetailView: View {
 						}
 						.swipeActions {
 							Button {
-								viewModel.addSongToQueue(song: song)
+//								viewModel.addSongToQueue(song: song)
+								viewModel.addSongToPlaylist(song: song, coordinator: coordinator)
 							} label: {
 								Image(systemName: "text.badge.plus").imageScale(.large)
 							}

@@ -52,8 +52,14 @@ class SubsonicClient {
 //		default:
 //			break
 //		}
+		do {
+			return try JSONDecoder().decode(T.self, from: data)
+		} catch {
+			print(error)
+			throw HalpoError.imageDecode
+		}
 			
-		return try JSONDecoder().decode(T.self, from: data)
+		
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
 		guard let currentAddress = currentAddress else {
@@ -161,6 +167,9 @@ class SubsonicClient {
 	}
 	func updatePlaylist(id: String, songs: [Song]) async throws -> BasicResponse {
 		return try await request(.updatePlaylist(id: id, songs: songs)) as BasicResponse
+	}
+	func addSongToPlaylist(playlistId: String, songId: String) async throws -> BasicResponse{
+		return try await request(.addSongToPlaylist(playlistId: playlistId, songId: songId)) as BasicResponse
 	}
 	func getArtists() async throws -> GetArtistsResponse {
 		return try await request(.getArtists) as GetArtistsResponse
