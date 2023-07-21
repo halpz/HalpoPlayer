@@ -33,7 +33,10 @@ struct ArtistView: View {
 			if let bio = viewModel.bio {
 				let markdown = LocalizedStringKey(stringLiteral: bio)
 				ExpandableText(markdown)
-					.font(.body)
+					.font(.body).lineSpacing(4)
+					.padding(8)
+					.background(Color("TextBackground"))
+					.cornerRadius(8)
 			}
 			ForEach(viewModel.albums ?? []) { album in
 				Button {

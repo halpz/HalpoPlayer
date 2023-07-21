@@ -25,9 +25,10 @@ struct GetArtistInfoResponse: Codable {
 	// MARK: - ArtistInfo
 	struct ArtistInfo: Codable {
 		let largeImageUrl, mediumImageUrl, smallImageUrl: String
-		let similarArtist: [SimilarArtist]
+		let similarArtist: [SimilarArtist]?
 		let lastFmUrl: String
-		let biography, musicBrainzId: String
+		let biography: String
+		let musicBrainzId: String?
 	}
 
 	// MARK: - SimilarArtist
