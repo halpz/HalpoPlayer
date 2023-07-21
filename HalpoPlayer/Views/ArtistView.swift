@@ -32,7 +32,7 @@ struct ArtistView: View {
 			.listRowSeparator(.hidden)
 			if let bio = viewModel.bio {
 				let markdown = LocalizedStringKey(stringLiteral: bio)
-				LongText(markdown)
+				ExpandableText(markdown)
 					.font(.body)
 			}
 			ForEach(viewModel.albums ?? []) { album in

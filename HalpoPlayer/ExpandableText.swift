@@ -7,14 +7,10 @@
 
 import SwiftUI
 
-struct LongText: View {
+struct ExpandableText: View {
 
-	/* Indicates whether the user want to see all the text or not. */
 	@State private var expanded: Bool = false
-
-	/* Indicates whether the text has been truncated in its display. */
 	@State private var truncated: Bool = false
-
 	private var text: String
 	private var localizedStringKey: LocalizedStringKey?
 
@@ -27,8 +23,6 @@ struct LongText: View {
 	}
 
 	private func determineTruncation(_ geometry: GeometryProxy) {
-		// Calculate the bounding box we'd need to render the
-		// text given the width from the GeometryReader.
 		let total = self.text.boundingRect(
 			with: CGSize(
 				width: geometry.size.width,
