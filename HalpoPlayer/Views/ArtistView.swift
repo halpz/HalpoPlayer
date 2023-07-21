@@ -128,17 +128,10 @@ class ArtistViewModel: ObservableObject {
 	func getArtistBio() async throws {
 		let info = try await SubsonicClient.shared.getArtistInfo(id: artistId)
 		let bio = info.subsonicResponse.artistInfo.biography
-		let pattern = /<a target='_blank' href="(?<url>.+?)\" rel=\"nofollow\">(?<text>.+?)<\/a>/
-		if let result = bio.firstMatch(of: pattern) {
-			let string = bio.replacing(pattern.regex) { match in
-				"[\(match.output.text)](\(match.output.url))"
-			}
-			DispatchQueue.main.async {
-				self.info = info
-				self.bio = string
-			}
-		} else {
-			print("No match")
+		let string = bio.replacingOccurrences(of: "<a target='_blank' href=\"(.+)\" rel=\"nofollow\">(.+)</a>", with: "[$2]($1)", options: .regularExpression, range: nil)
+		DispatchQueue.main.async {
+			self.info = info
+			self.bio = string
 		}
 	}
 	func shuffle() {
