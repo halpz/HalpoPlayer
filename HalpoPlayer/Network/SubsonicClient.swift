@@ -25,10 +25,8 @@ class SubsonicClient {
 		var urlRequest = URLRequest(url: URL(string: address)!)
 		urlRequest.httpMethod = "HEAD"
 		urlRequest.timeoutInterval = 5
-		do {
-			_ = try await session.data(for: urlRequest)
-			currentAddress = address
-		}
+		_ = try await session.data(for: urlRequest)
+		currentAddress = address
 	}
 	func request<T: Decodable>(_ api: SubsonicAPI) async throws -> T {
 		guard let currentAddress = currentAddress else {
