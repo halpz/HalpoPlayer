@@ -70,7 +70,7 @@ class ViewFactory {
 		case .artist(let id, let artistName):
 			ArtistView(artistId: id, artistName: artistName)
 		case .playlistSelect(let song):
-			PlaylistsView(song)
+			PlaylistsView(song, refresh: true)
 		}
 	}
 }

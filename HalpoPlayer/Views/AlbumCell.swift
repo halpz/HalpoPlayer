@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AlbumCell: View {
+	@EnvironmentObject var database: Database
 	let album: Album
 	var showArtistName = true
 	@State var image: UIImage?
@@ -40,6 +41,10 @@ struct AlbumCell: View {
 					}
 				}
 				Spacer()
+				if database.downloadedAlbums[album.id] ?? false {
+					Image(systemName: "arrow.down.circle.fill").imageScale(.large)
+						.foregroundColor(.green)
+				}
 				Image(systemName: "chevron.right")
 					.font(.body)
 			}

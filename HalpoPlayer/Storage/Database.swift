@@ -17,6 +17,19 @@ class Database: ObservableObject {
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
 	@Published var libraryViewType: LibraryViewType = .albums
+	@Published var downloadedAlbums: [String: Bool] {
+		didSet {
+			guard let data = try? JSONEncoder().encode(downloadedAlbums), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+				return
+			}
+			let path = documentsUrl.appendingPathComponent("isDownloadedCache")
+			guard FileManager.default.fileExists(atPath: path.path()) else {
+				FileManager.default.createFile(atPath: path.path(), contents: data)
+				return
+			}
+			try? data.write(to: path)
+		}
+	}
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
 			guard let data = try? JSONEncoder().encode(musicCache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
@@ -40,10 +53,18 @@ class Database: ObservableObject {
 			   let decodedMusicCache = try? decoder.decode([String: CachedSong].self, from: musicCacheData) {
 				self.musicCache = decodedMusicCache
 			} else {
-				self.musicCache = [String: CachedSong]()
+				self.musicCache = [:]
+			}
+			let isDownloadedCache = documentsUrl.appendingPathComponent("isDownloadedCache")
+			if FileManager.default.fileExists(atPath: isDownloadedCache.path()), let isDownloadedCacheData = try? Data(contentsOf: isDownloadedCache),
+			   let decodedIsDownloadedCache = try? decoder.decode([String: Bool].self, from: isDownloadedCacheData) {
+				self.downloadedAlbums = decodedIsDownloadedCache
+			} else {
+				self.downloadedAlbums = [:]
 			}
 		} else {
-			self.musicCache = [String: CachedSong]()
+			self.musicCache = [:]
+			self.downloadedAlbums = [:]
 		}
 	}
 	func downloadSong(song: Song) async throws -> CachedSong {

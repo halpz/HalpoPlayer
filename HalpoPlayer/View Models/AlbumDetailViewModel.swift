@@ -54,6 +54,7 @@ class AlbumDetailViewModel: ObservableObject {
 				}
 			}
 		}
+		database.downloadedAlbums[albumId] = true
 	}
 	func playSong(song: Song, songs: [Song]) {
 		if let index = songs.firstIndex(of: song) {
@@ -83,6 +84,7 @@ class AlbumDetailViewModel: ObservableObject {
 		for song in albumResponse?.subsonicResponse.album.song ?? [] where database.musicCache[song.id] != nil {
 			database.deleteSong(song: song)
 		}
+		database.downloadedAlbums[albumId] = false
 	}
 	func getAlbum(callback: (() -> Void)? = nil) {
 		Task {
@@ -98,6 +100,19 @@ class AlbumDetailViewModel: ObservableObject {
 				print(error)
 			}
 		}
+	}
+	func isAlbumDownloaded() {
+		guard let songs = albumResponse?.subsonicResponse.album.song else {
+			database.downloadedAlbums[albumId] = false
+			return
+		}
+		var downloaded = true
+		for song in songs {
+			if database.musicCache[song.id] == nil {
+				downloaded = false
+			}
+		}
+		database.downloadedAlbums[albumId] = downloaded
 	}
 	func playButtonPressed() {
 		if let currentSong = player.currentSong,

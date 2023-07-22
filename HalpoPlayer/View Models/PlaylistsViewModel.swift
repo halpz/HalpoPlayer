@@ -10,9 +10,9 @@ import Foundation
 class PlaylistsViewModel: ObservableObject {
 	var song: Song?
 	var database = Database.shared
-	init(_ song: Song? = nil) {
+	init(_ song: Song? = nil, refresh: Bool = false) {
 		self.song = song
-		if database.playlists == nil {
+		if database.playlists == nil || refresh {
 			getPlaylists()
 		}
 	}

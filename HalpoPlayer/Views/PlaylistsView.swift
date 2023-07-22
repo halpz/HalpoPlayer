@@ -11,8 +11,8 @@ struct PlaylistsView: View {
 	@StateObject var viewModel: PlaylistsViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
-	init(_ song: Song? = nil) {
-		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song))
+	init(_ song: Song? = nil, refresh: Bool = false) {
+		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song, refresh: refresh))
 	}
 	var body: some View {
 		if let playlists = database.playlists {
