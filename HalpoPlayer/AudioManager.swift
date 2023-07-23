@@ -44,6 +44,7 @@ class AudioManager: ObservableObject {
 	}
 	
 	func play(songs: [Song], index: Int) {
+		self.activateSession()
 		self.queue.stop()
 		for (i, _) in self.queue.items.enumerated() {
 			try? self.queue.removeItem(at: i)
@@ -54,6 +55,13 @@ class AudioManager: ObservableObject {
 		}
 		try? self.queue.jumpToItem(atIndex: index, playWhenReady: true)
 		self.currentSong = songs[index]
+	}
+	
+	func activateSession() {
+		if !AudioSessionController.shared.audioSessionIsActive {
+			try AudioSessionController.shared.set(category: .playback)
+			try AudioSessionController.shared.activateSession()
+		}
 	}
 	
 	func addSongToQueue(song: Song) {

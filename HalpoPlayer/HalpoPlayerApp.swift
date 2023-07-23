@@ -104,8 +104,6 @@ struct halpoplayerApp: App {
 		Task {
 			do {
 				UIApplication.shared.beginReceivingRemoteControlEvents()
-				try AudioSessionController.shared.set(category: .playback)
-				try AudioSessionController.shared.activateSession()
 				_ = try await SubsonicClient.shared.authenticate()
 			} catch {
 				print(error)
