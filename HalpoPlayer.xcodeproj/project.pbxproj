@@ -58,6 +58,7 @@
 		DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */; };
 		DA86C7D82A66AB330082659C /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */; };
 		DA86C7F42A66EDA30082659C /* BasicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7F32A66EDA30082659C /* BasicResponse.swift */; };
+		DAAF52E42A6D86E300CEF449 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF52E32A6D86E300CEF449 /* ArtistViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +115,7 @@
 		DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModel.swift; sourceTree = "<group>"; };
 		DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		DA86C7F32A66EDA30082659C /* BasicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResponse.swift; sourceTree = "<group>"; };
+		DAAF52E32A6D86E300CEF449 /* ArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 				DA86C7C52A6684D10082659C /* AlbumDetailViewModel.swift */,
 				DA86C7C72A668C350082659C /* LibraryViewModel.swift */,
 				DA86C7C92A668F930082659C /* DownloadsViewModel.swift */,
+				DAAF52E32A6D86E300CEF449 /* ArtistViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				DA470E7B2A6A8110001EFA80 /* ExpandableText.swift in Sources */,
 				DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */,
 				DA7F1EB32A652E25006D8934 /* Database.swift in Sources */,
+				DAAF52E42A6D86E300CEF449 /* ArtistViewModel.swift in Sources */,
 				DA7F1EC62A652E2A006D8934 /* SongCell.swift in Sources */,
 				DA7F1E9F2A652E14006D8934 /* Search2Response.swift in Sources */,
 			);
