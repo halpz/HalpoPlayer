@@ -7,12 +7,13 @@
 
 import UIKit
 
-class BatteryManager {
-	var state: UIDevice.BatteryState
+class BatteryManager: ObservableObject {
+	@Published var state: UIDevice.BatteryState
 	static let shared = BatteryManager()
 	private init() {
-		state = UIDevice.current.batteryState
 		UIDevice.current.isBatteryMonitoringEnabled = true
+		state = UIDevice.current.batteryState
+		UIApplication.shared.isIdleTimerDisabled = state == .full || state == .charging
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(batteryStateDidChange),
@@ -28,7 +29,9 @@ class BatteryManager {
 		)
 	}
 	@objc private func batteryStateDidChange() {
-		state = UIDevice.current.batteryState
+		DispatchQueue.main.async {
+			self.state = UIDevice.current.batteryState
+		}
 		UIApplication.shared.isIdleTimerDisabled = state == .full || state == .charging
 	}
 }
