@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */; };
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */; };
 		DA3E7C392A69367800DD5180 /* GetArtistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewType.swift; sourceTree = "<group>"; };
 		DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistsResponse.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				DA7F1E832A652DD7006D8934 /* Assets.xcassets */,
 				DA7F1E852A652DD7006D8934 /* Preview Content */,
 				DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */,
+				DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */,
 			);
 			path = HalpoPlayer;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				DA86C7D02A66A2190082659C /* PlaylistView.swift in Sources */,
 				DA7F1EA52A652E14006D8934 /* CachedSong.swift in Sources */,
 				DA7F1EBF2A652E2A006D8934 /* AlbumDetailView.swift in Sources */,
+				DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */,
 				DA470E7B2A6A8110001EFA80 /* ExpandableText.swift in Sources */,
 				DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */,
 				DA7F1EB32A652E25006D8934 /* Database.swift in Sources */,

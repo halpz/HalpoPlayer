@@ -19,6 +19,7 @@ struct halpoplayerApp: App {
 	@ObservedObject var accountHolder = AccountHolder.shared
 	@ObservedObject var mediaControlBarMinimized = MediaControlBarMinimized.shared
 	@State var selectedTab: AppTab = .library
+	let batteryManager = BatteryManager.shared
 	var body: some Scene {
 		WindowGroup {
 			VStack {
