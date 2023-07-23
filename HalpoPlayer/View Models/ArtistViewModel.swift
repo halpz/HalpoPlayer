@@ -71,11 +71,14 @@ class ArtistViewModel: ObservableObject {
 	}
 	func getArtistBio() async throws {
 		let info = try await SubsonicClient.shared.getArtistInfo(id: artistId)
-		let bio = info.subsonicResponse.artistInfo.biography
-		let string = bio.replacingOccurrences(of: "<a target='_blank' href=\"(.+)\" rel=\"nofollow\">(.+)</a>", with: "[$2]($1)", options: .regularExpression, range: nil)
-		DispatchQueue.main.async {
-			self.info = info
-			self.bio = string
+		if let bio = info.subsonicResponse.artistInfo.biography {
+			let string = bio.replacingOccurrences(of: "<a target='_blank' href=\"(.+)\" rel=\"nofollow\">(.+)</a>", with: "[$2]($1)", options: .regularExpression, range: nil)
+			DispatchQueue.main.async {
+				self.info = info
+				self.bio = string
+			}
+		} else {
+			throw HalpoError.offline
 		}
 	}
 	func shuffle() {

@@ -33,15 +33,21 @@ struct LibraryView: View {
 }
 
 struct AlbumListView: View {
+	@Environment(\.horizontalSizeClass) var horizontalSize
 	@StateObject var viewModel: LibraryViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
+	var gridItems: [GridItem] {
+		if horizontalSize == .compact {
+			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
+		} else {
+			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
+		}
+	}
 	var body: some View {
-		
-		let columns = [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
 		ScrollView {
-			LazyVGrid(columns: columns, spacing: 8) {
+			LazyVGrid(columns: gridItems, spacing: 8) {
 				ForEach(viewModel.albums) { album in
 					Button {
 						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)

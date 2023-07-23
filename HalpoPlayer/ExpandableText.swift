@@ -29,7 +29,7 @@ struct ExpandableText: View {
 				height: .greatestFiniteMagnitude
 			),
 			options: .usesLineFragmentOrigin,
-			attributes: [.font: UIFont.systemFont(ofSize: 16)],
+			attributes: [.font: UIFont.preferredFont(forTextStyle: .body)],
 			context: nil
 		)
 
