@@ -17,19 +17,6 @@ class Database: ObservableObject {
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
 	@Published var libraryViewType: LibraryViewType = .albums
-	@Published var downloadedAlbums: [String: Bool] {
-		didSet {
-			guard let data = try? JSONEncoder().encode(downloadedAlbums), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
-				return
-			}
-			let path = documentsUrl.appendingPathComponent("isDownloadedCache")
-			guard FileManager.default.fileExists(atPath: path.path()) else {
-				FileManager.default.createFile(atPath: path.path(), contents: data)
-				return
-			}
-			try? data.write(to: path)
-		}
-	}
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
 			guard let data = try? JSONEncoder().encode(musicCache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
@@ -55,16 +42,8 @@ class Database: ObservableObject {
 			} else {
 				self.musicCache = [:]
 			}
-			let isDownloadedCache = documentsUrl.appendingPathComponent("isDownloadedCache")
-			if FileManager.default.fileExists(atPath: isDownloadedCache.path()), let isDownloadedCacheData = try? Data(contentsOf: isDownloadedCache),
-			   let decodedIsDownloadedCache = try? decoder.decode([String: Bool].self, from: isDownloadedCacheData) {
-				self.downloadedAlbums = decodedIsDownloadedCache
-			} else {
-				self.downloadedAlbums = [:]
-			}
 		} else {
 			self.musicCache = [:]
-			self.downloadedAlbums = [:]
 		}
 	}
 	func downloadSong(song: Song) async throws -> CachedSong {
@@ -112,12 +91,12 @@ class Database: ObservableObject {
 			}
 		}
 	}
-	func deleteSong(song: Song) {
+	func deleteSong(song: Song, callback: (() -> Void)? = nil) {
 		if let cached = self.musicCache[song.id] {
-			deleteSong(cached: cached)
+			deleteSong(cached: cached, callback: callback)
 		}
 	}
-	func deleteSong(cached: CachedSong) {
+	func deleteSong(cached: CachedSong, callback: (() -> Void)? = nil) {
 		do {
 			if let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
 				let fileUrl = documentsUrl.appendingPathComponent(cached.path)
@@ -125,12 +104,14 @@ class Database: ObservableObject {
 				DispatchQueue.main.async {
 					self.musicCache.removeValue(forKey: cached.song.id)
 				}
+				callback?()
 			}
 		} catch {
 			print("Could not delete file: \(error)")
 			DispatchQueue.main.async {
 				self.musicCache.removeValue(forKey: cached.song.id)
 			}
+			callback?()
 		}
 	}
 }

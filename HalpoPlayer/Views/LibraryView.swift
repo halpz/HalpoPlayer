@@ -38,14 +38,29 @@ struct AlbumListView: View {
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
 	var body: some View {
-		List(viewModel.albums) { album in
-			Button {
-				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
-			} label: {
-				AlbumCell(album: Album(albumListResponse: album))
+		
+		let columns = [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
+		ScrollView {
+			LazyVGrid(columns: columns, spacing: 8) {
+				ForEach(viewModel.albums) { album in
+					Button {
+						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+					} label: {
+						AlbumGridCell(album: Album(albumListResponse: album))
+					}
+				}
 			}
-			.listRowSeparator(.hidden)
+			.padding(8)
 		}
+		
+//		List(viewModel.albums) { album in
+//			Button {
+//				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+//			} label: {
+//				AlbumCell(album: Album(albumListResponse: album))
+//			}
+//			.listRowSeparator(.hidden)
+//		}
 		.simultaneousGesture(DragGesture().onChanged({ value in
 			withAnimation {
 				MediaControlBarMinimized.shared.isCompact = true
