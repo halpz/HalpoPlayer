@@ -42,8 +42,6 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-		
-		
 //		switch api {
 //		case .getArtistInfo:
 //			printJSONData(data)

@@ -44,23 +44,31 @@ class AudioManager: ObservableObject {
 	}
 	
 	func play(songs: [Song], index: Int) {
-		self.activateSession()
-		self.queue.stop()
-		for (i, _) in self.queue.items.enumerated() {
-			try? self.queue.removeItem(at: i)
+		self.activateSession { success in
+			guard success else { return }
+			self.queue.stop()
+			for (i, _) in self.queue.items.enumerated() {
+				try? self.queue.removeItem(at: i)
+			}
+			self.songs = []
+			songs.forEach {
+				self.addSongToQueue(song: $0)
+			}
+			try? self.queue.jumpToItem(atIndex: index, playWhenReady: true)
+			self.currentSong = songs[index]
 		}
-		self.songs = []
-		songs.forEach {
-			addSongToQueue(song: $0)
-		}
-		try? self.queue.jumpToItem(atIndex: index, playWhenReady: true)
-		self.currentSong = songs[index]
 	}
 	
-	func activateSession() {
-		if !AudioSessionController.shared.audioSessionIsActive {
-			try AudioSessionController.shared.set(category: .playback)
-			try AudioSessionController.shared.activateSession()
+	func activateSession(callback: @escaping (Bool) -> Void) {
+		do {
+			if !AudioSessionController.shared.audioSessionIsActive {
+				try AudioSessionController.shared.set(category: .playback)
+				try AudioSessionController.shared.activateSession()
+			}
+			callback(true)
+		} catch {
+			print("Could not activate audio session")
+			callback(false)
 		}
 	}
 	
