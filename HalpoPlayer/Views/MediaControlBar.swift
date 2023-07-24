@@ -12,7 +12,6 @@ struct MediaControlBar: View {
 	@EnvironmentObject var player: AudioManager
 	@EnvironmentObject var compact: MediaControlBarMinimized
 	@ObservedObject var timeline = TimelineManager.shared
-	@Environment(\.colorScheme) var colorScheme
 	@State private var dragAmount = CGSize.zero
 	var buttonSize: CGFloat {
 		return compact.isCompact ? 28 : 48
@@ -176,11 +175,7 @@ struct MediaControlBar: View {
 			}
 			.padding()
 			.background {
-				if colorScheme == .dark {
-					Color.init(red: 1, green: 1, blue: 1, opacity: 0.1)
-				} else {
-					Color.init(red: 0, green: 0, blue: 0, opacity: 0.1)
-				}
+				Color("TextBackground")
 			}
 			.gesture(
 				DragGesture(minimumDistance: 30)
