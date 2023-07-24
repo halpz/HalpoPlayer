@@ -46,28 +46,27 @@ struct AlbumListView: View {
 		}
 	}
 	var body: some View {
-		ScrollView {
-			LazyVGrid(columns: gridItems, spacing: 8) {
-				ForEach(viewModel.albums) { album in
-					Button {
-						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
-					} label: {
-						AlbumGridCell(album: Album(albumListResponse: album))
-					}
-					.frame(height: 260)
-				}
-			}
-			.padding(8)
-		}
-		
-//		List(viewModel.albums) { album in
-//			Button {
-//				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
-//			} label: {
-//				AlbumCell(album: Album(albumListResponse: album))
+//		ScrollView {
+//			LazyVGrid(columns: gridItems, spacing: 8) {
+//				ForEach(viewModel.albums) { album in
+//					Button {
+//						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+//					} label: {
+//						AlbumGridCell(album: Album(albumListResponse: album))
+//					}
+//					.frame(height: 260)
+//				}
 //			}
-//			.listRowSeparator(.hidden)
+//			.padding(8)
 //		}
+		List(viewModel.albums) { album in
+			Button {
+				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+			} label: {
+				AlbumCell(album: Album(albumListResponse: album))
+			}
+			.listRowSeparator(.hidden)
+		}
 		.simultaneousGesture(DragGesture().onChanged({ value in
 			withAnimation {
 				MediaControlBarMinimized.shared.isCompact = true

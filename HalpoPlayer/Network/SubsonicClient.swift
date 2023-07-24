@@ -18,16 +18,6 @@ class SubsonicClient {
 		}
 		return "&f=json&u=\(account.username)&p=\(account.password)&v=1.16.1&c=halpoplayer"
 	}
-	func setAddress(address: String) async throws {
-		guard account != nil else {
-			throw HalpoError.noAccount
-		}
-		var urlRequest = URLRequest(url: URL(string: address)!)
-		urlRequest.httpMethod = "HEAD"
-		urlRequest.timeoutInterval = 5
-		_ = try await session.data(for: urlRequest)
-		currentAddress = address
-	}
 	func request<T: Decodable>(_ api: SubsonicAPI) async throws -> T {
 		guard let currentAddress = currentAddress else {
 			throw HalpoError.noAccount
@@ -54,8 +44,6 @@ class SubsonicClient {
 			print(error)
 			throw HalpoError.imageDecode
 		}
-			
-		
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
 		guard let currentAddress = currentAddress else {
@@ -72,6 +60,16 @@ class SubsonicClient {
 			throw HalpoError.badResponse(code: code)
 		}
 		return (data, response)
+	}
+	func setAddress(address: String) async throws {
+		guard account != nil else {
+			throw HalpoError.noAccount
+		}
+		var urlRequest = URLRequest(url: URL(string: address)!)
+		urlRequest.httpMethod = "HEAD"
+		urlRequest.timeoutInterval = 5
+		_ = try await session.data(for: urlRequest)
+		currentAddress = address
 	}
 	func authenticate() async throws -> Bool {
 		guard let account = self.account else {

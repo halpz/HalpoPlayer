@@ -183,20 +183,17 @@ struct MediaControlBar: View {
 				}
 			}
 			.gesture(
-				DragGesture()
-					.onChanged { dragAmount = $0.translation }
-					.onEnded { _ in dragAmount = .zero }
-			)
-			.gesture(DragGesture(minimumDistance: 30)
-				.onEnded { value in
-					if !compact.isCompact {
-						if value.translation.height > 0 {
-							withAnimation {
-								compact.isCompact = true
+				DragGesture(minimumDistance: 30)
+					.onEnded { value in
+						if !compact.isCompact {
+							if value.translation.height > 0 {
+								withAnimation {
+									compact.isCompact = true
+								}
 							}
 						}
 					}
-				})
+			)
 		} else {
 			EmptyView()
 		}
