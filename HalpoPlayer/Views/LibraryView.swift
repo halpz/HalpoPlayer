@@ -54,6 +54,7 @@ struct AlbumListView: View {
 					} label: {
 						AlbumGridCell(album: Album(albumListResponse: album))
 					}
+					.frame(height: 260)
 				}
 			}
 			.padding(8)

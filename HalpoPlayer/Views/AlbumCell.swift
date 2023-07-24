@@ -53,7 +53,10 @@ struct AlbumGridCell: View {
 	let album: Album
 	var showArtistName = true
 	@State var image: UIImage?
-	let imageSize: CGFloat = 60
+	init(album: Album) {
+		self.album = album
+		self.image = Database.shared.imageCache.image(albumId: album.id)
+	}
 	var body: some View {
 		VStack(alignment: .leading) {
 			if let image = image {
