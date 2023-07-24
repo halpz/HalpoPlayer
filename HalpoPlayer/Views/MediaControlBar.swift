@@ -219,22 +219,3 @@ class MediaControlBarMinimized: ObservableObject {
 	static let shared = MediaControlBarMinimized()
 	@Published var isCompact = false
 }
-
-
-struct myView: View {
-	@State var isCompact = false
-	var body: some View {
-		Text("")
-		Text("")
-		if isCompact {
-			Text("")
-		}
-		Image("")
-		Text("")
-		Button {
-			isCompact.toggle()
-		} label: {
-			Text("button")
-		}
-	}
-}
