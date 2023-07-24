@@ -78,9 +78,9 @@ struct Album: Codable, Identifiable, Hashable {
 // MARK: - Song
 struct Song: Codable, Identifiable, Hashable {
 	let suffix, title: String
-	let bitRate: Int
+	let bitRate: Int?
 	let isVideo: Bool
-	let duration: Int
+	let duration: Int?
 	let path: String
 	let artistId: String?
 	let year: Int?
