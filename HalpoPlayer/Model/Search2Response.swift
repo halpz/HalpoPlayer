@@ -37,7 +37,7 @@ struct Search2Response: Codable {
 		let songCount: Int
 		let year: Int?
 		let created: String
-		let duration: Int
+		let duration: Int?
 		let artistId, artist: String?
 		let isDir: Bool
 		let name: String
@@ -62,10 +62,10 @@ struct Search2Response: Codable {
 		let isVideo: Bool
 		let year: Int?
 		let created: String
-		let duration: Int
+		let duration: Int?
 		let albumId, artist: String
 		let isDir: Bool
-		let bitRate: Int
+		let bitRate: Int?
 		let track, discNumber: Int?
 		let genre: String?
 	}
