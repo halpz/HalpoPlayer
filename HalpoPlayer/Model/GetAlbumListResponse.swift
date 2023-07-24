@@ -35,7 +35,7 @@ struct GetAlbumListResponse: Codable {
 		let songCount: Int
 		let year: Int?
 		let created: String
-		let duration: Int
+		let duration: Int?
 		let artistId, artist: String
 		let isDir: Bool
 		let name: String

@@ -27,7 +27,8 @@ struct GetAlbumResponse: Codable {
 struct Album: Codable, Identifiable, Hashable {
 	let artist, artistId: String?
 	let id, coverArt: String
-	let duration, songCount: Int
+	let songCount: Int
+	let duration: Int?
 	let created: String
 	let year: Int?
 	let name: String
