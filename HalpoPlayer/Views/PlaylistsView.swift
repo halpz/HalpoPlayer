@@ -15,6 +15,21 @@ struct PlaylistsView: View {
 		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song, refresh: refresh))
 	}
 	var body: some View {
+		let toolbar = ToolbarItem(placement: .navigationBarTrailing) {
+			Button {
+				viewModel.showPrompt = true
+			} label: {
+				Image(systemName: "plus").imageScale(.large)
+					.foregroundColor(Color.accentColor)
+			}
+			.alert("Enter a name for your playlist", isPresented: $viewModel.showPrompt) {
+				TextField("Name", text: $viewModel.playlistName)
+				Button("Create") {
+					viewModel.createPlaylist(name: viewModel.playlistName)
+				}
+				Button("Cancel", role: .cancel) {}
+			}
+		}
 		if let playlists = database.playlists,
 		   !(playlists.subsonicResponse.playlists.playlist?.isEmpty ?? true) {
 			List {
@@ -42,21 +57,7 @@ struct PlaylistsView: View {
 			.listStyle(.plain)
 			.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")
 			.toolbar {
-				ToolbarItem(placement: .navigationBarTrailing) {
-					Button {
-						viewModel.showPrompt = true
-					} label: {
-						Image(systemName: "plus").imageScale(.large)
-							.foregroundColor(Color.accentColor)
-					}
-					.alert("Enter a name for your playlist", isPresented: $viewModel.showPrompt) {
-						TextField("Name", text: $viewModel.playlistName)
-						Button("Create") {
-							viewModel.createPlaylist(name: viewModel.playlistName)
-						}
-						Button("Cancel", role: .cancel) {}
-					}
-				}
+				toolbar
 			}
 		} else {
 			if viewModel.loading {
@@ -65,21 +66,7 @@ struct PlaylistsView: View {
 				Text("No playlists")
 					.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")
 					.toolbar {
-						ToolbarItem(placement: .navigationBarTrailing) {
-							Button {
-								viewModel.showPrompt = true
-							} label: {
-								Image(systemName: "plus").imageScale(.large)
-									.foregroundColor(Color.accentColor)
-							}
-							.alert("Enter a name for your playlist", isPresented: $viewModel.showPrompt) {
-								TextField("Name", text: $viewModel.playlistName)
-								Button("Create") {
-									viewModel.createPlaylist(name: viewModel.playlistName)
-								}
-								Button("Cancel", role: .cancel) {}
-							}
-						}
+						toolbar
 					}
 			}
 		}
