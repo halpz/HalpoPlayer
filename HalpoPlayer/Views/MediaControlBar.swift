@@ -104,7 +104,11 @@ struct MediaControlBar: View {
 						Spacer()
 						Button {
 							print("back")
-							self.player.previousPressed()
+							do {
+								try self.player.previousPressed()
+							} catch {
+								print(error)
+							}
 						} label: {
 							Image(systemName: "backward.circle")
 								.font(.system(size: buttonSize))

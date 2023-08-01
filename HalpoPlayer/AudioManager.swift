@@ -140,9 +140,9 @@ class AudioManager: ObservableObject {
 			}
 		}
 	}
-	func previousPressed() {
+	func previousPressed() throws {
 		if self.queue.currentTime < 5 {
-			try? self.queue.previous()
+			try self.queue.previous()
 		} else {
 			self.queue.seek(to: 0)
 		}
@@ -150,11 +150,7 @@ class AudioManager: ObservableObject {
 	
 	func handlePreviousTrackCommand(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
 		do {
-			if self.queue.currentTime < 5 {
-				try self.queue.previous()
-			} else {
-				self.queue.seek(to: 0)
-			}
+			try previousPressed()
 			return MPRemoteCommandHandlerStatus.success
 		}
 		catch {
