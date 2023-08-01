@@ -10,10 +10,15 @@ import Foundation
 class PlaylistsViewModel: ObservableObject {
 	var song: Song?
 	var database = Database.shared
+	@Published var loading = true
+	@Published var showPrompt = false
+	@Published var playlistName: String = ""
 	init(_ song: Song? = nil, refresh: Bool = false) {
 		self.song = song
 		if database.playlists == nil || refresh {
 			getPlaylists()
+		} else {
+			loading = false
 		}
 	}
 	func getPlaylists() {
@@ -21,6 +26,7 @@ class PlaylistsViewModel: ObservableObject {
 			do {
 				let response = try await SubsonicClient.shared.getPlaylists()
 				DispatchQueue.main.async {
+					self.loading = false
 					self.database.playlists = response
 				}
 			} catch {
@@ -42,6 +48,17 @@ class PlaylistsViewModel: ObservableObject {
 			DispatchQueue.main.async {
 				coordinator.path.removeLast()
 			}
+		}
+	}
+	func createPlaylist(name: String) {
+		Task {
+			do {
+				let response = try await SubsonicClient.shared.createPlaylist(name: name)
+				print(response)
+			} catch {
+				print(error)
+			}
+			getPlaylists()
 		}
 	}
 }

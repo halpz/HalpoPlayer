@@ -34,7 +34,7 @@ class SubsonicClient {
 			throw HalpoError.badResponse(code: code)
 		}
 //		switch api {
-//		case .getArtistInfo:
+//		case .createPlaylist:
 //			printJSONData(data)
 //		default:
 //			break
@@ -174,6 +174,9 @@ class SubsonicClient {
 	}
 	func getArtistInfo(id: String) async throws -> GetArtistInfoResponse {
 		return try await request(.getArtistInfo(id: id)) as GetArtistInfoResponse
+	}
+	func createPlaylist(name: String) async throws -> CreatePlaylistResponse {
+		return try await request(.createPlaylist(name: name)) as CreatePlaylistResponse
 	}
 	func printJSONData(_ data: Data) {
 		if let json = try? JSONSerialization.jsonObject(with: data, options: []),

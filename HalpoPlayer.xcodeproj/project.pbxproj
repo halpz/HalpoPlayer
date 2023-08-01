@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */; };
+		DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */; };
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */; };
 		DA3E7C392A69367800DD5180 /* GetArtistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
+		DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistResponse.swift; sourceTree = "<group>"; };
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewType.swift; sourceTree = "<group>"; };
 		DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistsResponse.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */,
 				DA3E7C3C2A693E2F00DD5180 /* GetArtistResponse.swift */,
 				DA3E7C402A69896600DD5180 /* GetArtistInfoResponse.swift */,
+				DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				DA7F1EC02A652E2A006D8934 /* SearchView.swift in Sources */,
 				DA7F1EC32A652E2A006D8934 /* MediaControlBar.swift in Sources */,
 				DA7F1E932A652DF4006D8934 /* AudioManager.swift in Sources */,
+				DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */,
 				DA7F1EB22A652E25006D8934 /* AccountManager.swift in Sources */,
 				DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */,
 				DA7F1EBE2A652E2A006D8934 /* DownloadsView.swift in Sources */,

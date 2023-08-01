@@ -25,7 +25,7 @@ class PlaylistViewModel: ObservableObject {
 		}
 	}
 	var songs: [Song] {
-		return playlistResponse?.subsonicResponse.playlist.entry.map {
+		return playlistResponse?.subsonicResponse.playlist.entry?.map {
 			Song(playlistEntry: $0)
 		} ?? []
 	}

@@ -26,10 +26,11 @@ struct GetPlaylistResponse: Codable {
 	struct Playlist: Codable {
 		let playlistPublic: Bool
 		let owner: String
-		let entry: [Entry]
+		let entry: [Entry]?
 		let id, coverArt: String
 		let duration, songCount: Int
-		let created, comment, name, changed: String
+		let created, name, changed: String
+		let comment: String?
 
 		enum CodingKeys: String, CodingKey {
 			case playlistPublic = "public"

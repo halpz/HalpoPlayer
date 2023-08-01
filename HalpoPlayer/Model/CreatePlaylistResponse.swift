@@ -1,14 +1,14 @@
 //
-//  GetPlaylistsResponse.swift
+//  CreatePlaylistResponse.swift
 //  HalpoPlayer
 //
-//  Created by paul on 18/07/2023.
+//  Created by paul on 01/08/2023.
 //
 
 import Foundation
 
-// MARK: - GetPlaylistsResponse
-struct GetPlaylistsResponse: Codable {
+// MARK: - CreatePlaylistResponse
+struct CreatePlaylistResponse: Codable {
 	let subsonicResponse: SubsonicResponse
 
 	enum CodingKeys: String, CodingKey {
@@ -18,30 +18,22 @@ struct GetPlaylistsResponse: Codable {
 	// MARK: - SubsonicResponse
 	struct SubsonicResponse: Codable {
 		let status: String
-		let playlists: Playlists
+		let playlist: Playlist
 		let serverVersion, type, version: String
 	}
 
-	// MARK: - Playlists
-	struct Playlists: Codable {
-		let playlist: [Playlist]?
-	}
-
 	// MARK: - Playlist
-	struct Playlist: Codable, Hashable {
+	struct Playlist: Codable {
 		let playlistPublic: Bool
 		let owner, id, coverArt: String
 		let duration, songCount: Int
-		let created, name, changed: String
-		let comment: String?
+		let created, changed, name: String
 
 		enum CodingKeys: String, CodingKey {
 			case playlistPublic = "public"
-			case owner, id, coverArt, duration, songCount, created, comment, name, changed
+			case owner, id, coverArt, duration, songCount, created, changed, name
 		}
 	}
 }
-
-
 
 
