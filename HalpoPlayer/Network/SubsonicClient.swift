@@ -26,6 +26,7 @@ class SubsonicClient {
 			throw HalpoError.noURL
 		}
 		var urlRequest = URLRequest(url: url)
+		urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 		urlRequest.httpMethod = api.method
 		let (data, response) = try await self.session.data(for: urlRequest)
 		if let code = (response as? HTTPURLResponse)?.statusCode, code != 200 {
