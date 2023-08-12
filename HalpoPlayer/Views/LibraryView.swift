@@ -115,7 +115,7 @@ struct ArtistListView: View {
 		if viewModel.artists.isEmpty {
 			ProgressView()
 				.onAppear {
-					viewModel.loadContent()
+					viewModel.refresh()
 				}
 		}
 		List(viewModel.artists) { artist in
@@ -132,7 +132,11 @@ struct ArtistListView: View {
 			}
 		}))
 		.refreshable {
-			viewModel.refresh()
+			do {
+				try await viewModel.loadContent()
+			} catch {
+				print(error)
+			}
 		}
 		.listStyle(.plain)
 		.searchable(text: $viewModel.searchText, prompt: "Search artists")

@@ -33,47 +33,35 @@ class LibraryViewModel: ObservableObject {
 	}
 	init() {
 		searchText = ""
-		loadContent()
+		refresh()
 		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("login"), object: nil)
 	}
-	func loadContent() {
+	func loadContent() async throws {
 		switch viewType {
 		case .albums:
 			if database.albumList == nil {
-				getAlbumList()
+				try await getAlbumList()
 			}
 		case .artists:
-			getArtists()
+			try await getArtists()
 		}
 	}
-	func getAlbumList() {
-		Task {
-			do {
-				if try await SubsonicClient.shared.authenticate() {
-					let response = try await SubsonicClient.shared.getAlbumList()
-					DispatchQueue.main.async {
-						self.database.albumList = response.subsonicResponse.albumList.album
-					}
-				}
-			} catch {
-				print(error)
+	func getAlbumList() async throws {
+		if try await SubsonicClient.shared.authenticate() {
+			let response = try await SubsonicClient.shared.getAlbumList()
+			DispatchQueue.main.async {
+				self.database.albumList = response.subsonicResponse.albumList.album
 			}
 		}
 	}
-	func getArtists() {
-		Task {
-			do {
-				if try await SubsonicClient.shared.authenticate() {
-					let response = try await SubsonicClient.shared.getIndexes()
-					let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
-						return index.artist
-					}
-					DispatchQueue.main.async {
-						self.database.artistList = artists
-					}
-				}
-			} catch {
-				print(error)
+	func getArtists() async throws {
+		if try await SubsonicClient.shared.authenticate() {
+			let response = try await SubsonicClient.shared.getIndexes()
+			let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
+				return index.artist
+			}
+			DispatchQueue.main.async {
+				self.database.artistList = artists
 			}
 		}
 	}
@@ -81,7 +69,13 @@ class LibraryViewModel: ObservableObject {
 		coordinator.albumTapped(albumId: albumId, scrollToSong: nil)
 	}
 	@objc func refresh() {
-		loadContent()
+		Task {
+			do {
+				try await loadContent()
+			} catch {
+				print(error)
+			}
+		}
 	}
 	func shuffle() {
 		Task {
