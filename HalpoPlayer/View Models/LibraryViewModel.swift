@@ -33,10 +33,16 @@ class LibraryViewModel: ObservableObject {
 	}
 	init() {
 		searchText = ""
-		refresh()
+		Task {
+			do {
+				try await loadContent(force: true)
+			} catch {
+				print(error)
+			}
+		}
 		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("login"), object: nil)
 	}
-	func loadContent() async throws {
+	func loadContent(force: Bool = false) async throws {
 		switch viewType {
 		case .albums:
 			if database.albumList == nil {
@@ -71,7 +77,7 @@ class LibraryViewModel: ObservableObject {
 	@objc func refresh() {
 		Task {
 			do {
-				try await loadContent()
+				try await loadContent(force: true)
 			} catch {
 				print(error)
 			}

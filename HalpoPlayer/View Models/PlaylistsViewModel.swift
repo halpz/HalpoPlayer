@@ -16,22 +16,22 @@ class PlaylistsViewModel: ObservableObject {
 	init(_ song: Song? = nil, refresh: Bool = false) {
 		self.song = song
 		if database.playlists == nil || refresh {
-			getPlaylists()
+			Task {
+				do {
+					try await self.getPlaylists()
+				} catch {
+					print(error)
+				}
+			}
 		} else {
 			loading = false
 		}
 	}
-	func getPlaylists() {
-		Task {
-			do {
-				let response = try await SubsonicClient.shared.getPlaylists()
-				DispatchQueue.main.async {
-					self.loading = false
-					self.database.playlists = response
-				}
-			} catch {
-				print(error)
-			}
+	func getPlaylists() async throws {
+		let response = try await SubsonicClient.shared.getPlaylists()
+		DispatchQueue.main.async {
+			self.loading = false
+			self.database.playlists = response
 		}
 	}
 	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist, coordinator: Coordinator) {
@@ -55,10 +55,10 @@ class PlaylistsViewModel: ObservableObject {
 			do {
 				let response = try await SubsonicClient.shared.createPlaylist(name: name)
 				print(response)
+				try await getPlaylists()
 			} catch {
 				print(error)
 			}
-			getPlaylists()
 		}
 	}
 }

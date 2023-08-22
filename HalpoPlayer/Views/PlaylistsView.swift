@@ -52,7 +52,11 @@ struct PlaylistsView: View {
 				}
 			}
 			.refreshable {
-				viewModel.getPlaylists()
+				do {
+					try await viewModel.getPlaylists()
+				} catch {
+					print(error)
+				}
 			}
 			.listStyle(.plain)
 			.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")

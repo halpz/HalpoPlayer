@@ -38,13 +38,13 @@ struct AlbumListView: View {
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
-	var gridItems: [GridItem] {
-		if horizontalSize == .compact {
-			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
-		} else {
-			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
-		}
-	}
+//	var gridItems: [GridItem] {
+//		if horizontalSize == .compact {
+//			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
+//		} else {
+//			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
+//		}
+//	}
 	var body: some View {
 //		ScrollView {
 //			LazyVGrid(columns: gridItems, spacing: 8) {
@@ -73,7 +73,11 @@ struct AlbumListView: View {
 			}
 		}))
 		.refreshable {
-			viewModel.refresh()
+			do {
+				try await viewModel.loadContent(force: true)
+			} catch {
+				print(error)
+			}
 		}
 		.listStyle(.plain)
 		.searchable(text: $viewModel.searchText, prompt: "Search albums")
@@ -115,7 +119,13 @@ struct ArtistListView: View {
 		if viewModel.artists.isEmpty {
 			ProgressView()
 				.onAppear {
-					viewModel.refresh()
+					Task {
+						do {
+							try await viewModel.loadContent(force: true)
+						} catch {
+							print(error)
+						}
+					}
 				}
 		}
 		List(viewModel.artists) { artist in
