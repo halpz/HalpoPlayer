@@ -15,7 +15,14 @@ class PlaylistViewModel: ObservableObject {
 	@Published var playlistResponse: GetPlaylistResponse?
 	init(id: String) {
 		playlistId = id
-		getPlaylist()
+		Task {
+			do {
+				try await getPlaylist()
+			} catch {
+				print(error)
+			}
+		}
+		
 	}
 	var playButtonName: String {
 		if player.isPlaying && player.songs == songs {
@@ -29,20 +36,20 @@ class PlaylistViewModel: ObservableObject {
 			Song(playlistEntry: $0)
 		} ?? []
 	}
-	func getPlaylist(callback: (() -> Void)? = nil) {
-		Task {
-			do {
+	func getPlaylist() async throws {
+//		Task {
+//			do {
 				let response = try await SubsonicClient.shared.getPlaylist(id: playlistId)
 				let imageResponse = try await SubsonicClient.shared.coverArt(albumId: response.subsonicResponse.playlist.coverArt)
 				DispatchQueue.main.async {
 					self.playlistResponse = response
 					self.image = imageResponse
-					callback?()
+//					callback?()
 				}
-			} catch {
-				print(error)
-			}
-		}
+//			} catch {
+//				print(error)
+//			}
+//		}
 	}
 	func playSong(song: Song) {
 		if let index = songs.firstIndex(of: song) {
@@ -81,15 +88,19 @@ class PlaylistViewModel: ObservableObject {
 		let finalSongs = songList
 		Task {
 			do {
-				_ = try await SubsonicClient.shared.updatePlaylist(id: playlistId , songs: finalSongs)
-				let response = try await SubsonicClient.shared.getPlaylist(id: playlistId)
+				_ = try await SubsonicClient.shared.updatePlaylist(id: self.playlistId , songs: finalSongs)
+				let response = try await SubsonicClient.shared.getPlaylist(id: self.playlistId)
 				DispatchQueue.main.async {
 					self.playlistResponse = response
 				}
 				self.reordering = false
 			} catch {
 				print(error)
-				getPlaylist() {
+				do {
+					try await getPlaylist()
+					self.reordering = false
+				} catch {
+					print(error)
 					self.reordering = false
 				}
 			}

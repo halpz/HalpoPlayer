@@ -61,7 +61,11 @@ struct PlaylistView: View {
 			}
 			.environment(\.editMode, $editMode)
 			.refreshable {
-				viewModel.getPlaylist()
+				do {
+					try await viewModel.getPlaylist()
+				} catch {
+					print(error)
+				}
 			}
 			.listStyle(.plain)
 			.navigationTitle(name)
