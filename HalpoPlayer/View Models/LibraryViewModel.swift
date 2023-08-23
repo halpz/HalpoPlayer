@@ -45,7 +45,7 @@ class LibraryViewModel: ObservableObject {
 	func loadContent(force: Bool = false) async throws {
 		switch viewType {
 		case .albums:
-			if database.albumList == nil {
+			if database.albumList == nil || force {
 				try await getAlbumList()
 			}
 		case .artists:
