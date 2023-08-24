@@ -13,6 +13,7 @@ class AccountHolder: ObservableObject {
 	@Published var account: Account? {
 		didSet {
 			guard account != nil else { return }
+			guard !ProcessInfo.processInfo.arguments.contains("UITEST") else { return }
 			SubsonicClient.shared.account = account
 			Task {
 				if try await SubsonicClient.shared.authenticate() {
@@ -24,9 +25,11 @@ class AccountHolder: ObservableObject {
 		}
 	}
 	init() {
-		if let accountData = UserDefaults.standard.data(forKey: "UserAccount") {
-			account = try? JSONDecoder().decode(Account.self, from: accountData)
-			SubsonicClient.shared.account = account
+		if !ProcessInfo.processInfo.arguments.contains("UITEST") {
+			if let accountData = UserDefaults.standard.data(forKey: "UserAccount") {
+				account = try? JSONDecoder().decode(Account.self, from: accountData)
+				SubsonicClient.shared.account = account
+			}
 		}
 	}
 }
