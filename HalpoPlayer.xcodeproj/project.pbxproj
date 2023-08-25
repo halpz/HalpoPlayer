@@ -61,8 +61,21 @@
 		DA86C7D62A66AB240082659C /* PlaylistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */; };
 		DA86C7D82A66AB330082659C /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */; };
 		DA86C7F42A66EDA30082659C /* BasicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86C7F32A66EDA30082659C /* BasicResponse.swift */; };
+		DAA35B912A98E765005BD979 /* HalpoPlayerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA35B902A98E765005BD979 /* HalpoPlayerUITests.swift */; };
+		DAA35B932A98E765005BD979 /* HalpoPlayerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA35B922A98E765005BD979 /* HalpoPlayerUITestsLaunchTests.swift */; };
+		DAA35B9A2A98EB16005BD979 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA35B992A98EB16005BD979 /* SnapshotHelper.swift */; };
 		DAAF52E42A6D86E300CEF449 /* ArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF52E32A6D86E300CEF449 /* ArtistViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DAA35B942A98E765005BD979 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA7F1E742A652DD6006D8934 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA7F1E7B2A652DD6006D8934;
+			remoteInfo = HalpoPlayer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
@@ -121,6 +134,10 @@
 		DA86C7D52A66AB240082659C /* PlaylistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModel.swift; sourceTree = "<group>"; };
 		DA86C7D72A66AB330082659C /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		DA86C7F32A66EDA30082659C /* BasicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicResponse.swift; sourceTree = "<group>"; };
+		DAA35B8E2A98E765005BD979 /* HalpoPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HalpoPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAA35B902A98E765005BD979 /* HalpoPlayerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalpoPlayerUITests.swift; sourceTree = "<group>"; };
+		DAA35B922A98E765005BD979 /* HalpoPlayerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalpoPlayerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DAA35B992A98EB16005BD979 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		DAAF52E32A6D86E300CEF449 /* ArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +150,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAA35B8B2A98E765005BD979 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -140,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7F1E7E2A652DD6006D8934 /* HalpoPlayer */,
+				DAA35B8F2A98E765005BD979 /* HalpoPlayerUITests */,
 				DA7F1E7D2A652DD6006D8934 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */,
+				DAA35B8E2A98E765005BD979 /* HalpoPlayerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +289,16 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		DAA35B8F2A98E765005BD979 /* HalpoPlayerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DAA35B992A98EB16005BD979 /* SnapshotHelper.swift */,
+				DAA35B902A98E765005BD979 /* HalpoPlayerUITests.swift */,
+				DAA35B922A98E765005BD979 /* HalpoPlayerUITestsLaunchTests.swift */,
+			);
+			path = HalpoPlayerUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -286,6 +322,24 @@
 			productReference = DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DAA35B8D2A98E765005BD979 /* HalpoPlayerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAA35B982A98E765005BD979 /* Build configuration list for PBXNativeTarget "HalpoPlayerUITests" */;
+			buildPhases = (
+				DAA35B8A2A98E765005BD979 /* Sources */,
+				DAA35B8B2A98E765005BD979 /* Frameworks */,
+				DAA35B8C2A98E765005BD979 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAA35B952A98E765005BD979 /* PBXTargetDependency */,
+			);
+			name = HalpoPlayerUITests;
+			productName = HalpoPlayerUITests;
+			productReference = DAA35B8E2A98E765005BD979 /* HalpoPlayerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,6 +352,10 @@
 				TargetAttributes = {
 					DA7F1E7B2A652DD6006D8934 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					DAA35B8D2A98E765005BD979 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = DA7F1E7B2A652DD6006D8934;
 					};
 				};
 			};
@@ -318,6 +376,7 @@
 			projectRoot = "";
 			targets = (
 				DA7F1E7B2A652DD6006D8934 /* HalpoPlayer */,
+				DAA35B8D2A98E765005BD979 /* HalpoPlayerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -329,6 +388,13 @@
 			files = (
 				DA7F1E872A652DD7006D8934 /* Preview Assets.xcassets in Resources */,
 				DA7F1E842A652DD7006D8934 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAA35B8C2A98E765005BD979 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +460,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAA35B8A2A98E765005BD979 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAA35B932A98E765005BD979 /* HalpoPlayerUITestsLaunchTests.swift in Sources */,
+				DAA35B912A98E765005BD979 /* HalpoPlayerUITests.swift in Sources */,
+				DAA35B9A2A98EB16005BD979 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DAA35B952A98E765005BD979 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA7F1E7B2A652DD6006D8934 /* HalpoPlayer */;
+			targetProxy = DAA35B942A98E765005BD979 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DA7F1E882A652DD7006D8934 /* Debug */ = {
@@ -571,6 +655,40 @@
 			};
 			name = Release;
 		};
+		DAA35B962A98E765005BD979 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 942GRELLQU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = halpo.HalpoPlayerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HalpoPlayer;
+			};
+			name = Debug;
+		};
+		DAA35B972A98E765005BD979 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 942GRELLQU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = halpo.HalpoPlayerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HalpoPlayer;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -588,6 +706,15 @@
 			buildConfigurations = (
 				DA7F1E8B2A652DD7006D8934 /* Debug */,
 				DA7F1E8C2A652DD7006D8934 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAA35B982A98E765005BD979 /* Build configuration list for PBXNativeTarget "HalpoPlayerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAA35B962A98E765005BD979 /* Debug */,
+				DAA35B972A98E765005BD979 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

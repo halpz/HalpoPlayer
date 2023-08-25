@@ -13,7 +13,7 @@ class AccountHolder: ObservableObject {
 	@Published var account: Account? {
 		didSet {
 			guard account != nil else { return }
-			guard !ProcessInfo.processInfo.arguments.contains("UITEST") else { return }
+//			guard !ProcessInfo.processInfo.arguments.contains("UITEST") else { return }
 			SubsonicClient.shared.account = account
 			Task {
 				if try await SubsonicClient.shared.authenticate() {

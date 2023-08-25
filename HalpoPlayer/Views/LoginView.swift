@@ -53,6 +53,14 @@ struct LoginView: View {
 				otherAddress = "http://" + otherAddress
 			}
 			
+			if ProcessInfo.processInfo.arguments.contains("UITEST") {
+				username = "app"
+				password = "app"
+				address = "http://paulhalpin.co.uk"
+			}
+			
+			
+			print("\(username) \(password) \(address)")
 			SubsonicClient.shared.testAddressesForPermission(ad1: address, ad2: otherAddress) { success in
 				guard success else {return}
 				let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
