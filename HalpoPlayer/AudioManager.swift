@@ -19,7 +19,7 @@ class AudioManager: ObservableObject {
 	static let shared = AudioManager()
 	var currentTask: Task<(), Error>?
 	@Published var songs: [Song]?
-	@Published var artwork: UIImage?
+//	@Published var artwork: UIImage?
 	@Published var queue = QueuedAudioPlayer()
 	@Published var currentSong: Song?
 	@Published var isPlaying = false
@@ -84,7 +84,7 @@ class AudioManager: ObservableObject {
 		item.albumTitle = song.album
 		item.artist = song.artist
 		item.title = song.title
-		item.artwork = artwork
+		item.artwork = albumArt
 		try? self.queue.add(item: item)
 	}
 	

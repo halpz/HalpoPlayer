@@ -34,7 +34,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DAD9A6622A978A1F00406F48"
+               BlueprintIdentifier = "DAA35B8D2A98E765005BD979"
                BuildableName = "HalpoPlayerUITests.xctest"
                BlueprintName = "HalpoPlayerUITests"
                ReferencedContainer = "container:HalpoPlayer.xcodeproj">
