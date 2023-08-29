@@ -19,7 +19,6 @@ class AudioManager: ObservableObject {
 	static let shared = AudioManager()
 	var currentTask: Task<(), Error>?
 	@Published var songs: [Song]?
-//	@Published var artwork: UIImage?
 	@Published var queue = QueuedAudioPlayer()
 	@Published var currentSong: Song?
 	@Published var isPlaying = false
@@ -128,15 +127,15 @@ class AudioManager: ObservableObject {
 	func handleAudioPlayerIndexChange(state: AudioPlayer.QueueIndexEventData) {
 		DispatchQueue.main.async {
 			self.currentSong = self.songs?[state.newIndex ?? 0]
-		}
-		Task {
-			let image = try await SubsonicClient.shared.coverArt(albumId: self.currentSong?.albumId ?? "")
-			let media = MPMediaItemArtwork(boundsSize: CGSize(width: 100, height: 100)) { _ in
-				return image
-			}
-			self.queue.nowPlayingInfoController.set(keyValue: MediaItemProperty.artwork(media))
-			DispatchQueue.main.async {
-				self.albumArt = image
+			Task {
+				let image = try await SubsonicClient.shared.coverArt(albumId: self.currentSong?.albumId ?? "")
+				let media = MPMediaItemArtwork(boundsSize: CGSize(width: 100, height: 100)) { _ in
+					return image
+				}
+				self.queue.nowPlayingInfoController.set(keyValue: MediaItemProperty.artwork(media))
+				DispatchQueue.main.async {
+					self.albumArt = image
+				}
 			}
 		}
 	}
