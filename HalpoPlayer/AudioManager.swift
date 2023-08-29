@@ -63,6 +63,7 @@ class AudioManager: ObservableObject {
 			if !AudioSessionController.shared.audioSessionIsActive {
 				try AudioSessionController.shared.set(category: .playback)
 				try AudioSessionController.shared.activateSession()
+				AudioSessionController.shared.delegate = self
 			}
 			callback(true)
 		} catch {
@@ -154,6 +155,19 @@ class AudioManager: ObservableObject {
 		}
 		catch {
 			return MPRemoteCommandHandlerStatus.commandFailed
+		}
+	}
+}
+
+extension AudioManager: AudioSessionControllerDelegate {
+	func handleInterruption(type: InterruptionType) {
+		switch type {
+		case .began:
+			self.queue.pause()
+		case .ended(let shouldResume):
+			if shouldResume {
+				self.queue.play()
+			}
 		}
 	}
 }
