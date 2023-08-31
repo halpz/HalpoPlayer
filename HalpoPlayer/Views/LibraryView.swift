@@ -59,20 +59,19 @@ struct AlbumListView: View {
 						}
 					}
 					.padding(8)
-					.simultaneousGesture(DragGesture().onChanged({ value in
-						withAnimation {
-							MediaControlBarMinimized.shared.isCompact = true
-						}
-					}))
-					.refreshable {
-						do {
-							try await viewModel.loadContent(force: true)
-						} catch {
-							print(error)
-						}
+				}
+				.simultaneousGesture(DragGesture().onChanged({ value in
+					withAnimation {
+						MediaControlBarMinimized.shared.isCompact = true
+					}
+				}))
+				.refreshable {
+					do {
+						try await viewModel.loadContent(force: true)
+					} catch {
+						print(error)
 					}
 				}
-				.listStyle(.plain)
 				.searchable(text: $viewModel.searchText, prompt: "Search albums")
 				.scrollDismissesKeyboard(.immediately)
 				.navigationBarTitleDisplayMode(.inline)
