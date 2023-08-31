@@ -38,75 +38,120 @@ struct AlbumListView: View {
 	@EnvironmentObject var coordinator: Coordinator
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
-//	var gridItems: [GridItem] {
-//		if horizontalSize == .compact {
-//			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
-//		} else {
-//			return [GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8),GridItem(.flexible(), spacing: 8)]
-//		}
-//	}
+	func gridItems(width: Double) -> ([GridItem], Double) {
+		let count = Int((width / 200.0).rounded(.toNearestOrAwayFromZero))
+		let item = GridItem(.flexible(), spacing: 8, alignment: .top)
+		let itemWidth: Double = (width-(8*(Double(count)+1)))/Double(count)
+		return (Array(repeating: item, count: count), itemWidth)
+	}
 	var body: some View {
-//		ScrollView {
-//			LazyVGrid(columns: gridItems, spacing: 8) {
-//				ForEach(viewModel.albums) { album in
-//					Button {
-//						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
-//					} label: {
-//						AlbumGridCell(album: Album(albumListResponse: album))
-//					}
-//					.frame(height: 260)
-//				}
-//			}
-//			.padding(8)
-//		}
-		List(viewModel.albums) { album in
-			Button {
-				viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
-			} label: {
-				AlbumCell(album: Album(albumListResponse: album))
-			}
-			.listRowSeparator(.hidden)
-		}
-		.simultaneousGesture(DragGesture().onChanged({ value in
-			withAnimation {
-				MediaControlBarMinimized.shared.isCompact = true
-			}
-		}))
-		.refreshable {
-			do {
-				try await viewModel.loadContent(force: true)
-			} catch {
-				print(error)
-			}
-		}
-		.listStyle(.plain)
-		.searchable(text: $viewModel.searchText, prompt: "Search albums")
-		.scrollDismissesKeyboard(.immediately)
-		.navigationBarTitleDisplayMode(.inline)
-		.navigationTitle(viewModel.viewType.rawValue.capitalized)
-		.toolbar {
-			ToolbarTitleMenu {
-				Picker("Picker", selection: $viewModel.viewType) {
-					ForEach(LibraryViewType.allCases, id: \.self) { item in
-						Text(item.rawValue.capitalized)
+		if UIDevice.current.userInterfaceIdiom == .pad {
+			GeometryReader { geometry in
+				ScrollView {
+					let (gridItems, width) = gridItems(width: geometry.size.width)
+					LazyVGrid(columns: gridItems, spacing: 8) {
+						ForEach(viewModel.albums) { album in
+							Button {
+								viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+							} label: {
+								AlbumGridCell(album: Album(albumListResponse: album), width: width)
+							}
+						}
+					}
+					.padding(8)
+					.simultaneousGesture(DragGesture().onChanged({ value in
+						withAnimation {
+							MediaControlBarMinimized.shared.isCompact = true
+						}
+					}))
+					.refreshable {
+						do {
+							try await viewModel.loadContent(force: true)
+						} catch {
+							print(error)
+						}
+					}
+				}
+				.listStyle(.plain)
+				.searchable(text: $viewModel.searchText, prompt: "Search albums")
+				.scrollDismissesKeyboard(.immediately)
+				.navigationBarTitleDisplayMode(.inline)
+				.navigationTitle(viewModel.viewType.rawValue.capitalized)
+				.toolbar {
+					ToolbarTitleMenu {
+						Picker("Picker", selection: $viewModel.viewType) {
+							ForEach(LibraryViewType.allCases, id: \.self) { item in
+								Text(item.rawValue.capitalized)
+							}
+						}
+					}
+					ToolbarItem(placement: .navigationBarLeading) {
+						Button {
+							viewModel.goToLogin(coordinator: coordinator)
+						} label: {
+							Image(systemName: "person.circle").imageScale(.large)
+						}
+					}
+					ToolbarItem(placement: .navigationBarTrailing) {
+						Button {
+							viewModel.shuffle()
+						} label: {
+							Image(systemName: "shuffle").imageScale(.large)
+						}
 					}
 				}
 			}
-			ToolbarItem(placement: .navigationBarLeading) {
+		} else {
+			List(viewModel.albums) { album in
 				Button {
-					viewModel.goToLogin(coordinator: coordinator)
+					viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
 				} label: {
-					Image(systemName: "person.circle").imageScale(.large)
+					AlbumCell(album: Album(albumListResponse: album))
+				}
+				.listRowSeparator(.hidden)
+			}
+			.simultaneousGesture(DragGesture().onChanged({ value in
+				withAnimation {
+					MediaControlBarMinimized.shared.isCompact = true
+				}
+			}))
+			.refreshable {
+				do {
+					try await viewModel.loadContent(force: true)
+				} catch {
+					print(error)
 				}
 			}
-			ToolbarItem(placement: .navigationBarTrailing) {
-				Button {
-					viewModel.shuffle()
-				} label: {
-					Image(systemName: "shuffle").imageScale(.large)
+			.listStyle(.plain)
+			.searchable(text: $viewModel.searchText, prompt: "Search albums")
+			.scrollDismissesKeyboard(.immediately)
+			.navigationBarTitleDisplayMode(.inline)
+			.navigationTitle(viewModel.viewType.rawValue.capitalized)
+			.toolbar {
+				ToolbarTitleMenu {
+					Picker("Picker", selection: $viewModel.viewType) {
+						ForEach(LibraryViewType.allCases, id: \.self) { item in
+							Text(item.rawValue.capitalized)
+						}
+					}
+				}
+				ToolbarItem(placement: .navigationBarLeading) {
+					Button {
+						viewModel.goToLogin(coordinator: coordinator)
+					} label: {
+						Image(systemName: "person.circle").imageScale(.large)
+					}
+				}
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						viewModel.shuffle()
+					} label: {
+						Image(systemName: "shuffle").imageScale(.large)
+					}
 				}
 			}
 		}
+		
 	}
 }
 

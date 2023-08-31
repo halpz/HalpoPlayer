@@ -51,10 +51,12 @@ struct AlbumCell: View {
 struct AlbumGridCell: View {
 	@EnvironmentObject var database: Database
 	let album: Album
+	let width: Double
 	var showArtistName = true
 	@State var image: UIImage?
-	init(album: Album) {
+	init(album: Album, width: Double) {
 		self.album = album
+		self.width = width
 		self.image = Database.shared.imageCache.image(albumId: album.id)
 	}
 	var body: some View {
@@ -62,7 +64,8 @@ struct AlbumGridCell: View {
 			if let image = image {
 				Image(uiImage: image)
 					.resizable()
-					.scaledToFit()
+					.scaledToFill()
+					.frame(width: width-16, height: width-16)
 					.cornerRadius(8)
 			} else {
 				ProgressView()
@@ -76,6 +79,7 @@ struct AlbumGridCell: View {
 				Text("\(album.name)")
 					.foregroundColor(.primary)
 					.multilineTextAlignment(.leading)
+					.lineLimit(2)
 					.font(.body).bold()
 				if showArtistName {
 					Text("\(album.artist ?? "")")
