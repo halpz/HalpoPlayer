@@ -9,7 +9,7 @@ import Foundation
 
 enum SubsonicAPI {
 	case authenticate
-	case getAlbumList
+	case getAlbumList(page: Int)
 	case getAlbum(id: String)
 	case randomSongs(albumId: String?)
 	case search(term: String)
@@ -34,8 +34,10 @@ enum SubsonicAPI {
 		switch self {
 		case .authenticate:
 			return "ping.view?"
-		case .getAlbumList:
-			return "getAlbumList?type=newest&size=500"
+		case .getAlbumList(let page):
+			let pageSize = 12
+			let offset = pageSize * page
+			return "getAlbumList?type=newest&size=\(pageSize)&offset=\(offset)"
 		case .getAlbum(let id):
 			return "getAlbum?id=\(id)"
 		case .randomSongs(let albumId):

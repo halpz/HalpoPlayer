@@ -10,6 +10,7 @@ import UIKit
 class LibraryViewModel: ObservableObject {
 	@Published var searchText: String
 	@Published var viewType = Database.shared.libraryViewType
+	var albumPage = 0
 	var player = AudioManager.shared
 	var database = Database.shared
 	var albums: [GetAlbumListResponse.Album] {
@@ -46,6 +47,7 @@ class LibraryViewModel: ObservableObject {
 		switch viewType {
 		case .albums:
 			if database.albumList == nil || force {
+				self.albumPage = 0
 				try await getAlbumList()
 			}
 		case .artists:
@@ -53,21 +55,34 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	func getAlbumList() async throws {
-		if try await SubsonicClient.shared.authenticate() {
-			let response = try await SubsonicClient.shared.getAlbumList()
-			DispatchQueue.main.async {
+		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
+		DispatchQueue.main.async {
+			if self.albumPage == 0 {
 				self.database.albumList = response.subsonicResponse.albumList.album
+			} else {
+				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
 			}
+			self.albumPage += 1
+			print("Page: \(self.albumPage), album count: \(self.albums.count)")
 		}
 	}
 	func getArtists() async throws {
-		if try await SubsonicClient.shared.authenticate() {
-			let response = try await SubsonicClient.shared.getIndexes()
-			let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
-				return index.artist
-			}
-			DispatchQueue.main.async {
-				self.database.artistList = artists
+		let response = try await SubsonicClient.shared.getIndexes()
+		let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
+			return index.artist
+		}
+		DispatchQueue.main.async {
+			self.database.artistList = artists
+		}
+	}
+	func albumAppeared(album: GetAlbumListResponse.Album) {
+		if album == self.albums.last {
+			Task {
+				do {
+					try await self.getAlbumList()
+				} catch {
+					print(error)
+				}
 			}
 		}
 	}

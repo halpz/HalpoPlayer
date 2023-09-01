@@ -136,8 +136,8 @@ class SubsonicClient {
 	func getIndexes() async throws -> GetIndexesResponse {
 		return try await request(.getIndexes) as GetIndexesResponse
 	}
-	func getAlbumList() async throws -> GetAlbumListResponse {
-		return try await request(.getAlbumList) as GetAlbumListResponse
+	func getAlbumList(page: Int) async throws -> GetAlbumListResponse {
+		return try await request(.getAlbumList(page: page)) as GetAlbumListResponse
 	}
 	func getAlbum(id: String) async throws -> GetAlbumResponse {
 		return try await request(.getAlbum(id: id)) as GetAlbumResponse

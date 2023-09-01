@@ -39,7 +39,7 @@ struct AlbumListView: View {
 	@EnvironmentObject var database: Database
 	@EnvironmentObject var accountHolder: AccountHolder
 	func gridItems(width: Double) -> ([GridItem], Double) {
-		let count = Int((width / 200.0).rounded(.toNearestOrAwayFromZero))
+		let count = Int((width / 200.0).rounded())
 		let item = GridItem(.flexible(), spacing: 8, alignment: .top)
 		let itemWidth: Double = (width-(8*(Double(count)+1)))/Double(count)
 		return (Array(repeating: item, count: count), itemWidth)
@@ -55,6 +55,9 @@ struct AlbumListView: View {
 								viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
 							} label: {
 								AlbumGridCell(album: Album(albumListResponse: album), width: width)
+							}
+							.onAppear {
+								viewModel.albumAppeared(album: album)
 							}
 						}
 					}
@@ -108,6 +111,9 @@ struct AlbumListView: View {
 					AlbumCell(album: Album(albumListResponse: album))
 				}
 				.listRowSeparator(.hidden)
+				.onAppear {
+					viewModel.albumAppeared(album: album)
+				}
 			}
 			.simultaneousGesture(DragGesture().onChanged({ value in
 				withAnimation {
