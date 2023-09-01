@@ -10,7 +10,6 @@ import UIKit
 class LibraryViewModel: ObservableObject {
 	@Published var searchText: String
 	@Published var viewType = Database.shared.libraryViewType
-	var albumPage = 0
 	var player = AudioManager.shared
 	@Published var database = Database.shared
 	var currentTask: Task<(), Error>?
@@ -49,7 +48,7 @@ class LibraryViewModel: ObservableObject {
 		switch viewType {
 		case .albums:
 			if database.albumList == nil || force {
-				self.albumPage = 0
+				self.database.albumPage = 0
 				try await getAlbumList()
 			}
 		case .artists:
@@ -57,19 +56,20 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	func getAlbumList() async throws {
-		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
+		try await Task.sleep(for: .milliseconds(100))
+		let response = try await SubsonicClient.shared.getAlbumList(page: database.albumPage)
 		await MainActor.run {
-			if self.database.albumList == nil || self.albumPage == 0 {
+			if self.database.albumList == nil || self.database.albumPage == 0 {
 				self.database.albumList = []
 			}
 		}
 		if !(self.database.albumList ?? []).contains(where: { album in
 			album.id == response.subsonicResponse.albumList.album.first?.id
 		}) {
-		await MainActor.run {
-			self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
-		}
-		self.albumPage += 1
+			await MainActor.run {
+				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
+			}
+			self.database.albumPage += 1
 		} else {
 			print("ERRORORROROR")
 		}
@@ -87,6 +87,7 @@ class LibraryViewModel: ObservableObject {
 		if album == self.albums.last {
 			self.currentTask?.cancel()
 			self.currentTask = Task {
+//				try await Task.sleep(for: .milliseconds(1000))
 				do {
 					try await self.getAlbumList()
 				} catch {
