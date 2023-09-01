@@ -58,18 +58,20 @@ class LibraryViewModel: ObservableObject {
 	}
 	func getAlbumList() async throws {
 		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
-		DispatchQueue.main.async {
+		await MainActor.run {
 			if self.database.albumList == nil || self.albumPage == 0 {
 				self.database.albumList = []
 			}
-			if !(self.database.albumList ?? []).contains(where: { album in
-				album.id == response.subsonicResponse.albumList.album.first?.id
-			}) {
+		}
+		if !(self.database.albumList ?? []).contains(where: { album in
+			album.id == response.subsonicResponse.albumList.album.first?.id
+		}) {
+			await MainActor.run {
 				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
-				self.albumPage += 1
-			} else {
-				print("ERRORORROROR")
 			}
+			self.albumPage += 1
+		} else {
+			print("ERRORORROROR")
 		}
 	}
 	func getArtists() async throws {
