@@ -12,7 +12,7 @@ class LibraryViewModel: ObservableObject {
 	@Published var viewType = Database.shared.libraryViewType
 	var albumPage = 0
 	var player = AudioManager.shared
-	var database = Database.shared
+	@Published var database = Database.shared
 	var currentTask: Task<(), Error>?
 	var albums: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
@@ -66,10 +66,10 @@ class LibraryViewModel: ObservableObject {
 		if !(self.database.albumList ?? []).contains(where: { album in
 			album.id == response.subsonicResponse.albumList.album.first?.id
 		}) {
-			await MainActor.run {
-				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
-			}
-			self.albumPage += 1
+		await MainActor.run {
+			self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
+		}
+		self.albumPage += 1
 		} else {
 			print("ERRORORROROR")
 		}

@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaylistsView: View {
 	@StateObject var viewModel: PlaylistsViewModel
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var database: Database
+	@ObservedObject var database = Database.shared
 	init(_ song: Song? = nil, refresh: Bool = false) {
 		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song, refresh: refresh))
 	}

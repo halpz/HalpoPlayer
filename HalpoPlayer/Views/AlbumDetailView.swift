@@ -10,7 +10,7 @@ import SwiftUI
 struct AlbumDetailView: View {
 	@StateObject private var viewModel: AlbumDetailViewModel
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var database: Database
+	@ObservedObject var database = Database.shared
 	@EnvironmentObject var player: AudioManager
 	init(albumId: String, scrollToSong: String? = nil) {
 		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId, scrollToSong: scrollToSong))
