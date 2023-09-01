@@ -69,6 +69,15 @@ struct PlaylistView: View {
 			}
 			.listStyle(.plain)
 			.navigationTitle(name)
+			.toolbar {
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						viewModel.shuffle()
+					} label: {
+						Image(systemName: "shuffle").imageScale(.large)
+					}
+				}
+			}
 		} else {
 			ProgressView()
 				.navigationTitle(name)

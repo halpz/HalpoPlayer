@@ -37,19 +37,12 @@ class PlaylistViewModel: ObservableObject {
 		} ?? []
 	}
 	func getPlaylist() async throws {
-//		Task {
-//			do {
 				let response = try await SubsonicClient.shared.getPlaylist(id: playlistId)
 				let imageResponse = try await SubsonicClient.shared.coverArt(albumId: response.subsonicResponse.playlist.coverArt)
 				DispatchQueue.main.async {
 					self.playlistResponse = response
 					self.image = imageResponse
-//					callback?()
 				}
-//			} catch {
-//				print(error)
-//			}
-//		}
 	}
 	func playSong(song: Song) {
 		if let index = songs.firstIndex(of: song) {
@@ -105,5 +98,9 @@ class PlaylistViewModel: ObservableObject {
 				}
 			}
 		}
+	}
+	func shuffle() {
+		let songs = self.songs.shuffled()
+		self.player.play(songs: songs, index: 0)
 	}
 }
