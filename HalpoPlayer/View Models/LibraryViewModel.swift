@@ -60,6 +60,7 @@ class LibraryViewModel: ObservableObject {
 		let response = try await SubsonicClient.shared.getAlbumList(page: database.albumPage)
 		await MainActor.run {
 			if self.database.albumList == nil || self.database.albumPage == 0 {
+				self.database.albumPage = 0
 				self.database.albumList = []
 			}
 		}
@@ -70,6 +71,7 @@ class LibraryViewModel: ObservableObject {
 				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
 			}
 			self.database.albumPage += 1
+			
 		} else {
 			print("ERRORORROROR")
 		}
@@ -87,7 +89,6 @@ class LibraryViewModel: ObservableObject {
 		if album == self.albums.last {
 			self.currentTask?.cancel()
 			self.currentTask = Task {
-//				try await Task.sleep(for: .milliseconds(1000))
 				do {
 					try await self.getAlbumList()
 				} catch {

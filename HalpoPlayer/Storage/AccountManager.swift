@@ -18,7 +18,7 @@ class AccountHolder: ObservableObject {
 				if try await SubsonicClient.shared.authenticate() {
 					let data = try JSONEncoder().encode(account)
 					UserDefaults.standard.set(data, forKey: "UserAccount")
-					NotificationCenter.default.post(name: Notification.Name("login"), object: nil)
+//					NotificationCenter.default.post(name: Notification.Name("login"), object: nil)
 				}
 			}
 		}
