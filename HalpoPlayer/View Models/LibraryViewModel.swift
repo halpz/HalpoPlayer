@@ -59,7 +59,7 @@ class LibraryViewModel: ObservableObject {
 	func getAlbumList() async throws {
 		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
 		DispatchQueue.main.async {
-			if self.database.albumList == nil {
+			if self.database.albumList == nil || self.albumPage == 0 {
 				self.database.albumList = []
 			}
 			if !(self.database.albumList ?? []).contains(where: { album in
@@ -67,7 +67,6 @@ class LibraryViewModel: ObservableObject {
 			}) {
 				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
 				self.albumPage += 1
-				print("Page: \(self.albumPage), album count: \(self.albums.count)")
 			} else {
 				print("ERRORORROROR")
 			}
