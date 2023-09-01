@@ -13,6 +13,7 @@ class LibraryViewModel: ObservableObject {
 	var albumPage = 0
 	var player = AudioManager.shared
 	var database = Database.shared
+	var currentTask: Task<(), Error>?
 	var albums: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
 			return database.albumList ?? []
@@ -34,7 +35,8 @@ class LibraryViewModel: ObservableObject {
 	}
 	init() {
 		searchText = ""
-		Task {
+		self.currentTask?.cancel()
+		self.currentTask = Task {
 			do {
 				try await loadContent(force: true)
 			} catch {
@@ -57,13 +59,18 @@ class LibraryViewModel: ObservableObject {
 	func getAlbumList() async throws {
 		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
 		DispatchQueue.main.async {
-			if self.albumPage == 0 {
-				self.database.albumList = response.subsonicResponse.albumList.album
-			} else {
-				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
+			if self.database.albumList == nil {
+				self.database.albumList = []
 			}
-			self.albumPage += 1
-			print("Page: \(self.albumPage), album count: \(self.albums.count)")
+			if !(self.database.albumList ?? []).contains(where: { album in
+				album.id == response.subsonicResponse.albumList.album.first?.id
+			}) {
+				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
+				self.albumPage += 1
+				print("Page: \(self.albumPage), album count: \(self.albums.count)")
+			} else {
+				print("ERRORORROROR")
+			}
 		}
 	}
 	func getArtists() async throws {
@@ -77,7 +84,8 @@ class LibraryViewModel: ObservableObject {
 	}
 	func albumAppeared(album: GetAlbumListResponse.Album) {
 		if album == self.albums.last {
-			Task {
+			self.currentTask?.cancel()
+			self.currentTask = Task {
 				do {
 					try await self.getAlbumList()
 				} catch {
@@ -90,7 +98,8 @@ class LibraryViewModel: ObservableObject {
 		coordinator.albumTapped(albumId: albumId, scrollToSong: nil)
 	}
 	@objc func refresh() {
-		Task {
+		self.currentTask?.cancel()
+		self.currentTask = Task {
 			do {
 				try await loadContent(force: true)
 			} catch {
