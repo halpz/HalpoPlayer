@@ -14,8 +14,6 @@ struct halpoplayerApp: App {
 	@ObservedObject var downloadsCoordinator = Coordinator()
 	@ObservedObject var playlistsCoordinator = Coordinator()
 	@ObservedObject var searchCoordinator = Coordinator()
-	@ObservedObject var player = AudioManager.shared
-	@ObservedObject var accountHolder = AccountHolder.shared
 	@ObservedObject var mediaControlBarMinimized = MediaControlBarMinimized.shared
 	@State var selectedTab: AppTab = .library
 	let batteryManager = BatteryManager.shared
@@ -79,9 +77,6 @@ struct halpoplayerApp: App {
 			}
 			.ignoresSafeArea(.keyboard)
 			.environmentObject(mediaControlBarMinimized)
-			.environmentObject(accountHolder)
-//			.environmentObject(database)
-			.environmentObject(player)
 			.environmentObject(coordinatorForTab(tab: selectedTab))
 			.onAppear {
 				initApp()

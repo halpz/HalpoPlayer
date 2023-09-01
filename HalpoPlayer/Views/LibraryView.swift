@@ -10,7 +10,7 @@ import SwiftUI
 struct LibraryView: View {
 	@StateObject var viewModel = LibraryViewModel()
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var accountHolder: AccountHolder
+	@ObservedObject var accountHolder = AccountHolder.shared
 	@ObservedObject var database = Database.shared
 	var body: some View {
 		if accountHolder.account != nil {
@@ -36,8 +36,7 @@ struct AlbumListView: View {
 	@Environment(\.horizontalSizeClass) var horizontalSize
 	@StateObject var viewModel: LibraryViewModel
 	@EnvironmentObject var coordinator: Coordinator
-//	@EnvironmentObject var database: Database
-	@EnvironmentObject var accountHolder: AccountHolder
+	@ObservedObject var accountHolder = AccountHolder.shared
 	func gridItems(width: Double) -> ([GridItem], Double) {
 		let count = Int((width / 200.0).rounded())
 		let item = GridItem(.flexible(), spacing: 8, alignment: .top)
@@ -163,8 +162,7 @@ struct AlbumListView: View {
 struct ArtistListView: View {
 	@StateObject var viewModel: LibraryViewModel
 	@EnvironmentObject var coordinator: Coordinator
-//	@EnvironmentObject var database: Database
-	@EnvironmentObject var accountHolder: AccountHolder
+	@ObservedObject var accountHolder = AccountHolder.shared
 	var body: some View {
 		if viewModel.artists.isEmpty {
 			ProgressView()

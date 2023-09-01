@@ -11,7 +11,7 @@ struct AlbumDetailView: View {
 	@StateObject private var viewModel: AlbumDetailViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var database = Database.shared
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	init(albumId: String, scrollToSong: String? = nil) {
 		_viewModel = StateObject(wrappedValue: AlbumDetailViewModel(albumId: albumId, scrollToSong: scrollToSong))
 	}

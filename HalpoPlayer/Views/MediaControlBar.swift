@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MediaControlBar: View {
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	@EnvironmentObject var compact: MediaControlBarMinimized
 	@ObservedObject var timeline = TimelineManager.shared
 	@State private var dragAmount = CGSize.zero

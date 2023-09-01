@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	@ObservedObject var database = Database.shared
 	var body: some View {
 		ZStack {

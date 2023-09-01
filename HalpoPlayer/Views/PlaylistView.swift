@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlaylistView: View {
 	@StateObject var viewModel: PlaylistViewModel
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	@State private var editMode = EditMode.active
 	var name: String
 	init(playlist: GetPlaylistsResponse.Playlist) {

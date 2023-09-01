@@ -12,7 +12,7 @@ struct SongCell: View {
 	var showAlbumName: Bool = true
 	var showTrackNumber: Bool = true
 	var showAlbumArt: Bool = true
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	@ObservedObject var database = Database.shared
 	let song: Song
 	@State var image: UIImage?

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NowPlayingView: View {
 	@EnvironmentObject var coordinator: Coordinator
-	@EnvironmentObject var player: AudioManager
+	@ObservedObject var player = AudioManager.shared
 	@EnvironmentObject var compact: MediaControlBarMinimized
 	@ObservedObject var timeline = TimelineManager.shared
 	var buttonSize: CGFloat {

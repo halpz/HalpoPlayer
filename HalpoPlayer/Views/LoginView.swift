@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
 	@Environment(\.dismiss) var dismiss
-	@EnvironmentObject var accountHolder: AccountHolder
+	@ObservedObject var accountHolder = AccountHolder.shared
 	@State var address: String = ""
 	@State var otherAddress: String = ""
 	@State var username: String = ""
