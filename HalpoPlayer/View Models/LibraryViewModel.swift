@@ -56,7 +56,7 @@ class LibraryViewModel: ObservableObject {
 	func loadContent(force: Bool = false) async throws {
 		switch viewType {
 		case .albums:
-			if albums.isEmpty {
+			if albums.isEmpty || force {
 				self.albumPage = 0
 				try await getAlbumList()
 			}
