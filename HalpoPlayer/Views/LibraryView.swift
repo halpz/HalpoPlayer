@@ -189,13 +189,6 @@ struct ArtistListView: View {
 				MediaControlBarMinimized.shared.isCompact = true
 			}
 		}))
-		.refreshable {
-			do {
-				try await viewModel.loadContent()
-			} catch {
-				print(error)
-			}
-		}
 		.listStyle(.plain)
 		.searchable(text: $viewModel.searchText, prompt: "Search artists")
 		.scrollDismissesKeyboard(.immediately)
