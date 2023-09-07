@@ -71,6 +71,7 @@ class AudioManager: ObservableObject {
 	}
 	
 	func play(songs: [Song], index: Int, paused: Bool = false, currentTime: TimeInterval = 0) {
+		if songs.isEmpty { return }
 		self.activateSession { success in
 			guard success else { return }
 			self.queue.stop()
