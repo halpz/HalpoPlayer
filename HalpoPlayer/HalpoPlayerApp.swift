@@ -97,14 +97,6 @@ struct halpoplayerApp: App {
 	}
 	func initApp() {
 		UIApplication.shared.beginReceivingRemoteControlEvents()
-//		Task {
-//			do {
-//				UIApplication.shared.beginReceivingRemoteControlEvents()
-//				
-//			} catch {
-//				print(error)
-//			}
-//		}
 	}
 }
 

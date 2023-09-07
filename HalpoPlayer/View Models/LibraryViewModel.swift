@@ -50,6 +50,9 @@ class LibraryViewModel: ObservableObject {
 			} catch {
 				print(error)
 			}
+			await MainActor.run {
+				AudioManager.shared.loadSavedState()
+			}
 		}
 		NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name("login"), object: nil)
 	}

@@ -8,6 +8,12 @@
 import SwiftAudioEx
 import MediaPlayer
 
+struct CurrentPlaylist: Codable {
+	var songs: [Song]
+	var index: Int
+	var currentTime: TimeInterval
+}
+
 class TimelineManager: ObservableObject {
 	static let shared = TimelineManager()
 	@Published var timeElapsed = 0.0
@@ -18,6 +24,8 @@ class TimelineManager: ObservableObject {
 class AudioManager: ObservableObject {
 	static let shared = AudioManager()
 	var currentTask: Task<(), Error>?
+	var currentPlaylist: CurrentPlaylist
+	var initialLoad = false
 	@Published var songs: [Song]?
 	@Published var queue = QueuedAudioPlayer()
 	@Published var currentSong: Song?
@@ -27,6 +35,15 @@ class AudioManager: ObservableObject {
 	@Published var loading = false
 	
 	init() {
+		if let playlistData = UserDefaults.standard.data(forKey: "CurrentPlaylist") {
+			if let playlist = try? JSONDecoder().decode(CurrentPlaylist.self, from: playlistData) {
+				self.currentPlaylist = playlist
+			} else {
+				self.currentPlaylist = CurrentPlaylist(songs: [], index: 0, currentTime: 0)
+			}
+		} else {
+			self.currentPlaylist = CurrentPlaylist(songs: [], index: 0, currentTime: 0)
+		}
 		self.queue.event.queueIndex.addListener(self, handleAudioPlayerIndexChange)
 		self.queue.event.stateChange.addListener(self, handleAudioPlayerStateChange)
 		self.queue.event.secondElapse.addListener(self, handleAudioPlayerSecondElapse)
@@ -40,9 +57,22 @@ class AudioManager: ObservableObject {
 			.next,
 			.previous
 		]
+		NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
+			print("GOOD BYE!!")
+			if let data = try? JSONEncoder().encode(self.currentPlaylist) {
+				UserDefaults.standard.setValue(data, forKey: "CurrentPlaylist")
+				print("Data Saved")
+			}
+		}
 	}
 	
-	func play(songs: [Song], index: Int) {
+	func loadSavedState() {
+		guard !initialLoad else { return }
+		self.play(songs: self.currentPlaylist.songs, index: self.currentPlaylist.index, paused: true, currentTime: self.currentPlaylist.currentTime)
+		initialLoad = true
+	}
+	
+	func play(songs: [Song], index: Int, paused: Bool = false, currentTime: TimeInterval = 0) {
 		self.activateSession { success in
 			guard success else { return }
 			self.queue.stop()
@@ -53,9 +83,17 @@ class AudioManager: ObservableObject {
 			songs.forEach {
 				self.addSongToQueue(song: $0)
 			}
-			try? self.queue.jumpToItem(atIndex: index, playWhenReady: true)
+			try? self.queue.jumpToItem(atIndex: index, playWhenReady: !paused)
+			self.queue.seek(to: currentTime)
 			self.currentSong = songs[index]
+			self.updatePlaylist()
 		}
+	}
+
+	func updatePlaylist() {
+		self.currentPlaylist.songs = self.songs ?? []
+		self.currentPlaylist.index = self.queue.currentIndex
+		self.currentPlaylist.currentTime = self.queue.currentTime
 	}
 	
 	func activateSession(callback: @escaping (Bool) -> Void) {
@@ -86,6 +124,7 @@ class AudioManager: ObservableObject {
 		item.title = song.title
 		item.artwork = albumArt
 		try? self.queue.add(item: item)
+		self.updatePlaylist()
 	}
 	
 	func handleAudioPlayerError(fail: AudioPlayer.FailEventData) {
@@ -99,6 +138,7 @@ class AudioManager: ObservableObject {
 		DispatchQueue.main.async {
 			TimelineManager.shared.duration = time
 			TimelineManager.shared.percentPlayed = (TimelineManager.shared.timeElapsed / TimelineManager.shared.duration) * 100
+			self.currentPlaylist.currentTime = time
 		}
 	}
 	
@@ -107,6 +147,7 @@ class AudioManager: ObservableObject {
 		DispatchQueue.main.async {
 			TimelineManager.shared.timeElapsed = time
 			TimelineManager.shared.percentPlayed = (TimelineManager.shared.timeElapsed / TimelineManager.shared.duration) * 100
+			self.currentPlaylist.currentTime = time
 		}
 	}
 	
@@ -137,6 +178,7 @@ class AudioManager: ObservableObject {
 				DispatchQueue.main.async {
 					self.albumArt = image
 				}
+				self.updatePlaylist()
 			}
 		}
 	}
@@ -146,6 +188,7 @@ class AudioManager: ObservableObject {
 		} else {
 			self.queue.seek(to: 0)
 		}
+		self.updatePlaylist()
 	}
 	
 	func handlePreviousTrackCommand(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
