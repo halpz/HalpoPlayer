@@ -8,7 +8,7 @@
 import SwiftAudioEx
 import MediaPlayer
 
-struct CurrentPlaylist: Codable {
+struct PlayerState: Codable {
 	var songs: [Song]
 	var index: Int
 	var currentTime: TimeInterval
@@ -24,7 +24,7 @@ class TimelineManager: ObservableObject {
 class AudioManager: ObservableObject {
 	static let shared = AudioManager()
 	var currentTask: Task<(), Error>?
-	var currentPlaylist: CurrentPlaylist
+	var playerState: PlayerState
 	var initialLoad = false
 	@Published var songs: [Song]?
 	@Published var queue = QueuedAudioPlayer()
@@ -36,13 +36,13 @@ class AudioManager: ObservableObject {
 	
 	init() {
 		if let playlistData = UserDefaults.standard.data(forKey: "CurrentPlaylist") {
-			if let playlist = try? JSONDecoder().decode(CurrentPlaylist.self, from: playlistData) {
-				self.currentPlaylist = playlist
+			if let playlist = try? JSONDecoder().decode(PlayerState.self, from: playlistData) {
+				self.playerState = playlist
 			} else {
-				self.currentPlaylist = CurrentPlaylist(songs: [], index: 0, currentTime: 0)
+				self.playerState = PlayerState(songs: [], index: 0, currentTime: 0)
 			}
 		} else {
-			self.currentPlaylist = CurrentPlaylist(songs: [], index: 0, currentTime: 0)
+			self.playerState = PlayerState(songs: [], index: 0, currentTime: 0)
 		}
 		self.queue.event.queueIndex.addListener(self, handleAudioPlayerIndexChange)
 		self.queue.event.stateChange.addListener(self, handleAudioPlayerStateChange)
@@ -58,17 +58,15 @@ class AudioManager: ObservableObject {
 			.previous
 		]
 		NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
-			print("GOOD BYE!!")
-			if let data = try? JSONEncoder().encode(self.currentPlaylist) {
+			if let data = try? JSONEncoder().encode(self.playerState) {
 				UserDefaults.standard.setValue(data, forKey: "CurrentPlaylist")
-				print("Data Saved")
 			}
 		}
 	}
 	
 	func loadSavedState() {
 		guard !initialLoad else { return }
-		self.play(songs: self.currentPlaylist.songs, index: self.currentPlaylist.index, paused: true, currentTime: self.currentPlaylist.currentTime)
+		self.play(songs: self.playerState.songs, index: self.playerState.index, paused: true, currentTime: self.playerState.currentTime)
 		initialLoad = true
 	}
 	
@@ -91,9 +89,9 @@ class AudioManager: ObservableObject {
 	}
 
 	func updatePlaylist() {
-		self.currentPlaylist.songs = self.songs ?? []
-		self.currentPlaylist.index = self.queue.currentIndex
-		self.currentPlaylist.currentTime = self.queue.currentTime
+		self.playerState.songs = self.songs ?? []
+		self.playerState.index = self.queue.currentIndex
+		self.playerState.currentTime = self.queue.currentTime
 	}
 	
 	func activateSession(callback: @escaping (Bool) -> Void) {
@@ -138,7 +136,7 @@ class AudioManager: ObservableObject {
 		DispatchQueue.main.async {
 			TimelineManager.shared.duration = time
 			TimelineManager.shared.percentPlayed = (TimelineManager.shared.timeElapsed / TimelineManager.shared.duration) * 100
-			self.currentPlaylist.currentTime = time
+			self.playerState.currentTime = time
 		}
 	}
 	
@@ -147,7 +145,7 @@ class AudioManager: ObservableObject {
 		DispatchQueue.main.async {
 			TimelineManager.shared.timeElapsed = time
 			TimelineManager.shared.percentPlayed = (TimelineManager.shared.timeElapsed / TimelineManager.shared.duration) * 100
-			self.currentPlaylist.currentTime = time
+			self.playerState.currentTime = time
 		}
 	}
 	
