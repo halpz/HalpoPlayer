@@ -11,7 +11,7 @@ struct LibraryView: View {
 	@StateObject var viewModel = LibraryViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared
-	@ObservedObject var database = Database.shared
+//	@ObservedObject var database = Database.shared
 	var body: some View {
 		if accountHolder.account != nil {
 			switch viewModel.viewType {
@@ -160,6 +160,7 @@ struct AlbumListView: View {
 }
 
 struct ArtistListView: View {
+	
 	@StateObject var viewModel: LibraryViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared

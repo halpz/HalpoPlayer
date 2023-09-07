@@ -8,36 +8,45 @@
 import UIKit
 
 class LibraryViewModel: ObservableObject {
+	@Published var loggedIn = false
 	@Published var searchText: String
 	@Published var viewType = Database.shared.libraryViewType
 	var player = AudioManager.shared
-	@Published var database = Database.shared
+	@Published var albums: [GetAlbumListResponse.Album] = []
+	@Published var artists: [GetIndexesResponse.Artist] = []
+	var albumPage: Int = 0
 	var currentTask: Task<(), Error>?
-	var albums: [GetAlbumListResponse.Album] {
+	var loading = false
+	var filteredAlbums: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
-			return database.albumList ?? []
+			return albums
 		} else {
-			return database.albumList?.filter {
+			return albums.filter {
 				$0.title.localizedCaseInsensitiveContains(searchText) ||
 				$0.artist.localizedCaseInsensitiveContains(searchText)
-			} ?? []
+			}
 		}
 	}
-	var artists: [GetIndexesResponse.Artist] {
+	var filteredArtists: [GetIndexesResponse.Artist] {
 		if searchText.isEmpty {
-			return database.artistList ?? []
+			return artists
 		} else {
-			return database.artistList?.filter {
+			return artists.filter {
 				$0.name.localizedCaseInsensitiveContains(searchText)
-			} ?? []
+			}
 		}
 	}
 	init() {
+		self.loading = true
 		searchText = ""
+		self.artists = Database.shared.artistList ?? []
+		self.albums = Database.shared.albumList ?? []
+		self.albumPage = Database.shared.albumPage
 		self.currentTask?.cancel()
 		self.currentTask = Task {
 			do {
 				try await loadContent(force: true)
+				self.loading = false
 			} catch {
 				print(error)
 			}
@@ -47,8 +56,8 @@ class LibraryViewModel: ObservableObject {
 	func loadContent(force: Bool = false) async throws {
 		switch viewType {
 		case .albums:
-			if database.albumList == nil || force {
-				self.database.albumPage = 0
+			if albums.isEmpty {
+				self.albumPage = 0
 				try await getAlbumList()
 			}
 		case .artists:
@@ -56,33 +65,27 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	func getAlbumList() async throws {
-		try await Task.sleep(for: .milliseconds(100))
-		let response = try await SubsonicClient.shared.getAlbumList(page: database.albumPage)
+//		guard !loading else { return }
+		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
 		await MainActor.run {
-			if self.database.albumList == nil || self.database.albumPage == 0 {
-				self.database.albumPage = 0
-				self.database.albumList = []
+			if self.albumPage == 0 {
+				self.albums = response.subsonicResponse.albumList.album
+			} else {
+				self.albums.append(contentsOf: response.subsonicResponse.albumList.album)
 			}
+			Database.shared.albumList = self.albums
 		}
-		if !(self.database.albumList ?? []).contains(where: { album in
-			album.id == response.subsonicResponse.albumList.album.first?.id
-		}) {
-			await MainActor.run {
-				self.database.albumList?.append(contentsOf: response.subsonicResponse.albumList.album)
-			}
-			self.database.albumPage += 1
-			
-		} else {
-			print("ERRORORROROR")
-		}
+		self.albumPage += 1
+		Database.shared.albumPage = self.albumPage
 	}
 	func getArtists() async throws {
 		let response = try await SubsonicClient.shared.getIndexes()
-		let artists: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
+		let artistsResponse: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
 			return index.artist
 		}
+		Database.shared.artistList = artistsResponse
 		DispatchQueue.main.async {
-			self.database.artistList = artists
+			self.artists = artistsResponse
 		}
 	}
 	func albumAppeared(album: GetAlbumListResponse.Album) {

@@ -19,9 +19,16 @@ class SubsonicClient {
 		return "&f=json&u=\(account.username)&p=\(account.password)&v=1.16.1&c=halpoplayer"
 	}
 	func request<T: Decodable>(_ api: SubsonicAPI) async throws -> T {
+		
+		
+		if self.currentAddress == nil {
+			_ = try await self.authenticate()
+		}
+		
 		guard let currentAddress = currentAddress else {
 			throw HalpoError.noAccount
 		}
+		
 		guard let url = URL(string: "\(currentAddress)/rest/\(api.pathComponent)\(userString)") else {
 			throw HalpoError.noURL
 		}

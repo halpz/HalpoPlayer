@@ -99,7 +99,7 @@ struct halpoplayerApp: App {
 		Task {
 			do {
 				UIApplication.shared.beginReceivingRemoteControlEvents()
-				_ = try await SubsonicClient.shared.authenticate()
+				
 			} catch {
 				print(error)
 			}
