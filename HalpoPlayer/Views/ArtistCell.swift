@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct ArtistCell: View {
-	var artist: GetIndexesResponse.Artist
+	var artist: GetArtistsResponse.Artist
 	@State private var image: UIImage?
 	let imageSize: CGFloat = 40
 	var body: some View {

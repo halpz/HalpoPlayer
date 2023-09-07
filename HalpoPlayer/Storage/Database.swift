@@ -11,7 +11,7 @@ class Database: ObservableObject {
 	static let shared = Database()
 	let imageCache = ImageCache.shared
 	@Published var albumList: [GetAlbumListResponse.Album]?
-	@Published var artistList: [GetIndexesResponse.Artist]?
+	@Published var artistList: [GetArtistsResponse.Artist]?
 	@Published var playlists: GetPlaylistsResponse?
 	@Published var searchResults: Search2Response?
 	@Published var searchScope: SearchScope

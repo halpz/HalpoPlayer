@@ -48,7 +48,7 @@ struct AlbumListView: View {
 				ScrollView {
 					let (gridItems, width) = gridItems(width: geometry.size.width)
 					LazyVGrid(columns: gridItems, spacing: 8) {
-						ForEach(viewModel.albums) { album in
+						ForEach(viewModel.filteredAlbums) { album in
 							Button {
 								viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
 							} label: {
@@ -66,6 +66,13 @@ struct AlbumListView: View {
 						MediaControlBarMinimized.shared.isCompact = true
 					}
 				}))
+				.refreshable {
+					do {
+						try await viewModel.loadContent(force: true)
+					} catch {
+						print(error)
+					}
+				}
 				.searchable(text: $viewModel.searchText, prompt: "Search albums")
 				.scrollDismissesKeyboard(.immediately)
 				.navigationBarTitleDisplayMode(.inline)

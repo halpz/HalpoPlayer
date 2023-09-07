@@ -36,7 +36,7 @@ struct GetArtistsResponse: Codable {
 	}
 
 	// MARK: - Artist
-	struct Artist: Codable {
+	struct Artist: Codable, Hashable, Identifiable {
 		let albumCount: Int
 		let id, name, coverArt: String
 		let artistImageUrl: String

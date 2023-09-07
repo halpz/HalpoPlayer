@@ -13,10 +13,9 @@ class LibraryViewModel: ObservableObject {
 	@Published var viewType = Database.shared.libraryViewType
 	var player = AudioManager.shared
 	@Published var albums: [GetAlbumListResponse.Album] = []
-	@Published var artists: [GetIndexesResponse.Artist] = []
+	@Published var artists: [GetArtistsResponse.Artist] = []
 	var albumPage: Int = 0
 	var currentTask: Task<(), Error>?
-	var loading = false
 	var filteredAlbums: [GetAlbumListResponse.Album] {
 		if searchText.isEmpty {
 			return albums
@@ -27,7 +26,7 @@ class LibraryViewModel: ObservableObject {
 			}
 		}
 	}
-	var filteredArtists: [GetIndexesResponse.Artist] {
+	var filteredArtists: [GetArtistsResponse.Artist] {
 		if searchText.isEmpty {
 			return artists
 		} else {
@@ -37,7 +36,6 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	init() {
-		self.loading = true
 		searchText = ""
 		self.artists = Database.shared.artistList ?? []
 		self.albums = Database.shared.albumList ?? []
@@ -46,7 +44,6 @@ class LibraryViewModel: ObservableObject {
 		self.currentTask = Task {
 			do {
 				try await loadContent(force: true)
-				self.loading = false
 			} catch {
 				print(error)
 			}
@@ -68,26 +65,30 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	func getAlbumList() async throws {
-//		guard !loading else { return }
 		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
-		await MainActor.run {
-			if self.albumPage == 0 {
-				self.albums = response.subsonicResponse.albumList.album
-			} else {
-				self.albums.append(contentsOf: response.subsonicResponse.albumList.album)
+		let newAlbums: [GetAlbumListResponse.Album]
+		if self.albumPage == 0 {
+			await MainActor.run {
+				self.albums = []
 			}
-			Database.shared.albumList = self.albums
+			newAlbums = response.subsonicResponse.albumList.album
+		} else {
+			newAlbums = self.albums + response.subsonicResponse.albumList.album
 		}
 		self.albumPage += 1
 		Database.shared.albumPage = self.albumPage
+		await MainActor.run {
+			self.albums = newAlbums
+			Database.shared.albumList = self.albums
+		}
 	}
 	func getArtists() async throws {
-		let response = try await SubsonicClient.shared.getIndexes()
-		let artistsResponse: [GetIndexesResponse.Artist] = response.subsonicResponse.indexes.index.flatMap { index in
+		let response = try await SubsonicClient.shared.getArtists()
+		let artistsResponse: [GetArtistsResponse.Artist] = response.subsonicResponse.artists.index.flatMap { index in
 			return index.artist
 		}
 		Database.shared.artistList = artistsResponse
-		DispatchQueue.main.async {
+		await MainActor.run {
 			self.artists = artistsResponse
 		}
 	}
