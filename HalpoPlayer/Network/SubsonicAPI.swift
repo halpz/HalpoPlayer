@@ -35,7 +35,7 @@ enum SubsonicAPI {
 		case .authenticate:
 			return "ping.view?"
 		case .getAlbumList(let page):
-			let pageSize = 12
+			let pageSize = 24
 			let offset = pageSize * page
 			return "getAlbumList?type=newest&size=\(pageSize)&offset=\(offset)"
 		case .getAlbum(let id):
