@@ -37,6 +37,7 @@ class SubsonicClient {
 		urlRequest.httpMethod = api.method
 		let (data, response) = try await self.session.data(for: urlRequest)
 		if let code = (response as? HTTPURLResponse)?.statusCode, code != 200 {
+			self.showCode(code: code, message: "URLRequest error")
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
@@ -49,8 +50,19 @@ class SubsonicClient {
 		do {
 			return try JSONDecoder().decode(T.self, from: data)
 		} catch {
+			self.showCode(code: 0, message: "JSON Decoder error: \(error.localizedDescription)")
 			print(error)
 			throw HalpoError.imageDecode
+		}
+	}
+	func showCode(code: Int, message: String? = nil) {
+		let alert = UIAlertController(title: "Error", message: "error code: \(code) \(message ?? "")", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+		   let window = scene.windows.first(where: { $0.isKeyWindow }) {
+			DispatchQueue.main.async {
+				window.rootViewController?.present(alert, animated: true)
+			}
 		}
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
@@ -193,6 +205,9 @@ class SubsonicClient {
 		}
 	}
 	func testAddressesForPermission(ad1: String, ad2: String, callback: @escaping (Bool) -> Void) {
+		var varcount = 0
+		if !ad1.isEmpty { varcount += 1 }
+		if !ad2.isEmpty { varcount += 1 }
 		let url1 = URL(string: ad1)!
 		var urlRequest1 = URLRequest(url: url1)
 		urlRequest1.httpMethod = "HEAD"
@@ -201,15 +216,27 @@ class SubsonicClient {
 		urlRequest2.httpMethod = "HEAD"
 		let ur1 = urlRequest1
 		let ur2 = urlRequest2
+		let counter = varcount
 		Task {
+			var count = counter
 			do { _ = try await session.data(for: ur1)
 				callback(true)
 				return
-			} catch { }
+			} catch {
+				count -= 1
+				if count == 0 {
+					callback(false)
+				}
+			}
 			do { _ = try await session.data(for: ur2)
 				callback(true)
 				return
-			} catch { }
+			} catch {
+				count -= 1
+				if count == 0 {
+					callback(false)
+				}
+			}
 		}
 	}
 }

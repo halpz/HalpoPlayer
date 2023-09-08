@@ -43,7 +43,7 @@ struct AlbumListView: View {
 		return (Array(repeating: item, count: count), itemWidth)
 	}
 	var body: some View {
-		if UIDevice.current.userInterfaceIdiom == .pad {
+		if UIDevice.current.userInterfaceIdiom == .pad || UIDevice.current.userInterfaceIdiom == .tv {
 			GeometryReader { geometry in
 				ScrollView {
 					let (gridItems, width) = gridItems(width: geometry.size.width)
