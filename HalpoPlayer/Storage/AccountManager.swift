@@ -15,10 +15,13 @@ class AccountHolder: ObservableObject {
 			guard account != nil else { return }
 			SubsonicClient.shared.account = account
 			Task {
-				if try await SubsonicClient.shared.authenticate() {
+				do {
+					_ = try await SubsonicClient.shared.authenticate()
 					let data = try JSONEncoder().encode(account)
 					UserDefaults.standard.set(data, forKey: "UserAccount")
-//					NotificationCenter.default.post(name: Notification.Name("login"), object: nil)
+				} catch {
+					SubsonicClient.shared.showCode(code: 0, message: "Authentication Error: \(error)")
+					throw error
 				}
 			}
 		}

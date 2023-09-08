@@ -22,7 +22,11 @@ class SubsonicClient {
 		
 		
 		if self.currentAddress == nil {
-			_ = try await self.authenticate()
+			do {
+				_ = try await self.authenticate()
+			} catch {
+				self.showCode(code: 0, message: "Authentication error: \(error)")
+			}
 		}
 		
 		guard let currentAddress = currentAddress else {
@@ -56,6 +60,7 @@ class SubsonicClient {
 		}
 	}
 	func showCode(code: Int, message: String? = nil) {
+		return
 		let alert = UIAlertController(title: "Error", message: "error code: \(code) \(message ?? "")", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 		if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
