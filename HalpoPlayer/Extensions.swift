@@ -5,7 +5,7 @@
 //  Created by paul on 10/07/2023.
 //
 
-import Foundation
+import UIKit
 
 extension Array where Element : Equatable {
 	public subscript(safe bounds: Range<Int>) -> ArraySlice<Element> {
@@ -20,5 +20,15 @@ extension Array where Element : Equatable {
 		let upper = upper ?? count
 		if lower > upper { return [] }
 		return self[safe: lower..<upper]
+	}
+}
+
+extension UIApplication {
+	var rootView: UIViewController? {
+		if let scene = self.connectedScenes.first(where: {$0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+		   let window = scene.windows.first(where: { $0.isKeyWindow }) {
+			return window.rootViewController
+		}
+		return nil
 	}
 }

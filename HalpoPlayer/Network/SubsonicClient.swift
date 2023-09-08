@@ -63,11 +63,8 @@ class SubsonicClient {
 		return
 		let alert = UIAlertController(title: "Error", message: "error code: \(code) \(message ?? "")", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-		if let scene = UIApplication.shared.connectedScenes.first(where: {$0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
-		   let window = scene.windows.first(where: { $0.isKeyWindow }) {
-			DispatchQueue.main.async {
-				window.rootViewController?.present(alert, animated: true)
-			}
+		DispatchQueue.main.async {
+			UIApplication.shared.rootView?.present(alert, animated: true)
 		}
 	}
 	func dataRequest(_ api: SubsonicAPI) async throws -> (Data, URLResponse) {
