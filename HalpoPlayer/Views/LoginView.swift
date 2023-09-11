@@ -42,6 +42,16 @@ struct LoginView: View {
 			}
 			.buttonStyle(.automatic)
 		}
+		.toolbar {
+			ToolbarItem(placement: .navigationBarTrailing) {
+				Button {
+					// log out
+					self.logout()
+				} label: {
+					Text("Log out")
+				}
+			}
+		}
 	}
 	func submit() {
 		print("done")
@@ -69,5 +79,18 @@ struct LoginView: View {
 
 		}
 		dismiss()
+	}
+	func logout() {
+		self.address = ""
+		self.otherAddress = ""
+		self.username = ""
+		self.password = ""
+		self.port = "4533"
+		UserDefaults.standard.removeObject(forKey: "CurrentPlaylist")
+		UserDefaults.standard.removeObject(forKey: "UserAccount")
+		DispatchQueue.main.async {
+			SubsonicClient.shared.account = nil
+			accountHolder.account = nil
+		}
 	}
 }
