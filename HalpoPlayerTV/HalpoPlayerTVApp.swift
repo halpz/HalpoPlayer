@@ -16,7 +16,7 @@ struct HalpoPlayerTVApp: App {
 				if accountHolder.account == nil {
 					LoginView()
 				} else {
-					ContentView()
+					TV_LibraryView()
 				}
 			}
         }
