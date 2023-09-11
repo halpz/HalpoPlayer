@@ -47,6 +47,16 @@ class Database: ObservableObject {
 			self.musicCache = [:]
 		}
 	}
+	func reset() {
+		albumList = nil
+		artistList = nil
+		playlists = nil
+		searchResults = nil
+		searchScope = .song
+		searchText = ""
+		libraryViewType = .albums
+		self.albumPage = 0
+	}
 	func downloadSong(song: Song) async throws -> CachedSong {
 		let (data, response, cached) = try await SubsonicClient.shared.downloadSong(song: song)
 		let documentsURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)

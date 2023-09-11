@@ -86,10 +86,12 @@ struct LoginView: View {
 		self.username = ""
 		self.password = ""
 		self.port = "4533"
+		Database.shared.reset()
 		UserDefaults.standard.removeObject(forKey: "CurrentPlaylist")
 		UserDefaults.standard.removeObject(forKey: "UserAccount")
 		DispatchQueue.main.async {
 			SubsonicClient.shared.account = nil
+			SubsonicClient.shared.currentAddress = nil
 			accountHolder.account = nil
 		}
 	}
