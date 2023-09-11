@@ -206,39 +206,31 @@ class SubsonicClient {
 			print(prettyPrintedString)
 		}
 	}
-	func testAddressesForPermission(ad1: String, ad2: String, callback: @escaping (Bool) -> Void) {
-		var varcount = 0
-		if !ad1.isEmpty { varcount += 1 }
-		if !ad2.isEmpty { varcount += 1 }
-		let url1 = URL(string: ad1)!
-		var urlRequest1 = URLRequest(url: url1)
-		urlRequest1.httpMethod = "HEAD"
-		let url2 = URL(string: ad2)!
-		var urlRequest2 = URLRequest(url: url2)
-		urlRequest2.httpMethod = "HEAD"
-		let ur1 = urlRequest1
-		let ur2 = urlRequest2
-		let counter = varcount
-		Task {
-			var count = counter
-			do { _ = try await session.data(for: ur1)
-				callback(true)
-				return
+	func testAddressesForPermission(ad1: String, ad2: String) async throws -> Bool {
+		if ad1 != "http://" {
+			let url = URL(string: ad1)!
+			var urlRequest = URLRequest(url: url)
+			urlRequest.httpMethod = "HEAD"
+			do {
+				_ = try await session.data(for: urlRequest)
+				return true
 			} catch {
-				count -= 1
-				if count == 0 {
-					callback(false)
-				}
-			}
-			do { _ = try await session.data(for: ur2)
-				callback(true)
-				return
-			} catch {
-				count -= 1
-				if count == 0 {
-					callback(false)
-				}
+				print(error)
 			}
 		}
+		if ad2 != "http://" {
+			let url = URL(string: ad2)!
+			var urlRequest = URLRequest(url: url)
+			urlRequest.httpMethod = "HEAD"
+			do {
+				_ = try await session.data(for: urlRequest)
+				return true
+			} catch {
+				print(error)
+				throw error
+			}
+		}
+		
+		throw HalpoError.offline
 	}
 }

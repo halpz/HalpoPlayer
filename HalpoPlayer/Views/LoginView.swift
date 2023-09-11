@@ -67,16 +67,22 @@ struct LoginView: View {
 				password = "app"
 				address = "http://paulhalpin.co.uk"
 			}
-			SubsonicClient.shared.testAddressesForPermission(ad1: address, ad2: otherAddress) { success in
-				guard success else {
-					SubsonicClient.shared.showCode(code: 0, message: "Could not ping either address\n\(address)\n\(otherAddress)")
-					return}
-				let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
-				DispatchQueue.main.async {
-					accountHolder.account = account
+			
+			Task {
+				do {
+					let success = try await SubsonicClient.shared.testAddressesForPermission(ad1: address, ad2: otherAddress)
+					if success {
+						let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
+						DispatchQueue.main.async {
+							accountHolder.account = account
+						}
+					} else {
+						SubsonicClient.shared.showCode(code: 0, message: "Could not ping either address\n\(address)\n\(otherAddress)")
+					}
+				} catch {
+					print(error)
 				}
 			}
-
 		}
 		dismiss()
 	}
