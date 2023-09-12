@@ -16,7 +16,13 @@ struct HalpoPlayerTVApp: App {
 				if accountHolder.account == nil {
 					LoginView()
 				} else {
-					TV_LibraryView()
+					ZStack {
+						TV_LibraryView()
+						VStack {
+							Spacer()
+//							MediaControlBar()
+						}
+					}
 				}
 			}
         }
