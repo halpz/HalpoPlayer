@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */; };
 		DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */; };
+		DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3DFF632AB8595900D40D7A /* ViewFactory.swift */; };
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */; };
 		DA3E7C392A69367800DD5180 /* GetArtistsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */; };
@@ -112,6 +113,7 @@
 /* Begin PBXFileReference section */
 		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
 		DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistResponse.swift; sourceTree = "<group>"; };
+		DA3DFF632AB8595900D40D7A /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFactory.swift; path = HalpoPlayer/ViewFactory.swift; sourceTree = SOURCE_ROOT; };
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewType.swift; sourceTree = "<group>"; };
 		DA3E7C382A69367800DD5180 /* GetArtistsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetArtistsResponse.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				DA7F1E8D2A652DF4006D8934 /* CarPlaySceneDelegate.swift */,
 				DA7F1E8E2A652DF4006D8934 /* Coordinator.swift */,
 				DA7F1E902A652DF4006D8934 /* Extensions.swift */,
+				DA3DFF632AB8595900D40D7A /* ViewFactory.swift */,
 				DA86C7C42A6684C30082659C /* View Models */,
 				DA7F1E952A652E14006D8934 /* Model */,
 				DA7F1EA62A652E1E006D8934 /* Network */,
@@ -518,6 +521,7 @@
 				DA3E7C3B2A693C8100DD5180 /* ArtistView.swift in Sources */,
 				DA86C7CC2A669D4F0082659C /* PlaylistsView.swift in Sources */,
 				DA7F1EA42A652E14006D8934 /* Account.swift in Sources */,
+				DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */,
 				DA7F1EA02A652E14006D8934 /* AuthenticationResponse.swift in Sources */,
 				DA7F1EA12A652E14006D8934 /* GetIndexesResponse.swift in Sources */,
 				DA47D8312A6E74B200CBAAE4 /* NowPlayingView.swift in Sources */,
