@@ -64,7 +64,7 @@ class AlbumDetailViewModel: ObservableObject {
 		self.player.addSongToQueue(song: song)
 	}
 	func addSongToPlaylist(song: Song, coordinator: Coordinator) {
-		coordinator.selectPlaylist(song: song)
+		coordinator.selectPlaylist(songs: [song])
 	}
 	func downloadSong(song: Song) {
 		DispatchQueue.main.async {

@@ -29,8 +29,8 @@ class ViewFactory {
 			PlaylistView(playlist: playlist)
 		case .artist(let id, let artistName):
 			ArtistView(artistId: id, artistName: artistName)
-		case .playlistSelect(let song):
-			PlaylistsView(song, refresh: true)
+		case .playlistSelect(let songs):
+			PlaylistsView(songs, refresh: true)
 		}
 	}
 }

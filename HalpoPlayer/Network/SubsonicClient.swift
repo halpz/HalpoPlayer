@@ -184,8 +184,8 @@ class SubsonicClient {
 	func updatePlaylist(id: String, songs: [Song]) async throws -> BasicResponse {
 		return try await request(.updatePlaylist(id: id, songs: songs)) as BasicResponse
 	}
-	func addSongToPlaylist(playlistId: String, songId: String) async throws -> BasicResponse{
-		return try await request(.addSongToPlaylist(playlistId: playlistId, songId: songId)) as BasicResponse
+	func addSongToPlaylist(playlistId: String, songIds: [String]) async throws -> BasicResponse{
+		return try await request(.addSongsToPlaylist(playlistId: playlistId, songIds: songIds)) as BasicResponse
 	}
 	func getArtists() async throws -> GetArtistsResponse {
 		return try await request(.getArtists) as GetArtistsResponse

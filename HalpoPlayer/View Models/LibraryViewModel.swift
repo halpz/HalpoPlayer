@@ -14,6 +14,8 @@ class LibraryViewModel: ObservableObject {
 	var player = AudioManager.shared
 	@Published var albums: [GetAlbumListResponse.Album] = []
 	@Published var artists: [GetArtistsResponse.Artist] = []
+	@Published var selectMode = false
+	@Published var selectedAlbums = [GetAlbumListResponse.Album]()
 	var albumPage: Int = 0
 	var currentTask: Task<(), Error>?
 	var filteredAlbums: [GetAlbumListResponse.Album] {
@@ -62,6 +64,23 @@ class LibraryViewModel: ObservableObject {
 			}
 		case .artists:
 			try await getArtists()
+		}
+	}
+	func addToPlaylist(coordinator: Coordinator) {
+		Task {
+			do {
+				var songs = [Song]()
+				for album in selectedAlbums {
+					let albumResponse = try await SubsonicClient.shared.getAlbum(id: album.id)
+					songs.append(contentsOf: albumResponse.subsonicResponse.album.song)
+				}
+				let safeSongs = songs
+				await MainActor.run {
+					coordinator.selectPlaylist(songs: safeSongs)
+				}
+			} catch {
+				print(error)
+			}
 		}
 	}
 	func getAlbumList() async throws {

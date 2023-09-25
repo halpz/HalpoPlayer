@@ -31,8 +31,8 @@ class Coordinator: ObservableObject {
 	func goToArtist(artistId: String, artistName: String) {
 		path.append(Destination.artist(artistId: artistId, artistName: artistName))
 	}
-	func selectPlaylist(song: Song) {
-		path.append(Destination.playlistSelect(song: song))
+	func selectPlaylist(songs: [Song]) {
+		path.append(Destination.playlistSelect(songs: songs))
 	}
 }
 
@@ -44,5 +44,5 @@ enum Destination: Hashable {
 	case search
 	case playlist(playlist: GetPlaylistsResponse.Playlist)
 	case artist(artistId: String, artistName: String)
-	case playlistSelect(song: Song)
+	case playlistSelect(songs: [Song])
 }
