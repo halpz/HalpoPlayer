@@ -66,6 +66,12 @@ class AlbumDetailViewModel: ObservableObject {
 	func addSongToPlaylist(song: Song, coordinator: Coordinator) {
 		coordinator.selectPlaylist(songs: [song])
 	}
+	func goToArtist(_ coordinator: Coordinator) {
+		if let artistId = self.albumResponse?.subsonicResponse.album.artistId,
+		   let artistName = self.albumResponse?.subsonicResponse.album.artist {
+			coordinator.goToArtist(artistId: artistId, artistName: artistName)
+		}
+	}
 	func downloadSong(song: Song) {
 		DispatchQueue.main.async {
 			self.downloading[song.id] = true

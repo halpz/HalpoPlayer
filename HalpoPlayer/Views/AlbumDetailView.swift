@@ -23,9 +23,13 @@ struct AlbumDetailView: View {
 						if let album = viewModel.albumResponse?.subsonicResponse.album {
 							Text("\(album.name)")
 								.font(.title)
-							Text("\(album.artist ?? "")")
-								.font(.title2)
-								.foregroundColor(.secondary)
+							Button {
+								viewModel.goToArtist(coordinator)
+							} label: {
+								Text("\(album.artist ?? "")")
+									.font(.title2)
+									.foregroundColor(.secondary)
+							}
 							if let year = album.year {
 								Text(String(year))
 									.font(.title3)

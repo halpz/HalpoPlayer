@@ -170,6 +170,7 @@ class AudioManager: ObservableObject {
 			case .ready:
 				self.loading = false
 			case .paused:
+				self.isPlaying = false
 				MPNowPlayingInfoCenter.default().playbackState = .paused
 			case .idle:
 				MPNowPlayingInfoCenter.default().playbackState = .stopped
