@@ -20,7 +20,7 @@ enum SubsonicAPI {
 	case getPlaylists
 	case getPlaylist(id: String)
 	case updatePlaylist(id: String, songs: [Song])
-	case addSongToPlaylist(playlistId: String, songId: String)
+	case addSongsToPlaylist(playlistId: String, songIds: [String])
 	case getArtists
 	case getArtist(id: String)
 	case getArtistInfo(id: String)
@@ -69,8 +69,12 @@ enum SubsonicAPI {
 				removalIndices.append("&songIndexToRemove=\(index)")
 			}
 			return "updatePlaylist?playlistId=\(id)\(removalIndices)\(newIds)"
-		case .addSongToPlaylist(let playlistId, let songId):
-			return "updatePlaylist?playlistId=\(playlistId)&songIdToAdd=\(songId)"
+		case .addSongsToPlaylist(let playlistId, let songIds):
+			var idString = ""
+			for id in songIds {
+				idString.append("&songIdToAdd=\(id)")
+			}
+			return "updatePlaylist?playlistId=\(playlistId)\(idString)"
 		case .getArtists:
 			return "getArtists?"
 		case .getArtist(let id):

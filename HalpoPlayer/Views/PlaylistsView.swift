@@ -11,8 +11,8 @@ struct PlaylistsView: View {
 	@StateObject var viewModel: PlaylistsViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var database = Database.shared
-	init(_ song: Song? = nil, refresh: Bool = false) {
-		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(song, refresh: refresh))
+	init(_ songs: [Song] = [], refresh: Bool = false) {
+		_viewModel = StateObject(wrappedValue: PlaylistsViewModel(songs, refresh: refresh))
 	}
 	var body: some View {
 		let toolbar = ToolbarItem(placement: .navigationBarTrailing) {
@@ -35,13 +35,13 @@ struct PlaylistsView: View {
 			List {
 				ForEach(playlists.subsonicResponse.playlists.playlist ?? [], id: \.self) { playlist in
 					Button {
-						if viewModel.song != nil {
-							viewModel.addSongToPlaylist(playlistId: playlist.id, coordinator: coordinator)
+						if !viewModel.songs.isEmpty {
+							viewModel.addSongsToPlaylist(playlistId: playlist.id, coordinator: coordinator)
 						} else {
 							viewModel.goToPlaylist(playlist: playlist, coordinator: coordinator)
 						}
 					} label: {
-						PlaylistCell(showChevron: viewModel.song == nil, playlist: playlist)
+						PlaylistCell(showChevron: viewModel.songs.isEmpty, playlist: playlist)
 					}
 					.listRowSeparator(.hidden)
 					.onAppear {
@@ -59,7 +59,7 @@ struct PlaylistsView: View {
 				}
 			}
 			.listStyle(.plain)
-			.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")
+			.navigationTitle(!viewModel.songs.isEmpty ? "Choose playlist" : "Playlists")
 			.toolbar {
 				toolbar
 			}
@@ -68,7 +68,7 @@ struct PlaylistsView: View {
 				ProgressView()
 			} else {
 				Text("No playlists")
-					.navigationTitle(viewModel.song != nil ? "Choose playlist" : "Playlists")
+					.navigationTitle(!viewModel.songs.isEmpty ? "Choose playlist" : "Playlists")
 					.toolbar {
 						toolbar
 					}

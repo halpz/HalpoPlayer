@@ -18,6 +18,15 @@ struct LibraryView: View {
 				ArtistListView(viewModel: viewModel)
 			case .albums:
 				AlbumListView(viewModel: viewModel)
+					.onAppear {
+						Task {
+							do {
+								try await viewModel.loadContent(force: true)
+							} catch {
+								print(error)
+							}
+						}
+					}
 			}
 		} else {
 			Button {
@@ -43,7 +52,7 @@ struct AlbumListView: View {
 		return (Array(repeating: item, count: count), itemWidth)
 	}
 	var body: some View {
-		if UIDevice.current.userInterfaceIdiom == .pad || UIDevice.current.userInterfaceIdiom == .tv {
+		if UIDevice.current.userInterfaceIdiom == .pad {
 			GeometryReader { geometry in
 				ScrollView {
 					let (gridItems, width) = gridItems(width: geometry.size.width)
@@ -104,9 +113,23 @@ struct AlbumListView: View {
 		} else {
 			List(viewModel.albums) { album in
 				Button {
-					viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+					if viewModel.selectMode {
+						if viewModel.selectedAlbums.contains(album) {
+							viewModel.selectedAlbums.removeAll { $0.id == album.id }
+						} else {
+							viewModel.selectedAlbums.append(album)
+						}
+					} else {
+						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+					}
 				} label: {
-					AlbumCell(album: Album(albumListResponse: album))
+					ZStack {
+						AlbumCell(album: Album(albumListResponse: album))
+						if viewModel.selectedAlbums.contains(album) {
+							Rectangle()
+								.fill(.green.opacity(0.5))
+						}
+					}
 				}
 				.listRowSeparator(.hidden)
 				.onAppear {
@@ -145,13 +168,31 @@ struct AlbumListView: View {
 						Image(systemName: "person.circle").imageScale(.large)
 					}
 				}
-				ToolbarItem(placement: .navigationBarTrailing) {
-					Button {
-						viewModel.shuffle()
-					} label: {
-						Image(systemName: "shuffle").imageScale(.large)
+				if viewModel.selectMode {
+					ToolbarItem(placement: .navigationBarTrailing) {
+						Button {
+							viewModel.addToPlaylist(coordinator: coordinator)
+						} label: {
+							Text("Add to...")
+						}
+					}
+				} else {
+					ToolbarItem(placement: .navigationBarTrailing) {
+						Button {
+							viewModel.shuffle()
+						} label: {
+							Image(systemName: "shuffle").imageScale(.large)
+						}
 					}
 				}
+//				ToolbarItem(placement: .navigationBarTrailing) {
+//					Button {
+//						viewModel.selectedAlbums = []
+//						viewModel.selectMode.toggle()
+//					} label: {
+//						Text(viewModel.selectMode ? "Cancel" : "Select")
+//					}
+//				}
 			}
 		}
 		

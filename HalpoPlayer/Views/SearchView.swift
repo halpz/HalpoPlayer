@@ -83,6 +83,4 @@ struct SearchView: View {
 	}
 }
 
-enum SearchScope: String, CaseIterable {
-	case song, album
-}
+
