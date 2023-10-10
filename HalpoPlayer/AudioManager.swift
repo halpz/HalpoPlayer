@@ -57,6 +57,15 @@ class AudioManager: ObservableObject {
 			.next,
 			.previous
 		]
+		MPRemoteCommandCenter.shared().togglePlayPauseCommand.addTarget { _ in
+			if self.queue.playerState == .playing {
+				self.queue.pause()
+				self.isPlaying = false
+			} else {
+				self.queue.play()
+			}
+			return .success
+		}
 		NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
 			if let data = try? JSONEncoder().encode(self.playerState) {
 				UserDefaults.standard.setValue(data, forKey: "CurrentPlaylist")
@@ -155,12 +164,18 @@ class AudioManager: ObservableObject {
 			switch state {
 			case .playing:
 				self.isPlaying = true
+				MPNowPlayingInfoCenter.default().playbackState = .playing
 			case .loading:
 				self.loading = true
 			case .ready:
 				self.loading = false
+			case .paused:
+				MPNowPlayingInfoCenter.default().playbackState = .paused
+			case .idle:
+				MPNowPlayingInfoCenter.default().playbackState = .stopped
 			default:
 				self.isPlaying = false
+				MPNowPlayingInfoCenter.default().playbackState = .unknown
 			}
 		}
 	}
