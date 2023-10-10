@@ -11,6 +11,7 @@ struct LibraryView: View {
 	@StateObject var viewModel = LibraryViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared
+	
 	var body: some View {
 		if accountHolder.account != nil {
 			switch viewModel.viewType {
@@ -45,6 +46,7 @@ struct AlbumListView: View {
 	@StateObject var viewModel: LibraryViewModel
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared
+	@ObservedObject var database = Database.shared
 	func gridItems(width: Double) -> ([GridItem], Double) {
 		let count = Int((width / 200.0).rounded())
 		let item = GridItem(.flexible(), spacing: 8, alignment: .top)
@@ -52,7 +54,7 @@ struct AlbumListView: View {
 		return (Array(repeating: item, count: count), itemWidth)
 	}
 	var body: some View {
-		if UIDevice.current.userInterfaceIdiom == .pad {
+		if database.libraryGridMode {
 			GeometryReader { geometry in
 				ScrollView {
 					let (gridItems, width) = gridItems(width: geometry.size.width)
@@ -106,6 +108,15 @@ struct AlbumListView: View {
 							viewModel.shuffle()
 						} label: {
 							Image(systemName: "shuffle").imageScale(.large)
+						}
+					}
+					ToolbarItem(placement: .navigationBarTrailing) {
+						Button {
+							withAnimation {
+								database.libraryGridMode.toggle()
+							}
+						} label: {
+							Image(systemName: database.libraryGridMode ? "line.3.horizontal" : "square.grid.2x2").imageScale(.large)
 						}
 					}
 				}
@@ -185,6 +196,15 @@ struct AlbumListView: View {
 						}
 					}
 				}
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						withAnimation {
+							database.libraryGridMode.toggle()
+						}
+					} label: {
+						Image(systemName: database.libraryGridMode ? "line.3.horizontal" : "square.grid.2x2").imageScale(.large)
+					}
+				}
 //				ToolbarItem(placement: .navigationBarTrailing) {
 //					Button {
 //						viewModel.selectedAlbums = []
@@ -257,6 +277,7 @@ struct ArtistListView: View {
 					Image(systemName: "shuffle").imageScale(.large)
 				}
 			}
+			
 		}
 	}
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Database: ObservableObject {
 	static let shared = Database()
@@ -17,6 +18,7 @@ class Database: ObservableObject {
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
 	@Published var libraryViewType: LibraryViewType = .albums
+	@Published var libraryGridMode = UIDevice.current.userInterfaceIdiom == .pad
 	var albumPage = 0
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
