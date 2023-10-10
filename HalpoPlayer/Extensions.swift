@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 extension Array where Element : Equatable {
 	public subscript(safe bounds: Range<Int>) -> ArraySlice<Element> {

@@ -70,7 +70,7 @@ struct LoginView: View {
 			
 			Task {
 				do {
-					let success = try await SubsonicClient.shared.testAddressesForPermission(ad1: address, ad2: otherAddress)
+					let success = try await SubsonicClient.shared.testAddressesForPermission(ad1: "\(address):\(port)", ad2: "\(otherAddress):\(port)")
 					if success {
 						let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
 						DispatchQueue.main.async {

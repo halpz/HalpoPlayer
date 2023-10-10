@@ -18,6 +18,15 @@ struct LibraryView: View {
 				ArtistListView(viewModel: viewModel)
 			case .albums:
 				AlbumListView(viewModel: viewModel)
+					.onAppear {
+						Task {
+							do {
+								try await viewModel.loadContent(force: true)
+							} catch {
+								print(error)
+							}
+						}
+					}
 			}
 		} else {
 			Button {
