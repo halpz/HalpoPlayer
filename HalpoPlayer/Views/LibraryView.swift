@@ -11,7 +11,6 @@ struct LibraryView: View {
 	@StateObject var viewModel = LibraryViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared
-	
 	var body: some View {
 		if accountHolder.account != nil {
 			switch viewModel.viewType {
@@ -19,6 +18,18 @@ struct LibraryView: View {
 				ArtistListView(viewModel: viewModel)
 			case .albums:
 				AlbumListView(viewModel: viewModel)
+					.onAppear {
+						if viewModel.albums.isEmpty {
+							Task {
+								do {
+									try await viewModel.loadContent(force: true)
+								} catch {
+									print(error)
+								}
+							}
+							
+						}
+					}
 			}
 		} else {
 			Button {
