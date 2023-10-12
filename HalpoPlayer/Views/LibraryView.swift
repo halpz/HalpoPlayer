@@ -63,11 +63,6 @@ struct AlbumListView: View {
 					}
 					.padding(8)
 				}
-				.simultaneousGesture(DragGesture().onChanged({ value in
-					withAnimation {
-						MediaControlBarMinimized.shared.isCompact = true
-					}
-				}))
 				.refreshable {
 					do {
 						try await viewModel.loadContent(force: true)
@@ -138,11 +133,6 @@ struct AlbumListView: View {
 					viewModel.albumAppeared(album: album)
 				}
 			}
-			.simultaneousGesture(DragGesture().onChanged({ value in
-				withAnimation {
-					MediaControlBarMinimized.shared.isCompact = true
-				}
-			}))
 			.refreshable {
 				do {
 					try await viewModel.loadContent(force: true)
@@ -236,11 +226,6 @@ struct ArtistListView: View {
 			}
 			.listRowSeparator(.hidden)
 		}
-		.simultaneousGesture(DragGesture().onChanged({ value in
-			withAnimation {
-				MediaControlBarMinimized.shared.isCompact = true
-			}
-		}))
 		.listStyle(.plain)
 		.searchable(text: $viewModel.searchText, prompt: "Search artists")
 		.scrollDismissesKeyboard(.immediately)

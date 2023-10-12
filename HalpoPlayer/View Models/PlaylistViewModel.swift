@@ -61,10 +61,6 @@ class PlaylistViewModel: ObservableObject {
 			self.player.play(songs: songs, index: 0)
 		}
 	}
-	func cellDidAppear(song: Song) {
-		guard MediaControlBarMinimized.shared.isCompact == false else { return }
-		MediaControlBarMinimized.shared.isCompact = true
-	}
 	func move(from source: IndexSet, to destination: Int) {
 		guard !reordering else { return }
 		reordering = true

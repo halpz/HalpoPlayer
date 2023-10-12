@@ -44,11 +44,6 @@ struct PlaylistsView: View {
 						PlaylistCell(showChevron: viewModel.songs.isEmpty, playlist: playlist)
 					}
 					.listRowSeparator(.hidden)
-					.onAppear {
-						withAnimation {
-							viewModel.cellDidAppear(playlist: playlist)
-						}
-					}
 				}
 			}
 			.refreshable {

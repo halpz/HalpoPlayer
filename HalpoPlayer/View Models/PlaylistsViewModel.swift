@@ -37,10 +37,6 @@ class PlaylistsViewModel: ObservableObject {
 	func goToPlaylist(playlist: GetPlaylistsResponse.Playlist, coordinator: Coordinator) {
 		coordinator.goToPlaylist(playlist: playlist)
 	}
-	func cellDidAppear(playlist: GetPlaylistsResponse.Playlist) {
-		guard MediaControlBarMinimized.shared.isCompact == false else { return }
-		MediaControlBarMinimized.shared.isCompact = true
-	}
 	func addSongsToPlaylist(playlistId: String, coordinator: Coordinator) {
 		Task {
 			let songIds = songs.map { $0.id }

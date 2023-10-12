@@ -10,65 +10,25 @@ import SwiftUI
 struct MediaControlBar: View {
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var player = AudioManager.shared
-	@EnvironmentObject var compact: MediaControlBarMinimized
 	@ObservedObject var timeline = TimelineManager.shared
 	@State private var dragAmount = CGSize.zero
-	var buttonSize: CGFloat {
-		return compact.isCompact ? 28 : 48
-	}
+	var buttonSize: CGFloat = 28
 	var body: some View {
 		if player.currentSong != nil {
 			VStack {
 				HStack {
-					Button {
-						if compact.isCompact {
-							withAnimation {
-								compact.isCompact = false
-							}
-						} else if let albumId = player.currentSong?.albumId {
-							if coordinator.viewingAlbum != albumId {
-								compact.isCompact = true
-								coordinator.albumTapped(albumId: albumId, scrollToSong: player.currentSong?.id)
-							} else {
-								// scroll to current song?
-							}
-						}
-					} label: {
-						if let image = player.albumArt {
-							Image(uiImage: image)
-								.resizable()
-								.scaledToFill()
-								.frame(width: 60, height: 60)
-								.cornerRadius(8)
-						}
-						if compact.isCompact {
-							Text("\(player.currentSong?.title ?? "")")
-								.font(.body).bold()
-								.foregroundColor(.primary)
-								.lineLimit(1)
-						} else {
-							VStack(alignment: .leading) {
-								Text("\(player.currentSong?.title ?? "")")
-									.font(.body).bold()
-									.foregroundColor(.primary)
-									.multilineTextAlignment(.leading)
-								Text("\(player.currentSong?.artist ?? "")")
-									.font(.body)
-									.foregroundColor(.secondary)
-									.multilineTextAlignment(.leading)
-							}
-						}
-						Spacer()
-						if !compact.isCompact {
-							AirPlayView.shared
-								.frame(width: 24, height: 24)
-								.padding(8)
-								.onTapGesture {
-									AirPlayView.shared.showAirPlayMenu()
-								}
-						}
+					if let image = player.albumArt {
+						Image(uiImage: image)
+							.resizable()
+							.scaledToFill()
+							.frame(width: 60, height: 60)
+							.cornerRadius(8)
 					}
-					if compact.isCompact {
+						Text("\(player.currentSong?.title ?? "")")
+							.font(.body).bold()
+							.foregroundColor(.primary)
+							.lineLimit(1)
+					Spacer()
 						Button {
 							if player.isPlaying {
 								player.queue.pause()
@@ -98,84 +58,6 @@ struct MediaControlBar: View {
 						.padding()
 						.disabled(self.player.queue.nextItems.isEmpty)
 					}
-				}
-				if !compact.isCompact {
-					HStack {
-						Spacer()
-						Button {
-							print("back")
-							do {
-								try self.player.previousPressed()
-							} catch {
-								print(error)
-							}
-						} label: {
-							Image(systemName: "backward.circle")
-								.font(.system(size: buttonSize))
-						}
-						.padding()
-						.disabled(self.player.queue.previousItems.isEmpty && self.player.queue.currentTime < 5)
-						
-						Button {
-							if player.isPlaying {
-								player.queue.pause()
-							} else {
-								player.queue.play()
-							}
-						} label: {
-							if player.loading {
-								ProgressView()
-									.controlSize(.large)
-							} else {
-								if player.isPlaying {
-									Image(systemName: "pause.circle")
-										.font(.system(size:buttonSize))
-								} else {
-									Image(systemName: "play.circle")
-										.font(.system(size:buttonSize))
-								}
-							}
-						}
-						.padding()
-						Button {
-							try? self.player.queue.next()
-						} label: {
-							Image(systemName: "forward.circle")
-								.font(.system(size:buttonSize))
-						}
-						.padding()
-						.disabled(self.player.queue.nextItems.isEmpty)
-						
-						Spacer()
-					}
-					
-					let upperBound = getUpperBound()
-					HStack {
-						Text(timeString(time:TimeInterval(timeline.timeElapsed)))
-							.foregroundColor(.secondary)
-							.font(.callout)
-							.padding(4)
-						ZStack {
-							let duration = max(0, min(timeline.duration, upperBound))
-							ProgressView(value: duration, total: upperBound)
-							Slider(value: $timeline.timeElapsed, in: 0...upperBound) { didChange in
-								player.invalidateSlider = didChange
-								if didChange {
-									player.queue.pause()
-								} else {
-									player.queue.seek(to: timeline.timeElapsed)
-									player.queue.play()
-								}
-							}
-							.tint(nil)
-							.opacity(0.8)
-						}
-						Text(timeString(time:TimeInterval(0 - self.getUpperBound() + timeline.timeElapsed)))
-							.foregroundColor(.secondary)
-							.font(.callout)
-							.padding(4)
-					}
-				}
 			}
 			.padding()
 			.background {
@@ -184,13 +66,6 @@ struct MediaControlBar: View {
 			.gesture(
 				DragGesture(minimumDistance: 30)
 					.onEnded { value in
-						if !compact.isCompact {
-							if value.translation.height > 0 {
-								withAnimation {
-									compact.isCompact = true
-								}
-							}
-						}
 					}
 			)
 		} else {
@@ -219,7 +94,3 @@ struct MediaControlBar: View {
 	}
 }
 
-class MediaControlBarMinimized: ObservableObject {
-	static let shared = MediaControlBarMinimized()
-	@Published var isCompact = false
-}

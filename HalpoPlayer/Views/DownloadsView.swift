@@ -42,9 +42,6 @@ struct DownloadsView: View {
 									.tint(.blue)
 								}
 								.listRowSeparator(.hidden)
-								.onAppear {
-									self.songAppeared(song: file.song)
-								}
 							}
 						case .albums:
 							ForEach(viewModel.albums) { album in
@@ -96,12 +93,6 @@ struct DownloadsView: View {
 					}
 				}
 			}
-		}
-	}
-	func songAppeared(song: Song) {
-		guard MediaControlBarMinimized.shared.isCompact == false else { return }
-		withAnimation {
-			MediaControlBarMinimized.shared.isCompact = true
 		}
 	}
 }
