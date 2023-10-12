@@ -123,9 +123,10 @@ class SubsonicClient {
 		let cachedSong = CachedSong(song: song, album: album.subsonicResponse.album, imageUrl: coverArtUrl, path: "")
 		return (data, response, cachedSong)
 	}
-	func stream(id: String, mp3: Bool = false) -> URL {
+	func stream(id: String, mp3: Bool = false) throws -> URL {
+		guard let currentAddress = currentAddress else { throw HalpoError.noAccount }
 		let api = SubsonicAPI.stream(id: id, mp3: mp3)
-		let url = URL(string: "\(currentAddress!)/rest/\(api.pathComponent)\(userString)")!
+		let url = URL(string: "\(currentAddress)/rest/\(api.pathComponent)\(userString)")!
 		return url
 	}
 	func coverArt(albumId: String) async throws -> UIImage {

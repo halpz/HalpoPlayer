@@ -75,6 +75,7 @@ class AudioManager: ObservableObject {
 	
 	func loadSavedState() {
 		guard !initialLoad else { return }
+		guard AccountHolder.shared.account != nil else { return }
 		self.play(songs: self.playerState.songs, index: self.playerState.index, paused: true, currentTime: self.playerState.currentTime)
 		initialLoad = true
 	}
@@ -119,20 +120,24 @@ class AudioManager: ObservableObject {
 	}
 	
 	func addSongToQueue(song: Song) {
-		self.songs?.append(song)
-		let item: DefaultAudioItem
-		if let cachedURL = Database.shared.retrieveSong(song: song) {
-			item = DefaultAudioItem(audioUrl: cachedURL.path(), sourceType: .file)
-		} else {
-			let url = SubsonicClient.shared.stream(id: song.id, mp3: true).absoluteString
-			item = DefaultAudioItem(audioUrl: url, sourceType: .stream)
+		do {
+			self.songs?.append(song)
+			let item: DefaultAudioItem
+			if let cachedURL = Database.shared.retrieveSong(song: song) {
+				item = DefaultAudioItem(audioUrl: cachedURL.path(), sourceType: .file)
+			} else {
+				let url = try SubsonicClient.shared.stream(id: song.id, mp3: true).absoluteString
+				item = DefaultAudioItem(audioUrl: url, sourceType: .stream)
+			}
+			item.albumTitle = song.album
+			item.artist = song.artist
+			item.title = song.title
+			item.artwork = albumArt
+			try? self.queue.add(item: item)
+			self.updatePlaylist()
+		} catch {
+			print(error)
 		}
-		item.albumTitle = song.album
-		item.artist = song.artist
-		item.title = song.title
-		item.artwork = albumArt
-		try? self.queue.add(item: item)
-		self.updatePlaylist()
 	}
 	
 	func handleAudioPlayerError(fail: AudioPlayer.FailEventData) {
