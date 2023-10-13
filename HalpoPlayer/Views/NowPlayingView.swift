@@ -11,7 +11,9 @@ struct NowPlayingView: View {
 	@Environment(\.dismiss) var dismiss
 	@ObservedObject var player = AudioManager.shared
 	@ObservedObject var timeline = TimelineManager.shared
+	@State var volume: Float = AudioManager.shared.queue.volume
 	var goToAlbum: (((albumId: String, songId: String?)) -> Void)?
+	var goToArtist: (((artistId: String, artistName: String)) -> Void)?
 	var buttonSize: CGFloat = 32
 	var playButtonName: String {
 		if player.isPlaying {
@@ -58,13 +60,22 @@ struct NowPlayingView: View {
 			}
 			Spacer()
 				.frame(height: 16)
-			VStack {
+			VStack(spacing: 8) {
 				Text(player.currentSong?.title ?? "")
 					.font(.title)
 					.multilineTextAlignment(.center)
-				Text(player.currentSong?.artist ?? "")
-					.font(.subheadline)
-					.multilineTextAlignment(.center)
+				Button {
+					if let artistId = player.currentSong?.artistId,
+					   let artistName = player.currentSong?.artist {
+						self.dismiss()
+						self.goToArtist?((artistId, artistName))
+					}
+				} label: {
+					Text(player.currentSong?.artist ?? "")
+						.font(.body)
+						.multilineTextAlignment(.center)
+				}
+				.disabled(player.currentSong?.artistId == nil)
 			}
 			.padding([.leading, .trailing], 16)
 			Spacer()
@@ -138,6 +149,9 @@ struct NowPlayingView: View {
 				
 				Spacer()
 			}
+			VolumeSlider()
+				.frame(height: 40)
+				.padding(.horizontal)
 			HStack {
 				Spacer()
 				AirPlayView.shared

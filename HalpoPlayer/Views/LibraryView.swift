@@ -119,7 +119,7 @@ struct AlbumListView: View {
 				}
 			}
 		} else {
-			List(viewModel.albums) { album in
+			List(viewModel.filteredAlbums) { album in
 				Button {
 					if viewModel.selectMode {
 						if viewModel.selectedAlbums.contains(album) {
@@ -229,7 +229,7 @@ struct ArtistListView: View {
 					}
 				}
 		}
-		List(viewModel.artists) { artist in
+		List(viewModel.filteredArtists) { artist in
 			Button {
 				coordinator.goToArtist(artistId: artist.id, artistName: artist.name)
 			} label: {

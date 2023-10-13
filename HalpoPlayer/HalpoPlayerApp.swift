@@ -59,6 +59,8 @@ struct halpoplayerApp: App {
 							if self.coordinatorForTab(tab: self.selectedTab).viewingAlbum != albumId {
 								self.coordinatorForTab(tab: self.selectedTab).albumTapped(albumId: albumId, scrollToSong: songId)
 							}
+						}, goToArtist: { artistId, artistName in
+							self.coordinatorForTab(tab: self.selectedTab).goToArtist(artistId: artistId, artistName: artistName)
 						})
 					})
 					
