@@ -149,9 +149,15 @@ struct NowPlayingView: View {
 				
 				Spacer()
 			}
-			VolumeSlider()
-				.frame(height: 40)
-				.padding(.horizontal)
+			HStack {
+				Image(systemName: "speaker")
+					.foregroundStyle(.gray)
+				VolumeSlider()
+				Image(systemName: "speaker.wave.3")
+					.foregroundStyle(.gray)
+			}
+			.frame(height: 40)
+			.padding(.horizontal)
 			HStack {
 				Spacer()
 				AirPlayView.shared
