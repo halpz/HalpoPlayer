@@ -50,11 +50,6 @@ struct PlaylistView: View {
 						SongCell(showAlbumName: true, showTrackNumber: false, song: song)
 					}
 					.listRowSeparator(.hidden)
-					.onAppear {
-						withAnimation {
-							viewModel.cellDidAppear(song: song)
-						}
-					}
 					.moveDisabled(viewModel.reordering)
 				}
 				.onMove(perform: viewModel.move)

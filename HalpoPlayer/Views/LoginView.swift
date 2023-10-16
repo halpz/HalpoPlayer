@@ -70,7 +70,7 @@ struct LoginView: View {
 			
 			Task {
 				do {
-					let success = try await SubsonicClient.shared.testAddressesForPermission(ad1: "\(address):\(port)", ad2: "\(otherAddress):\(port)")
+					let success = try await SubsonicClient.shared.testAddressesForPermission(ad1: self.combineAddressWithPort(address: address, port: port), ad2: self.combineAddressWithPort(address: otherAddress, port: port))
 					if success {
 						let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
 						DispatchQueue.main.async {
@@ -85,6 +85,13 @@ struct LoginView: View {
 			}
 		}
 		dismiss()
+	}
+	func combineAddressWithPort(address: String, port: String) -> String {
+		if address.contains(":") {
+			return address
+		} else {
+			return "\(address)\(port)"
+		}
 	}
 	func logout() {
 		self.address = ""

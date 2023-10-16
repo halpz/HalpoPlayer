@@ -11,7 +11,6 @@ struct LibraryView: View {
 	@StateObject var viewModel = LibraryViewModel()
 	@EnvironmentObject var coordinator: Coordinator
 	@ObservedObject var accountHolder = AccountHolder.shared
-	
 	var body: some View {
 		if accountHolder.account != nil {
 			switch viewModel.viewType {
@@ -20,12 +19,15 @@ struct LibraryView: View {
 			case .albums:
 				AlbumListView(viewModel: viewModel)
 					.onAppear {
-						Task {
-							do {
-								try await viewModel.loadContent(force: true)
-							} catch {
-								print(error)
+						if viewModel.albums.isEmpty {
+							Task {
+								do {
+									try await viewModel.loadContent(force: true)
+								} catch {
+									print(error)
+								}
 							}
+							
 						}
 					}
 			}
@@ -72,11 +74,6 @@ struct AlbumListView: View {
 					}
 					.padding(8)
 				}
-				.simultaneousGesture(DragGesture().onChanged({ value in
-					withAnimation {
-						MediaControlBarMinimized.shared.isCompact = true
-					}
-				}))
 				.refreshable {
 					do {
 						try await viewModel.loadContent(force: true)
@@ -122,7 +119,7 @@ struct AlbumListView: View {
 				}
 			}
 		} else {
-			List(viewModel.albums) { album in
+			List(viewModel.filteredAlbums) { album in
 				Button {
 					if viewModel.selectMode {
 						if viewModel.selectedAlbums.contains(album) {
@@ -147,11 +144,6 @@ struct AlbumListView: View {
 					viewModel.albumAppeared(album: album)
 				}
 			}
-			.simultaneousGesture(DragGesture().onChanged({ value in
-				withAnimation {
-					MediaControlBarMinimized.shared.isCompact = true
-				}
-			}))
 			.refreshable {
 				do {
 					try await viewModel.loadContent(force: true)
@@ -237,7 +229,7 @@ struct ArtistListView: View {
 					}
 				}
 		}
-		List(viewModel.artists) { artist in
+		List(viewModel.filteredArtists) { artist in
 			Button {
 				coordinator.goToArtist(artistId: artist.id, artistName: artist.name)
 			} label: {
@@ -245,11 +237,6 @@ struct ArtistListView: View {
 			}
 			.listRowSeparator(.hidden)
 		}
-		.simultaneousGesture(DragGesture().onChanged({ value in
-			withAnimation {
-				MediaControlBarMinimized.shared.isCompact = true
-			}
-		}))
 		.listStyle(.plain)
 		.searchable(text: $viewModel.searchText, prompt: "Search artists")
 		.scrollDismissesKeyboard(.immediately)

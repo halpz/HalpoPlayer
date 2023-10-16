@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */; };
+		DA1FC7DA2AD94F8D00B2DCBA /* VolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */; };
 		DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */; };
 		DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3DFF632AB8595900D40D7A /* ViewFactory.swift */; };
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
@@ -112,6 +113,7 @@
 
 /* Begin PBXFileReference section */
 		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
+		DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSlider.swift; sourceTree = "<group>"; };
 		DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistResponse.swift; sourceTree = "<group>"; };
 		DA3DFF632AB8595900D40D7A /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFactory.swift; path = HalpoPlayer/ViewFactory.swift; sourceTree = SOURCE_ROOT; };
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				DA3E7C3A2A693C8100DD5180 /* ArtistView.swift */,
 				DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */,
 				DA47D8302A6E74B200CBAAE4 /* NowPlayingView.swift */,
+				DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				DA7F1EA42A652E14006D8934 /* Account.swift in Sources */,
 				DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */,
 				DA7F1EA02A652E14006D8934 /* AuthenticationResponse.swift in Sources */,
+				DA1FC7DA2AD94F8D00B2DCBA /* VolumeSlider.swift in Sources */,
 				DA7F1EA12A652E14006D8934 /* GetIndexesResponse.swift in Sources */,
 				DA47D8312A6E74B200CBAAE4 /* NowPlayingView.swift in Sources */,
 				DA7F1E942A652DF4006D8934 /* Extensions.swift in Sources */,

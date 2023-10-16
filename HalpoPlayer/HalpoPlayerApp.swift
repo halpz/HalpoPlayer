@@ -14,8 +14,8 @@ struct halpoplayerApp: App {
 	@ObservedObject var downloadsCoordinator = Coordinator()
 	@ObservedObject var playlistsCoordinator = Coordinator()
 	@ObservedObject var searchCoordinator = Coordinator()
-	@ObservedObject var mediaControlBarMinimized = MediaControlBarMinimized.shared
 	@State var selectedTab: AppTab = .library
+	@State var presentTEst = false
 	let batteryManager = BatteryManager.shared
 	var body: some Scene {
 		WindowGroup {
@@ -51,6 +51,18 @@ struct halpoplayerApp: App {
 					}
 				}
 				MediaControlBar()
+					.onTapGesture {
+						self.presentTEst.toggle()
+					}
+					.sheet(isPresented: $presentTEst, content: {
+						NowPlayingView(goToAlbum: { albumId, songId in
+							if self.coordinatorForTab(tab: self.selectedTab).viewingAlbum != albumId {
+								self.coordinatorForTab(tab: self.selectedTab).albumTapped(albumId: albumId, scrollToSong: songId)
+							}
+						}, goToArtist: { artistId, artistName in
+							self.coordinatorForTab(tab: self.selectedTab).goToArtist(artistId: artistId, artistName: artistName)
+						})
+					})
 					
 				HStack {
 					ForEach(AppTab.allCases, id: \.self) { tab in
@@ -76,7 +88,6 @@ struct halpoplayerApp: App {
 				.frame(maxWidth: .infinity)
 			}
 			.ignoresSafeArea(.keyboard)
-			.environmentObject(mediaControlBarMinimized)
 			.environmentObject(coordinatorForTab(tab: selectedTab))
 			.onAppear {
 				initApp()

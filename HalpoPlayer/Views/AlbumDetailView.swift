@@ -119,9 +119,6 @@ struct AlbumDetailView: View {
 						}
 						.id(song.id)
 						.listRowSeparator(.hidden)
-						.onAppear {
-							self.songAppeared(song: song)
-						}
 					}
 				}
 				.listStyle(.plain)
@@ -158,12 +155,6 @@ struct AlbumDetailView: View {
 			}
 		} else {
 			ProgressView()
-		}
-	}
-	func songAppeared(song: Song) {
-		guard MediaControlBarMinimized.shared.isCompact == false else { return }
-		withAnimation {
-			MediaControlBarMinimized.shared.isCompact = true
 		}
 	}
 }
