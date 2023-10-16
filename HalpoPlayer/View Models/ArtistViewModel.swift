@@ -88,6 +88,7 @@ class ArtistViewModel: ObservableObject {
 				let respones = try await SubsonicClient.shared.getAlbum(id: album.id)
 				songs.append(contentsOf: respones.subsonicResponse.album.song)
 			}
+			songs = songs.shuffled()
 			let finalSongs = songs
 			DispatchQueue.main.async {
 				self.player.play(songs:finalSongs, index: 0)
