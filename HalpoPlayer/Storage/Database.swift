@@ -18,7 +18,19 @@ class Database: ObservableObject {
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
 	@Published var libraryViewType: LibraryViewType = .albums
-	@Published var libraryGridMode = UIDevice.current.userInterfaceIdiom == .pad
+	@Published var libraryGridMode: Bool = {
+		if let grid = UserDefaults.standard.object(forKey: "Grid") as? Bool {
+			return grid
+		} else {
+			let grid = UIDevice.current.userInterfaceIdiom == .pad
+			UserDefaults.standard.setValue(grid, forKey: "Grid")
+			return grid
+		}
+	}() {
+		didSet {
+			UserDefaults.standard.setValue(libraryGridMode, forKey: "Grid")
+		}
+	}
 	var albumPage = 0
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
