@@ -32,7 +32,24 @@ class Database: ObservableObject {
 			UserDefaults.standard.setValue(isGrid, forKey: "Grid")
 		}
 	}
-	@Published var libraryAlbumSortType: AlbumSortType = .newest
+	@Published var libraryAlbumSortType: AlbumSortType = {
+		if let data = UserDefaults.standard.data(forKey: "SortOrder"),
+		   let sort = try? JSONDecoder().decode(AlbumSortType.self, from: data) {
+			return sort
+		} else {
+			let sort = AlbumSortType.newest
+			if let data = try? JSONEncoder().encode(sort) {
+				UserDefaults.standard.setValue(data, forKey: "SortOrder")
+			}
+			return sort
+		}
+	}() {
+		didSet {
+			if let data = try? JSONEncoder().encode(libraryAlbumSortType) {
+				UserDefaults.standard.setValue(data, forKey: "SortOrder")
+			}
+		}
+	}
 	var albumPage = 0
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
