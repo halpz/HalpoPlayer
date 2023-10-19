@@ -92,7 +92,12 @@ class LibraryViewModel: ObservableObject {
 			}
 			newAlbums = response.subsonicResponse.albumList.album
 		} else {
-			newAlbums = self.albums + response.subsonicResponse.albumList.album
+			newAlbums = self.albums + response.subsonicResponse.albumList.album.compactMap {
+				if !self.albums.contains($0) {
+					return $0
+				}
+				return nil
+			}
 		}
 		self.albumPage += 1
 		Database.shared.albumPage = self.albumPage

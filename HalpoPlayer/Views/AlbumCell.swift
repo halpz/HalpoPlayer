@@ -69,6 +69,7 @@ struct AlbumGridCell: View {
 					.cornerRadius(8)
 			} else {
 				ProgressView()
+					.frame(width: width-16, height: width-16)
 					.onAppear {
 						Task {
 							image = try await SubsonicClient.shared.coverArt(albumId: album.id)
