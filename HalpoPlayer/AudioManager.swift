@@ -36,7 +36,7 @@ class AudioManager: ObservableObject {
 	
 	init() {
 		if let playlistData = UserDefaults.standard.data(forKey: "CurrentPlaylist") {
-			if let playlist = try? JSONDecoder().decode(PlayerState.self, from: playlistData) {
+			if let playlist = try? playlistData.decoded() as PlayerState {
 				self.playerState = playlist
 			} else {
 				self.playerState = PlayerState(songs: [], index: 0, currentTime: 0)
@@ -67,7 +67,7 @@ class AudioManager: ObservableObject {
 			return .success
 		}
 		NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
-			if let data = try? JSONEncoder().encode(self.playerState) {
+			if let data = try? self.playerState.encoded() {
 				UserDefaults.standard.setValue(data, forKey: "CurrentPlaylist")
 			}
 		}

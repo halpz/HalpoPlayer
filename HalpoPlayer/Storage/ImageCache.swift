@@ -12,7 +12,7 @@ class ImageCache {
 	let lock = NSLock()
 	private var cache: [String: String] {
 		didSet {
-			guard let data = try? JSONEncoder().encode(cache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+			guard let data = try? cache.encoded(), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
 				return
 			}
 			let path = documentsUrl.appendingPathComponent("imageCache")
@@ -31,9 +31,8 @@ class ImageCache {
 				try? FileManager.default.createDirectory(at: imagesDirectoryPath, withIntermediateDirectories: false)
 			}
 			let imageCachePath = documentsUrl.appendingPathComponent("imageCache")
-			let decoder = JSONDecoder()
 			if FileManager.default.fileExists(atPath: imageCachePath.path()), let imageCacheData = try? Data(contentsOf: imageCachePath),
-			   let decodedImageCache = try? decoder.decode([String: String].self, from: imageCacheData) {
+			   let decodedImageCache = try? imageCacheData.decoded() as [String: String] {
 				self.cache = decodedImageCache
 			} else {
 				self.cache = [String: String]()

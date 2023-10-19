@@ -34,18 +34,18 @@ class Database: ObservableObject {
 	}
 	@Published var libraryAlbumSortType: AlbumSortType = {
 		if let data = UserDefaults.standard.data(forKey: "SortOrder"),
-		   let sort = try? JSONDecoder().decode(AlbumSortType.self, from: data) {
+		   let sort = try? data.decoded() as AlbumSortType {
 			return sort
 		} else {
 			let sort = AlbumSortType.newest
-			if let data = try? JSONEncoder().encode(sort) {
+			if let data = try? sort.encoded() {
 				UserDefaults.standard.setValue(data, forKey: "SortOrder")
 			}
 			return sort
 		}
 	}() {
 		didSet {
-			if let data = try? JSONEncoder().encode(libraryAlbumSortType) {
+			if let data = try? libraryAlbumSortType.encoded() {
 				UserDefaults.standard.setValue(data, forKey: "SortOrder")
 			}
 		}
@@ -53,7 +53,7 @@ class Database: ObservableObject {
 	var albumPage = 0
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
-			guard let data = try? JSONEncoder().encode(musicCache), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+			guard let data = try? musicCache.encoded(), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
 				return
 			}
 			let path = documentsUrl.appendingPathComponent("musicCache")
@@ -69,9 +69,8 @@ class Database: ObservableObject {
 		searchScope = .song
 		if let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
 			let musicCachePath = documentsUrl.appendingPathComponent("musicCache")
-			let decoder = JSONDecoder()
 			if FileManager.default.fileExists(atPath: musicCachePath.path()), let musicCacheData = try? Data(contentsOf: musicCachePath),
-			   let decodedMusicCache = try? decoder.decode([String: CachedSong].self, from: musicCacheData) {
+			   let decodedMusicCache = try? musicCacheData.decoded() as [String: CachedSong] {
 				self.musicCache = decodedMusicCache
 			} else {
 				self.musicCache = [:]

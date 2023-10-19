@@ -52,7 +52,7 @@ class SubsonicClient {
 //			break
 //		}
 		do {
-			return try JSONDecoder().decode(T.self, from: data)
+			return try data.decoded() as T
 		} catch {
 			self.showCode(code: 0, message: "JSON Decoder error: \(error.localizedDescription)")
 			print(error)

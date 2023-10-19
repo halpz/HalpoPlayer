@@ -17,7 +17,7 @@ class AccountHolder: ObservableObject {
 			Task {
 				do {
 					_ = try await SubsonicClient.shared.authenticate()
-					let data = try JSONEncoder().encode(account)
+					let data = try account?.encoded()
 					UserDefaults.standard.set(data, forKey: "UserAccount")
 				} catch {
 					SubsonicClient.shared.showCode(code: 0, message: "Authentication Error: \(error)")
@@ -29,7 +29,7 @@ class AccountHolder: ObservableObject {
 	init() {
 		if !ProcessInfo.processInfo.arguments.contains("UITEST") {
 			if let accountData = UserDefaults.standard.data(forKey: "UserAccount") {
-				account = try? JSONDecoder().decode(Account.self, from: accountData)
+				account = try? accountData.decoded() as Account
 				SubsonicClient.shared.account = account
 			}
 		}
