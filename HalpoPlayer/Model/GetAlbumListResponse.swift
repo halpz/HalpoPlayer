@@ -56,7 +56,7 @@ enum AlbumSortType: String, CaseIterable, Codable {
 		case .newest:
 			return "Newest"
 		case .alphabeticalByName:
-			return "Alphabetical (name)"
+			return "Alphabetical (album)"
 		case .alphabeticalByArtist:
 			return "Alphabetical (artist)"
 		case .recent:
