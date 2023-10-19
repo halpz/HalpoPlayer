@@ -15,47 +15,44 @@ struct LoginView: View {
 	@State var username: String = ""
 	@State var password: String = ""
 	@State var port: String = "4533"
+	@State var loading = false
 	var callback: ((Account) -> Void)?
 	var body: some View {
-		Form {
-			TextField("URL", text: $address)
-				.keyboardType(.URL)
-				.autocorrectionDisabled(true)
-				.textInputAutocapitalization(.never)
-			TextField("Alternative URL", text: $otherAddress)
-				.keyboardType(.URL)
-				.autocorrectionDisabled(true)
-				.textInputAutocapitalization(.never)
-			TextField("Port", text: $port)
-				.keyboardType(.numberPad)
-				.autocorrectionDisabled(true)
-				.textInputAutocapitalization(.never)
-			TextField("Username", text: $username)
-				.keyboardType(.alphabet)
-				.textInputAutocapitalization(.never)
-				.autocorrectionDisabled(true)
-			SecureField("Password", text: $password)
-				.keyboardType(.alphabet)
-				.textInputAutocapitalization(.never)
-				.autocorrectionDisabled(true)
-			Button("Save") {
-				submit()
-			}
-			.buttonStyle(.automatic)
-		}
-		.toolbar {
-			ToolbarItem(placement: .navigationBarTrailing) {
-				Button {
-					// log out
-					self.logout()
-				} label: {
-					Text("Log out")
+		ZStack {
+			Form {
+				TextField("URL", text: $address)
+					.keyboardType(.URL)
+					.autocorrectionDisabled(true)
+					.textInputAutocapitalization(.never)
+				TextField("Alternative URL", text: $otherAddress)
+					.keyboardType(.URL)
+					.autocorrectionDisabled(true)
+					.textInputAutocapitalization(.never)
+				TextField("Port", text: $port)
+					.keyboardType(.numberPad)
+					.autocorrectionDisabled(true)
+					.textInputAutocapitalization(.never)
+				TextField("Username", text: $username)
+					.keyboardType(.alphabet)
+					.textInputAutocapitalization(.never)
+					.autocorrectionDisabled(true)
+				SecureField("Password", text: $password)
+					.keyboardType(.alphabet)
+					.textInputAutocapitalization(.never)
+					.autocorrectionDisabled(true)
+				Button("Save") {
+					submit()
 				}
+				.buttonStyle(.automatic)
+			}
+			if loading {
+				ProgressView()
 			}
 		}
 	}
 	func submit() {
 		print("done")
+		self.loading = true
 		Task {
 			if !address.contains("http://") && !address.contains("https://") {
 				address = "http://" + address
@@ -82,8 +79,10 @@ struct LoginView: View {
 					} else {
 						SubsonicClient.shared.showCode(code: 0, message: "Could not ping either address\n\(address)\n\(otherAddress)")
 					}
+					self.loading = false
 				} catch {
 					print(error)
+					self.loading = false
 				}
 			}
 		}
@@ -93,21 +92,6 @@ struct LoginView: View {
 			return address
 		} else {
 			return "\(address)\(port)"
-		}
-	}
-	func logout() {
-		self.address = ""
-		self.otherAddress = ""
-		self.username = ""
-		self.password = ""
-		self.port = "4533"
-		Database.shared.reset()
-		UserDefaults.standard.removeObject(forKey: "CurrentPlaylist")
-		UserDefaults.standard.removeObject(forKey: "UserAccount")
-		DispatchQueue.main.async {
-			SubsonicClient.shared.account = nil
-			SubsonicClient.shared.currentAddress = nil
-			accountHolder.account = nil
 		}
 	}
 }
