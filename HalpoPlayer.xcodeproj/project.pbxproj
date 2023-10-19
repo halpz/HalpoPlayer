@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA13D7FF2A6D94DD00BADCB6 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */; };
+		DA1D14982AE16E3300031124 /* AccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D14972AE16E3300031124 /* AccountListView.swift */; };
 		DA1FC7DA2AD94F8D00B2DCBA /* VolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */; };
 		DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */; };
 		DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3DFF632AB8595900D40D7A /* ViewFactory.swift */; };
@@ -113,6 +114,7 @@
 
 /* Begin PBXFileReference section */
 		DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
+		DA1D14972AE16E3300031124 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
 		DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSlider.swift; sourceTree = "<group>"; };
 		DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistResponse.swift; sourceTree = "<group>"; };
 		DA3DFF632AB8595900D40D7A /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFactory.swift; path = HalpoPlayer/ViewFactory.swift; sourceTree = SOURCE_ROOT; };
@@ -313,7 +315,6 @@
 				DA7F1EEE2A656074006D8934 /* OfflineAlbumView.swift */,
 				DA7F1EB62A652E2A006D8934 /* AlbumDetailView.swift */,
 				DA7F1EB72A652E2A006D8934 /* SearchView.swift */,
-				DA7F1EB92A652E2A006D8934 /* LoginView.swift */,
 				DA7F1EBA2A652E2A006D8934 /* MediaControlBar.swift */,
 				DA7F1EBB2A652E2A006D8934 /* AirPlayView.swift */,
 				DA7F1EBC2A652E2A006D8934 /* LibraryView.swift */,
@@ -327,6 +328,8 @@
 				DA3E7C3E2A69420100DD5180 /* ArtistCell.swift */,
 				DA47D8302A6E74B200CBAAE4 /* NowPlayingView.swift */,
 				DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */,
+				DA7F1EB92A652E2A006D8934 /* LoginView.swift */,
+				DA1D14972AE16E3300031124 /* AccountListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				DA47D8312A6E74B200CBAAE4 /* NowPlayingView.swift in Sources */,
 				DA7F1E942A652DF4006D8934 /* Extensions.swift in Sources */,
 				DA7F1EAA2A652E1E006D8934 /* SubsonicAPI.swift in Sources */,
+				DA1D14982AE16E3300031124 /* AccountListView.swift in Sources */,
 				DA7F1EA32A652E14006D8934 /* GetAlbumListResponse.swift in Sources */,
 				DA7F1E912A652DF4006D8934 /* CarPlaySceneDelegate.swift in Sources */,
 				DA86C7C62A6684D10082659C /* AlbumDetailViewModel.swift in Sources */,

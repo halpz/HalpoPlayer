@@ -16,11 +16,7 @@ class ViewFactory {
 		case .downloads:
 			DownloadsView()
 		case .login:
-			let account = AccountHolder.shared.account
-			LoginView(address: account?.address ?? "",
-					  otherAddress: account?.otherAddress ?? "",
-					  username: account?.username ?? "",
-					  password: account?.password ?? "")
+			AccountListView()
 		case .search:
 			SearchView()
 		case .albumViewOffline(let album):

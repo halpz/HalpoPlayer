@@ -15,6 +15,7 @@ struct LoginView: View {
 	@State var username: String = ""
 	@State var password: String = ""
 	@State var port: String = "4533"
+	var callback: ((Account) -> Void)?
 	var body: some View {
 		Form {
 			TextField("URL", text: $address)
@@ -75,6 +76,8 @@ struct LoginView: View {
 						let account = Account(username: username, password: password, address: address, otherAddress: otherAddress, port: port)
 						DispatchQueue.main.async {
 							accountHolder.account = account
+							self.callback?(account)
+							self.dismiss()
 						}
 					} else {
 						SubsonicClient.shared.showCode(code: 0, message: "Could not ping either address\n\(address)\n\(otherAddress)")
@@ -84,7 +87,6 @@ struct LoginView: View {
 				}
 			}
 		}
-		dismiss()
 	}
 	func combineAddressWithPort(address: String, port: String) -> String {
 		if address.contains(":") {
