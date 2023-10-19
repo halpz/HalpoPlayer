@@ -18,19 +18,21 @@ class Database: ObservableObject {
 	@Published var searchScope: SearchScope
 	@Published var searchText: String
 	@Published var libraryViewType: LibraryViewType = .albums
-	@Published var libraryGridMode: Bool = {
+	@Published var libraryLayout: LibraryLayout = {
 		if let grid = UserDefaults.standard.object(forKey: "Grid") as? Bool {
-			return grid
+			return grid ? .grid : .list
 		} else {
 			let grid = UIDevice.current.userInterfaceIdiom == .pad
 			UserDefaults.standard.setValue(grid, forKey: "Grid")
-			return grid
+			return grid ? .grid : .list
 		}
 	}() {
 		didSet {
-			UserDefaults.standard.setValue(libraryGridMode, forKey: "Grid")
+			let isGrid = libraryLayout == .grid
+			UserDefaults.standard.setValue(isGrid, forKey: "Grid")
 		}
 	}
+	@Published var libraryAlbumSortType: AlbumSortType = .newest
 	var albumPage = 0
 	@Published var musicCache: [String: CachedSong] {
 		didSet {
