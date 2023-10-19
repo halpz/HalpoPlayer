@@ -31,6 +31,15 @@ struct NowPlayingView: View {
 	}
 	var body: some View {
 		VStack {
+//			HStack {
+//				Spacer()
+//				Button {
+//					dismiss()
+//				} label: {
+//					Image(systemName: "xmark").imageScale(.large)
+//						.padding()
+//				}
+//			}
 			Spacer()
 				.frame(height: 64)
 			Button {

@@ -43,3 +43,7 @@ struct GetAlbumListResponse: Codable {
 		let played, genre: String?
 	}
 }
+
+enum AlbumSortType: String, CaseIterable {
+	case random, newest, highest, frequent, recent, alphabeticalByName, alphabeticalByArtist
+}
