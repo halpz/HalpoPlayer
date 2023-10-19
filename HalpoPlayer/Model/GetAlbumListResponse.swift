@@ -45,5 +45,26 @@ struct GetAlbumListResponse: Codable {
 }
 
 enum AlbumSortType: String, CaseIterable {
-	case random, newest, frequent, recent
+	case newest
+	case alphabeticalByName
+	case alphabeticalByArtist
+	case recent
+	case frequent
+	case random
+	var title: String {
+		switch self {
+		case .newest:
+			return "Newest"
+		case .alphabeticalByName:
+			return "Alphabetical (name)"
+		case .alphabeticalByArtist:
+			return "Alphabetical (artist)"
+		case .recent:
+			return "Recently Played"
+		case .frequent:
+			return "Frequently played"
+		case .random:
+			return "Random"
+		}
+	}
 }

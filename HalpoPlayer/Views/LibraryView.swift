@@ -128,7 +128,7 @@ struct AlbumListView: View {
 							Section {
 								Picker("Sort order", selection: $database.libraryAlbumSortType) {
 									ForEach(AlbumSortType.allCases, id: \.self) { sortType in
-										Text(sortType.rawValue.capitalized)
+										Text(sortType.title)
 									}
 								}
 							}
@@ -229,7 +229,7 @@ struct AlbumListView: View {
 						Section {
 							Picker("Sort order", selection: $database.libraryAlbumSortType) {
 								ForEach(AlbumSortType.allCases, id: \.self) { sortType in
-									Text(sortType.rawValue.capitalized)
+									Text(sortType.title)
 								}
 							}
 						}

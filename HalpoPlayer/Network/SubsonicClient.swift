@@ -56,6 +56,7 @@ class SubsonicClient {
 		} catch {
 			self.showCode(code: 0, message: "JSON Decoder error: \(error.localizedDescription)")
 			print(error)
+			printJSONData(data)
 			throw HalpoError.imageDecode
 		}
 	}
