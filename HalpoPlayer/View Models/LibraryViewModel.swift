@@ -84,7 +84,7 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	func getAlbumList() async throws {
-		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage)
+		let response = try await SubsonicClient.shared.getAlbumList(page: albumPage, sort: Database.shared.libraryAlbumSortType)
 		let newAlbums: [GetAlbumListResponse.Album]
 		if self.albumPage == 0 {
 			await MainActor.run {

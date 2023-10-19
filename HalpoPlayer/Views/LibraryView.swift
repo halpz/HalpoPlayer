@@ -56,7 +56,7 @@ struct AlbumListView: View {
 		return (Array(repeating: item, count: count), itemWidth)
 	}
 	var body: some View {
-		if database.libraryGridMode {
+		if database.libraryLayout == .grid {
 			GeometryReader { geometry in
 				ScrollView {
 					let (gridItems, width) = gridItems(width: geometry.size.width)
@@ -85,6 +85,15 @@ struct AlbumListView: View {
 				.scrollDismissesKeyboard(.immediately)
 				.navigationBarTitleDisplayMode(.inline)
 				.navigationTitle(viewModel.viewType.rawValue.capitalized)
+				.onChange(of: self.database.libraryAlbumSortType) { _ in
+					Task {
+						do {
+							try await self.viewModel.loadContent(force: true)
+						} catch {
+							print(error)
+						}
+					}
+				}
 				.toolbar {
 					ToolbarTitleMenu {
 						Picker("Picker", selection: $viewModel.viewType) {
@@ -108,12 +117,23 @@ struct AlbumListView: View {
 						}
 					}
 					ToolbarItem(placement: .navigationBarTrailing) {
-						Button {
-							withAnimation {
-								database.libraryGridMode.toggle()
+						Menu {
+							Section {
+								Picker("Layout", selection: $database.libraryLayout) {
+									ForEach(LibraryLayout.allCases, id: \.self) { layout in
+										Label(layout.rawValue.capitalized, systemImage: layout.iconName)
+									}
+								}
+							}
+							Section {
+								Picker("Sort order", selection: $database.libraryAlbumSortType) {
+									ForEach(AlbumSortType.allCases, id: \.self) { sortType in
+										Text(sortType.rawValue.capitalized)
+									}
+								}
 							}
 						} label: {
-							Image(systemName: database.libraryGridMode ? "line.3.horizontal" : "square.grid.2x2").imageScale(.large)
+							Image(systemName: "ellipsis.circle").imageScale(.large)
 						}
 					}
 				}
@@ -156,6 +176,15 @@ struct AlbumListView: View {
 			.scrollDismissesKeyboard(.immediately)
 			.navigationBarTitleDisplayMode(.inline)
 			.navigationTitle(viewModel.viewType.rawValue.capitalized)
+			.onChange(of: self.database.libraryAlbumSortType) { _ in
+				Task {
+					do {
+						try await self.viewModel.loadContent(force: true)
+					} catch {
+						print(error)
+					}
+				}
+			}
 			.toolbar {
 				ToolbarTitleMenu {
 					Picker("Picker", selection: $viewModel.viewType) {
@@ -189,22 +218,25 @@ struct AlbumListView: View {
 					}
 				}
 				ToolbarItem(placement: .navigationBarTrailing) {
-					Button {
-						withAnimation {
-							database.libraryGridMode.toggle()
+					Menu {
+						Section {
+							Picker("Layout", selection: $database.libraryLayout) {
+								ForEach(LibraryLayout.allCases, id: \.self) { layout in
+									Label(layout.rawValue.capitalized, systemImage: layout.iconName)
+								}
+							}
+						}
+						Section {
+							Picker("Sort order", selection: $database.libraryAlbumSortType) {
+								ForEach(AlbumSortType.allCases, id: \.self) { sortType in
+									Text(sortType.rawValue.capitalized)
+								}
+							}
 						}
 					} label: {
-						Image(systemName: database.libraryGridMode ? "line.3.horizontal" : "square.grid.2x2").imageScale(.large)
+						Image(systemName: "ellipsis.circle").imageScale(.large)
 					}
 				}
-//				ToolbarItem(placement: .navigationBarTrailing) {
-//					Button {
-//						viewModel.selectedAlbums = []
-//						viewModel.selectMode.toggle()
-//					} label: {
-//						Text(viewModel.selectMode ? "Cancel" : "Select")
-//					}
-//				}
 			}
 		}
 		
@@ -265,6 +297,18 @@ struct ArtistListView: View {
 				}
 			}
 			
+		}
+	}
+}
+
+enum LibraryLayout: String, CaseIterable {
+	case list, grid
+	var iconName: String {
+		switch self {
+		case .list:
+			return "line.3.horizontal"
+		case .grid:
+			return "square.grid.2x2"
 		}
 	}
 }
