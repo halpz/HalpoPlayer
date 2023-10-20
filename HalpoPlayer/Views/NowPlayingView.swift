@@ -31,6 +31,13 @@ struct NowPlayingView: View {
 	}
 	var body: some View {
 		VStack {
+			HStack {
+				Spacer()
+				Button("Close") {
+					dismiss()
+				}
+				.padding()
+			}
 			Spacer()
 				.frame(height: 64)
 			Button {
