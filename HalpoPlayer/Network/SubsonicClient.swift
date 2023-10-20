@@ -201,6 +201,9 @@ class SubsonicClient {
 	func createPlaylist(name: String) async throws -> CreatePlaylistResponse {
 		return try await request(.createPlaylist(name: name)) as CreatePlaylistResponse
 	}
+	func scrobble(id: String) async throws -> BasicResponse {
+		return try await request(.scrobble(id: id)) as BasicResponse
+	}
 	func printJSONData(_ data: Data) {
 		if let json = try? JSONSerialization.jsonObject(with: data, options: []),
 		   let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),

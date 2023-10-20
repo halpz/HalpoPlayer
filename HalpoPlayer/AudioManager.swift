@@ -33,6 +33,7 @@ class AudioManager: ObservableObject {
 	@Published var albumArt: UIImage?
 	var invalidateSlider = false
 	@Published var loading = false
+	var scrobbleTask: Task<(), Error>?
 	
 	init() {
 		if let playlistData = UserDefaults.standard.data(forKey: "CurrentPlaylist") {
@@ -189,6 +190,15 @@ class AudioManager: ObservableObject {
 	func handleAudioPlayerIndexChange(state: AudioPlayer.QueueIndexEventData) {
 		DispatchQueue.main.async {
 			self.currentSong = self.songs?[state.newIndex ?? 0]
+			if self.scrobbleTask == nil {
+				let task = Task {
+					if let id = self.currentSong?.id {
+						let scrob = try await SubsonicClient.shared.scrobble(id: id)
+					}
+					self.scrobbleTask = nil
+				}
+				self.scrobbleTask = task
+			}
 			Task {
 				let image = try await SubsonicClient.shared.coverArt(albumId: self.currentSong?.albumId ?? "")
 				let media = MPMediaItemArtwork(boundsSize: CGSize(width: 100, height: 100)) { _ in
