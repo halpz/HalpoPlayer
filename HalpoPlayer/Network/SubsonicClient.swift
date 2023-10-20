@@ -88,7 +88,10 @@ class SubsonicClient {
 		guard account != nil else {
 			throw HalpoError.noAccount
 		}
-		var urlRequest = URLRequest(url: URL(string: address)!)
+		guard let url = URL(string: address) else {
+			throw HalpoError.noAccount
+		}
+		var urlRequest = URLRequest(url: url)
 		urlRequest.httpMethod = "HEAD"
 		urlRequest.timeoutInterval = 5
 		_ = try await session.data(for: urlRequest)

@@ -193,7 +193,7 @@ class AudioManager: ObservableObject {
 			if self.scrobbleTask == nil {
 				let task = Task {
 					if let id = self.currentSong?.id {
-						let scrob = try await SubsonicClient.shared.scrobble(id: id)
+						_ = try await SubsonicClient.shared.scrobble(id: id)
 					}
 					self.scrobbleTask = nil
 				}
