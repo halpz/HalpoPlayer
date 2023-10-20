@@ -88,10 +88,12 @@ struct LoginView: View {
 		}
 	}
 	func combineAddressWithPort(address: String, port: String) -> String {
-		if address.contains(":") {
+		var trimmed = address.replacingOccurrences(of: "http://", with: "")
+		trimmed = trimmed.replacingOccurrences(of: "https://", with: "")
+		if trimmed.contains(":") {
 			return address
 		} else {
-			return "\(address)\(port)"
+			return "\(address):\(port)"
 		}
 	}
 }
