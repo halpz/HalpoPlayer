@@ -31,15 +31,6 @@ struct NowPlayingView: View {
 	}
 	var body: some View {
 		VStack {
-//			HStack {
-//				Spacer()
-//				Button {
-//					dismiss()
-//				} label: {
-//					Image(systemName: "xmark").imageScale(.large)
-//						.padding()
-//				}
-//			}
 			Spacer()
 				.frame(height: 64)
 			Button {
@@ -56,7 +47,7 @@ struct NowPlayingView: View {
 								.resizable()
 								.scaledToFit()
 								.cornerRadius(8)
-								.frame(width: 300, height: 300)
+								.frame(maxWidth: 300, maxHeight: 300)
 								.shadow(radius: 8)
 							if player.loading {
 								ProgressView()
