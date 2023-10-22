@@ -101,7 +101,6 @@ struct NowPlayingView: View {
 							player.queue.pause()
 						} else {
 							player.queue.seek(to: timeline.timeElapsed)
-							player.queue.play()
 						}
 					}
 					.tint(nil)

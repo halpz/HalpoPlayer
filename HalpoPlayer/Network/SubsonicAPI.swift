@@ -86,7 +86,7 @@ enum SubsonicAPI {
 		case .createPlaylist(let name):
 			return "createPlaylist?name=\(name)"
 		case .scrobble(let id):
-			return "scrobble?id=\(id)&submission=false"
+			return "scrobble?id=\(id)&submission=true"
 		}
 	}
 }
