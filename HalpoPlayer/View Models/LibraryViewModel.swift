@@ -8,6 +8,7 @@
 import UIKit
 
 class LibraryViewModel: ObservableObject {
+	@Published var loading = false
 	@Published var loggedIn = false
 	@Published var searchText: String
 	@Published var viewType = Database.shared.libraryViewType
@@ -45,9 +46,18 @@ class LibraryViewModel: ObservableObject {
 		self.currentTask?.cancel()
 		self.currentTask = Task {
 			do {
+				await MainActor.run {
+					self.loading = true
+				}
 				try await loadContent(force: true)
+				await MainActor.run {
+					self.loading = false
+				}
 			} catch {
 				print(error)
+				await MainActor.run {
+					self.loading = false
+				}
 			}
 			await MainActor.run {
 				AudioManager.shared.loadSavedState()
