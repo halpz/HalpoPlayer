@@ -12,6 +12,27 @@ class Database: ObservableObject {
 	static let shared = Database()
 	let imageCache = ImageCache.shared
 	@Published var albumList: [GetAlbumListResponse.Album]?
+//	= {
+//		if let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+//			let albumListFilePath = documentsUrl.appendingPathComponent("albumList")
+//			if FileManager.default.fileExists(atPath: albumListFilePath.path()), let albumListData = try? Data(contentsOf: albumListFilePath),
+//			   let decodedAlbumList = try? albumListData.decoded() as [GetAlbumListResponse.Album] {
+//				return decodedAlbumList
+//			}
+//		}
+//		return nil
+//	}() {
+//		didSet {
+//			if let data = try? albumList?.encoded(), let documentsUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+//				let path = documentsUrl.appendingPathComponent("albumList")
+//				guard FileManager.default.fileExists(atPath: path.path()) else {
+//					FileManager.default.createFile(atPath: path.path(), contents: data)
+//					return
+//				}
+//				try? data.write(to: path)
+//			}
+//		}
+//	}
 	@Published var artistList: [GetArtistsResponse.Artist]?
 	@Published var playlists: GetPlaylistsResponse?
 	@Published var searchResults: Search2Response?

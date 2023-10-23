@@ -19,8 +19,6 @@ class SubsonicClient {
 		return "&f=json&u=\(account.username)&p=\(account.password)&v=1.16.1&c=halpoplayer"
 	}
 	func request<T: Decodable>(_ api: SubsonicAPI) async throws -> T {
-		
-		
 		if self.currentAddress == nil {
 			do {
 				_ = try await self.authenticate()
@@ -45,18 +43,12 @@ class SubsonicClient {
 			printJSONData(data)
 			throw HalpoError.badResponse(code: code)
 		}
-//		switch api {
-//		case .createPlaylist:
-//			printJSONData(data)
-//		default:
-//			break
-//		}
 		do {
 			return try data.decoded() as T
 		} catch {
 			self.showCode(code: 0, message: "JSON Decoder error: \(error.localizedDescription)")
-			print(error)
-			printJSONData(data)
+//			print(error)
+//			printJSONData(data)
 			throw HalpoError.imageDecode
 		}
 	}
