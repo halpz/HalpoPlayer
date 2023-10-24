@@ -5,7 +5,7 @@
 //  Created by paul on 24/10/2023.
 //
 
-import UIKit
+import Foundation
 import AppIntents
 
 struct PlayRandomSongs: AppIntent {
