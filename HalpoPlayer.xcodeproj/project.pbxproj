@@ -11,6 +11,7 @@
 		DA1D14982AE16E3300031124 /* AccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D14972AE16E3300031124 /* AccountListView.swift */; };
 		DA1FC7DA2AD94F8D00B2DCBA /* VolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */; };
 		DA26224A2A7940FE006A2CDD /* CreatePlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */; };
+		DA290CEB2AE7BFE400552D1E /* AppIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA290CEA2AE7BFE400552D1E /* AppIntents.swift */; };
 		DA3DFF642AB8595900D40D7A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3DFF632AB8595900D40D7A /* ViewFactory.swift */; };
 		DA3E7C352A69213900DD5180 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C342A69213900DD5180 /* SideMenu.swift */; };
 		DA3E7C372A6923A900DD5180 /* LibraryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */; };
@@ -117,6 +118,7 @@
 		DA1D14972AE16E3300031124 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
 		DA1FC7D92AD94F8D00B2DCBA /* VolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeSlider.swift; sourceTree = "<group>"; };
 		DA2622492A7940FE006A2CDD /* CreatePlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistResponse.swift; sourceTree = "<group>"; };
+		DA290CEA2AE7BFE400552D1E /* AppIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntents.swift; sourceTree = "<group>"; };
 		DA3DFF632AB8595900D40D7A /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFactory.swift; path = HalpoPlayer/ViewFactory.swift; sourceTree = SOURCE_ROOT; };
 		DA3E7C342A69213900DD5180 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA3E7C362A6923A900DD5180 /* LibraryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewType.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				DA7F1E852A652DD7006D8934 /* Preview Content */,
 				DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */,
 				DA13D7FE2A6D94DD00BADCB6 /* BatteryManager.swift */,
+				DA290CEA2AE7BFE400552D1E /* AppIntents.swift */,
 			);
 			path = HalpoPlayer;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				DA3E7C3D2A693E2F00DD5180 /* GetArtistResponse.swift in Sources */,
 				DA7F1EC12A652E2A006D8934 /* AlbumCell.swift in Sources */,
 				DA86C7D22A66A4010082659C /* GetPlaylistResponse.swift in Sources */,
+				DA290CEB2AE7BFE400552D1E /* AppIntents.swift in Sources */,
 				DA7F1E9E2A652E14006D8934 /* GetAlbumResponse.swift in Sources */,
 				DA7F1EC22A652E2A006D8934 /* LoginView.swift in Sources */,
 				DA7F1EB12A652E25006D8934 /* ImageCache.swift in Sources */,
