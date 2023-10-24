@@ -62,28 +62,6 @@ struct AlbumDetailView: View {
 						}
 						.listRowSeparator(.hidden)
 					}
-					HStack {
-						Spacer()
-						Button {
-							viewModel.shuffleSongs(songs: songs)
-						} label: {
-							Image(systemName: "shuffle").imageScale(.large)
-								.foregroundColor(Color.accentColor)
-						}
-						.buttonStyle(.plain)
-						.padding(8)
-						Spacer()
-						Button {
-							viewModel.downloadAll(songs: songs)
-						} label: {
-							Image(systemName: "arrow.down.square").imageScale(.large)
-								.foregroundColor(Color.accentColor)
-						}
-						.buttonStyle(.plain)
-						.padding(8)
-						Spacer()
-					}
-					.listRowSeparator(.hidden)
 					ForEach(songs) { song in
 						Button {
 							viewModel.playSong(song: song, songs: songs)
@@ -93,7 +71,6 @@ struct AlbumDetailView: View {
 						}
 						.swipeActions {
 							Button {
-//								viewModel.addSongToQueue(song: song)
 								viewModel.addSongToPlaylist(song: song, coordinator: coordinator)
 							} label: {
 								Image(systemName: "text.badge.plus").imageScale(.large)
@@ -135,14 +112,29 @@ struct AlbumDetailView: View {
 			}
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				Menu {
-					Button("Delete from cache") {
-						viewModel.deleteAlbumFromCache()
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						viewModel.shuffleSongs(songs: songs)
+					} label: {
+						Image(systemName: "shuffle").imageScale(.large)
+							.foregroundColor(Color.accentColor)
 					}
-					
-				} label: {
-					Image(systemName: "ellipsis")
 				}
+				ToolbarItem(placement: .topBarTrailing) {
+					Menu {
+						Button {
+							viewModel.downloadAll(songs: songs)
+						} label: {
+							Text("Download album")
+						}
+						Button("Delete from cache", role: .destructive) {
+							viewModel.deleteAlbumFromCache()
+						}
+					} label: {
+						Image(systemName: "ellipsis.circle")
+					}
+				}
+				
 				
 			}
 			.onAppear {
