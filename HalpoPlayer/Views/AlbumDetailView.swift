@@ -47,6 +47,7 @@ struct AlbumDetailView: View {
 									.scaledToFit()
 									.cornerRadius(8)
 									.frame(maxWidth: 500, maxHeight: 500)
+									.shadow(radius: 8)
 								Button {
 									viewModel.playButtonPressed()
 								} label: {

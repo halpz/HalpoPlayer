@@ -41,13 +41,12 @@ class AlbumDetailViewModel: ObservableObject {
 	func downloadAll(songs: [Song]) {
 		DispatchQueue.main.async {
 			songs.forEach {
-				self.downloading[$0.id] = true
-			}
-			songs.forEach {
-				self.database.deleteSong(song: $0)
+				if self.database.musicCache[$0.id] == nil {
+					self.downloading[$0.id] = true
+				}
 			}
 		}
-		for song in songs {
+		for song in songs where self.database.musicCache[song.id] == nil {
 			self.database.cacheSong(song: song) {
 				DispatchQueue.main.async {
 					self.downloading[song.id] = false
