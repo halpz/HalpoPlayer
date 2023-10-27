@@ -15,7 +15,7 @@ struct halpoplayerApp: App {
 	@ObservedObject var playlistsCoordinator = Coordinator()
 	@ObservedObject var searchCoordinator = Coordinator()
 	@State var selectedTab: AppTab = .library
-	@State var presentTEst = false
+	@State var presentNowPlayingView = false
 	let batteryManager = BatteryManager.shared
 	var body: some Scene {
 		WindowGroup {
@@ -52,9 +52,9 @@ struct halpoplayerApp: App {
 				}
 				MediaControlBar()
 					.onTapGesture {
-						self.presentTEst.toggle()
+						self.presentNowPlayingView.toggle()
 					}
-					.sheet(isPresented: $presentTEst, content: {
+					.sheet(isPresented: $presentNowPlayingView, content: {
 						NowPlayingView(goToAlbum: { albumId, songId in
 							if self.coordinatorForTab(tab: self.selectedTab).viewingAlbum != albumId {
 								self.coordinatorForTab(tab: self.selectedTab).albumTapped(albumId: albumId, scrollToSong: songId)
