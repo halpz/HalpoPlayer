@@ -14,6 +14,7 @@ struct NowPlayingView: View {
 	@State var volume: Float = AudioManager.shared.queue.volume
 	var goToAlbum: (((albumId: String, songId: String?)) -> Void)?
 	var goToArtist: (((artistId: String, artistName: String)) -> Void)?
+	var addToPlaylist: ((Song) -> Void)?
 	var buttonSize: CGFloat = 32
 	var playButtonName: String {
 		if player.isPlaying {
@@ -31,13 +32,28 @@ struct NowPlayingView: View {
 	}
 	var body: some View {
 		VStack {
-			HStack {
+			HStack(spacing: 16) {
 				Spacer()
+				if let song = self.player.currentSong {
+					Menu {
+						Button("Add to playlist...") {
+							self.dismiss()
+							self.addToPlaylist?(song)
+						}
+						if Database.shared.musicCache[song.id] == nil {
+							Button("Download") {
+								self.downloadSong(song: song)
+							}
+						}
+					} label: {
+						Image(systemName: "ellipsis.circle").imageScale(.large)
+					}
+				}
 				Button("Close") {
 					dismiss()
 				}
-				.padding()
 			}
+			.padding()
 			Spacer()
 				.frame(height: 64)
 			Button {
@@ -196,5 +212,8 @@ struct NowPlayingView: View {
 		} else {
 			return negative + String(format:"%02i:%02i", minutes, seconds)
 		}
+	}
+	func downloadSong(song: Song) {
+		Database.shared.cacheSong(song: song) {}
 	}
 }

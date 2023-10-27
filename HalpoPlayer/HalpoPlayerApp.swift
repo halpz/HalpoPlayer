@@ -61,6 +61,8 @@ struct halpoplayerApp: App {
 							}
 						}, goToArtist: { artistId, artistName in
 							self.coordinatorForTab(tab: self.selectedTab).goToArtist(artistId: artistId, artistName: artistName)
+						}, addToPlaylist: { song in
+							self.coordinatorForTab(tab: self.selectedTab).selectPlaylist(songs: [song])
 						})
 					})
 					
