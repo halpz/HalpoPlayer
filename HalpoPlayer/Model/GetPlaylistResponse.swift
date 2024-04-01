@@ -46,7 +46,7 @@ struct GetPlaylistResponse: Codable {
 		let duration: Int
 		let path: String
 		let artistId: String?
-		let year: Int
+		let year: Int?
 		let parent: String
 		let size: Int
 		let albumId, type, id, artist: String
