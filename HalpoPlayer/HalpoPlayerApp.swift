@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftAudioEx
+import Reachability
 
 @main
 struct halpoplayerApp: App {

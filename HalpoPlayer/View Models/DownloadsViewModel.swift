@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Reachability
 
 class DownloadsViewModel: ObservableObject {
 	@Published var showAlert: Bool
@@ -55,7 +56,7 @@ class DownloadsViewModel: ObservableObject {
 		AudioManager.shared.addSongToQueue(song: file.song)
 	}
 	func albumTapped(album: Album, coordinator: Coordinator) {
-		if SubsonicClient.shared.currentAddress == nil {
+		if SubsonicClient.shared.reachability?.connection == Reachability.Connection.unavailable {
 			coordinator.albumTappedOffline(album: album)
 		} else {
 			coordinator.albumTapped( albumId: album.id, scrollToSong: nil)

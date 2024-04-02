@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OfflineAlbumView: View {
-	@EnvironmentObject var database: Database
+	var database: Database = Database.shared
 	let album: Album
 	var songs: [CachedSong] {
 		var tempSongs = [CachedSong]()

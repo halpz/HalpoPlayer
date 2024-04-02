@@ -22,6 +22,7 @@
 		DA3E7C412A69896600DD5180 /* GetArtistInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E7C402A69896600DD5180 /* GetArtistInfoResponse.swift */; };
 		DA470E7B2A6A8110001EFA80 /* ExpandableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA470E7A2A6A8110001EFA80 /* ExpandableText.swift */; };
 		DA47D8312A6E74B200CBAAE4 /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47D8302A6E74B200CBAAE4 /* NowPlayingView.swift */; };
+		DA75B3C42BBC3B4800D53193 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = DA75B3C32BBC3B4800D53193 /* Reachability */; };
 		DA7F1E802A652DD6006D8934 /* HalpoPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F1E7F2A652DD6006D8934 /* HalpoPlayerApp.swift */; };
 		DA7F1E842A652DD7006D8934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E832A652DD7006D8934 /* Assets.xcassets */; };
 		DA7F1E872A652DD7006D8934 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7F1E862A652DD7006D8934 /* Preview Assets.xcassets */; };
@@ -194,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA7F1ECA2A652EAC006D8934 /* SwiftAudioEx in Frameworks */,
+				DA75B3C42BBC3B4800D53193 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +400,7 @@
 			name = HalpoPlayer;
 			packageProductDependencies = (
 				DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */,
+				DA75B3C32BBC3B4800D53193 /* Reachability */,
 			);
 			productName = HalpoPlayer;
 			productReference = DA7F1E7C2A652DD6006D8934 /* HalpoPlayer.app */;
@@ -471,6 +474,7 @@
 			mainGroup = DA7F1E732A652DD6006D8934;
 			packageReferences = (
 				DA7F1EC82A652EAC006D8934 /* XCRemoteSwiftPackageReference "SwiftAudioEx" */,
+				DA75B3C22BBC3B4800D53193 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = DA7F1E7D2A652DD6006D8934 /* Products */;
 			projectDirPath = "";
@@ -955,6 +959,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DA75B3C22BBC3B4800D53193 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		DA7F1EC82A652EAC006D8934 /* XCRemoteSwiftPackageReference "SwiftAudioEx" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/doublesymmetry/SwiftAudioEx";
@@ -966,6 +978,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DA75B3C32BBC3B4800D53193 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA75B3C22BBC3B4800D53193 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
 		DA7F1EC92A652EAC006D8934 /* SwiftAudioEx */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DA7F1EC82A652EAC006D8934 /* XCRemoteSwiftPackageReference "SwiftAudioEx" */;

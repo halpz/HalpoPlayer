@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Reachability
 
 class LibraryViewModel: ObservableObject {
 	@Published var loading = false
@@ -138,8 +139,13 @@ class LibraryViewModel: ObservableObject {
 			}
 		}
 	}
-	func albumTapped(albumId: String, coordinator: Coordinator) {
-		coordinator.albumTapped(albumId: albumId, scrollToSong: nil)
+	func albumTapped(album: GetAlbumListResponse.Album, coordinator: Coordinator) {
+		let converted = Album(albumListResponse: album)
+		if SubsonicClient.shared.reachability?.connection == Reachability.Connection.unavailable {
+			coordinator.albumTappedOffline(album: converted)
+		} else {
+			coordinator.albumTapped(albumId: album.id, scrollToSong: nil)
+		}
 	}
 	@objc func refresh() {
 		self.currentTask?.cancel()

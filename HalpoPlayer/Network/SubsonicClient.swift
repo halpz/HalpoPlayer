@@ -6,17 +6,22 @@
 //
 
 import UIKit
+import Reachability
 
 class SubsonicClient {
 	var currentAddress: String?
 	var account: Account?
 	let session = URLSession(configuration: .default)
 	static let shared = SubsonicClient()
+	let reachability = try? Reachability()
 	var userString: String {
 		guard let account = account else {
 			return ""
 		}
 		return "&f=json&u=\(account.username)&p=\(account.password)&v=1.16.1&c=halpoplayer"
+	}
+	init() {
+		try? reachability?.startNotifier()
 	}
 	func request<T: Decodable>(_ api: SubsonicAPI) async throws -> T {
 		if self.currentAddress == nil {

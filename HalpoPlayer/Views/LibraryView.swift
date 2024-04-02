@@ -73,7 +73,7 @@ struct AlbumListView: View {
 					LazyVGrid(columns: gridItems, spacing: 8) {
 						ForEach(viewModel.filteredAlbums) { album in
 							Button {
-								viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+								viewModel.albumTapped(album: album, coordinator: coordinator)
 							} label: {
 								AlbumGridCell(album: Album(albumListResponse: album), width: width)
 							}
@@ -158,7 +158,7 @@ struct AlbumListView: View {
 							viewModel.selectedAlbums.append(album)
 						}
 					} else {
-						viewModel.albumTapped(albumId: album.id, coordinator: coordinator)
+						viewModel.albumTapped(album: album, coordinator: coordinator)
 					}
 				} label: {
 					ZStack {
