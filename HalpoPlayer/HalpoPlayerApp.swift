@@ -109,6 +109,11 @@ struct halpoplayerApp: App {
 		}
 	}
 	func initApp() {
+        do {
+            try AudioSessionController.shared.set(category: .playback)
+        } catch {
+            print("Could not activate audio session: \(error)")
+        }
 		UIApplication.shared.beginReceivingRemoteControlEvents()
 	}
 }

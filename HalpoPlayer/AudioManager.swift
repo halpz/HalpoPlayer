@@ -109,7 +109,6 @@ class AudioManager: ObservableObject {
 	func activateSession(callback: @escaping (Bool) -> Void) {
 		do {
 			if !AudioSessionController.shared.audioSessionIsActive {
-				try AudioSessionController.shared.set(category: .playback)
 				try AudioSessionController.shared.activateSession()
 				AudioSessionController.shared.delegate = self
 			}
