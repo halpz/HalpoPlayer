@@ -22,6 +22,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>AVInitialRouteSharingPolicy</key>
+	<string>LongFormVideo</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

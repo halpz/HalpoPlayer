@@ -8,9 +8,29 @@
 import SwiftUI
 import SwiftAudioEx
 import Reachability
+import AVFoundation
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+		activateAudioSession()
+		return true
+	}
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		activateAudioSession()
+	}
+	func activateAudioSession() {
+		do {
+			try AudioSessionController.shared.set(category: .playback)
+		} catch {
+			print("Could not activate audio session: \(error)")
+		}
+		UIApplication.shared.beginReceivingRemoteControlEvents()
+	}
+}
 
 @main
 struct halpoplayerApp: App {
+	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	@ObservedObject var libraryCoordinator = Coordinator()
 	@ObservedObject var downloadsCoordinator = Coordinator()
 	@ObservedObject var playlistsCoordinator = Coordinator()
@@ -92,9 +112,6 @@ struct halpoplayerApp: App {
 			}
 			.ignoresSafeArea(.keyboard)
 			.environmentObject(coordinatorForTab(tab: selectedTab))
-			.onAppear {
-				initApp()
-			}
 		}
 	}
 	func coordinatorForTab(tab: AppTab) -> Coordinator {
@@ -108,14 +125,6 @@ struct halpoplayerApp: App {
 		case .search:
 			return searchCoordinator
 		}
-	}
-	func initApp() {
-        do {
-            try AudioSessionController.shared.set(category: .playback)
-        } catch {
-            print("Could not activate audio session: \(error)")
-        }
-		UIApplication.shared.beginReceivingRemoteControlEvents()
 	}
 }
 
