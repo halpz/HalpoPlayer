@@ -23,7 +23,7 @@
 		</dict>
 	</dict>
 	<key>AVInitialRouteSharingPolicy</key>
-	<string>LongFormVideo</string>
+	<string>LongFormAudio</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
