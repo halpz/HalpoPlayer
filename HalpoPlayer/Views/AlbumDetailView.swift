@@ -123,11 +123,18 @@ struct AlbumDetailView: View {
 				}
 				ToolbarItem(placement: .topBarTrailing) {
 					Menu {
-						Button {
-							viewModel.downloadAll(songs: songs)
-						} label: {
-							Text("Download album")
-						}
+                        Button {
+                            viewModel.downloadAll(songs: songs)
+                        } label: {
+                            Text("Download album")
+                        }
+                        Button {
+                            if let album = viewModel.albumResponse?.subsonicResponse.album {
+                                viewModel.addAlbumToPlaylist(album: album, coordinator: coordinator)
+                            }
+                        } label: {
+                            Text("Add to playlist...")
+                        }
 						Button("Delete from cache", role: .destructive) {
 							viewModel.deleteAlbumFromCache()
 						}
