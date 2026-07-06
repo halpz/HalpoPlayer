@@ -17,5 +17,7 @@ final class HalpoPlayerUITestsLaunchTests: XCTestCase {
         continueAfterFailure = false
     }
 
-
+    override func tearDownWithError() throws {
+        // no-op
+    }
 }
