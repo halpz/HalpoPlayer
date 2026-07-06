@@ -1,0 +1,40 @@
+name: iOS CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild \
+            -resolvePackageDependencies \
+            -scheme HalpoPlayer
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -scheme HalpoPlayer \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            clean build
+
+      - name: Run tests
+        run: |
+          xcodebuild \
+            -scheme HalpoPlayer \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            test
